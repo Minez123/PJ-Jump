@@ -137,7 +137,7 @@ func _physics_process(delta: float) -> void:
 	# Gravity
 	if not is_on_floor():
 		velocity.y -= GRAVITY * delta
-	
+	#ihoihrweiofheiorfhewiofehiofehiofiohh
 
 	move_and_slide()
 	if not was_on_floor and is_on_floor():
