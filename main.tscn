@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://cawyxa2honk7g"]
+
+[ext_resource type="PackedScene" uid="uid://cotskyb82b6w2" path="res://character.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://pcuig3mu46ea" path="res://node_3d.gd" id="2_0xm2m"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_ig7tw"]
+sky_material = SubResource("ProceduralSkyMaterial_7dm0k")
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 2
+sky = SubResource("Sky_ig7tw")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ig7tw"]
+albedo_color = Color(0, 0.298039, 1, 1)
+
+[node name="main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 30.3661, 0)
+shadow_enabled = true
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10.952, -6.042, -1, -11.394)
+use_collision = true
+size = Vector3(31.35, 1, 22.75)
+material = SubResource("StandardMaterial3D_ig7tw")
+
+[node name="platform" type="CSGBox3D" parent="."]
+transform = Transform3D(1.46634, 0, 0, 0, 1, 0, 0, 0, 1.51054, -6.042, 2.27277, 10.45)
+use_collision = true
+size = Vector3(31.35, 1, 22.75)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="JumpPowerBar" type="ProgressBar" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.547
+anchor_right = 0.937
+anchor_bottom = 0.119
+offset_left = 138.856
+offset_top = 7.0
+offset_right = -221.424
+offset_bottom = -42.112
+max_value = 10.0
+
+[node name="Platform_Gen" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0449, 0, -9)
+script = ExtResource("2_0xm2m")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Platform_Gen"]
+
+[node name="SeedLabel" type="Label" parent="Platform_Gen/CanvasLayer"]
+offset_left = 1006.0
+offset_top = 59.0
+offset_right = 1134.0
+offset_bottom = 82.0
+
+[node name="Character" parent="." instance=ExtResource("1_ig7tw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.08812, 3.77277, 11.1132)

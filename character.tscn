@@ -1,0 +1,97 @@
+[gd_scene load_steps=8 format=3 uid="uid://cotskyb82b6w2"]
+
+[ext_resource type="Script" uid="uid://dap3xrj2t3l8m" path="res://character.gd" id="1_glpr6"]
+[ext_resource type="AudioStream" uid="uid://ysxpjdsnff8a" path="res://toy-button-105724.mp3" id="2_pjt0s"]
+[ext_resource type="AudioStream" uid="uid://dipk2wf4wxukd" path="res://landing_sfx-1.mp3" id="3_wa5vi"]
+[ext_resource type="AudioStream" uid="uid://bqoqxl7cxo5xf" path="res://knife_sfx-2.mp3" id="4_wfnr8"]
+[ext_resource type="Script" uid="uid://bsnef6hlfo54f" path="res://pause_menu.gd" id="5_px5sl"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_glpr6"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pjt0s"]
+points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607, 0.498884, 0.169713, 0.559144, 0.464172, 0.231051, -0.803591, 0.320455, 0.40741, 0.651043, -0.243523, -0.482789, 0.594843, 0.0822132, -0.362868, -0.682312, 0.289697, 0.469044, -0.654529, -0.0662713, -0.127444, 0.842701, -0.338103, -0.393435, -0.683942, -0.244717, 0.438255, 0.623309, 0.200849, 0.0841477, 0.977454, 0.114795, -0.0682023, -0.976458, -0.12927, 0.20055, -0.563129, -0.451454, -0.185527, 0.595453, -0.453475, -0.273363, 0.592268, 0.407754, -0.00693649, -0.476823, 0.49966, 0.375821, -0.588614, 0.316955, 0.111579, 0.563059, -0.481177, -0.41725, 0.527866, -0.270497, -0.484546, -0.596972, -0.0665097, -0.279747, 0.908561, 0.0533361, -0.250197, -0.880712, 0.205319, 0.263647, -0.902771, -0.127394, 0.293368, 0.871526, -0.157196, 0.373412, -0.526319, -0.328246, 0.499663, 0.476641, -0.00688856, 0.0531056, 0.875001, 0.324703, -0.154543, -0.590854, 0.465879, -0.0972799, -0.782358, -0.398188, -0.387649, -0.498171, 0.31565, -0.30068, -0.587995, -0.388901)
+
+[node name="Character" type="CharacterBody3D"]
+script = ExtResource("1_glpr6")
+
+[node name="jump_sfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_pjt0s")
+
+[node name="CharacterMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_glpr6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_pjt0s")
+
+[node name="TwistPivot" type="Node3D" parent="."]
+
+[node name="PitchPivot" type="Node3D" parent="TwistPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="TwistPivot/PitchPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4)
+current = true
+
+[node name="Landing_sfx" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_wa5vi")
+
+[node name="Full_Charge_sfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_wfnr8")
+
+[node name="PauseMenu" type="CanvasLayer" parent="."]
+process_mode = 2
+script = ExtResource("5_px5sl")
+
+[node name="Panel" type="ColorRect" parent="PauseMenu"]
+offset_left = 48.0
+offset_top = 85.0
+offset_right = 978.0
+offset_bottom = 510.0
+color = Color(0.32, 0.32, 0.32, 0)
+
+[node name="Volume" type="Label" parent="PauseMenu/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 4.25
+anchor_bottom = 1.675
+offset_left = 173.0
+offset_top = 204.0
+offset_right = -3720.5
+offset_bottom = -484.875
+text = "Volume"
+
+[node name="Mouse sensitivity" type="Label" parent="PauseMenu/Panel"]
+layout_mode = 0
+offset_left = 138.0
+offset_top = 146.0
+offset_right = 272.0
+offset_bottom = 169.0
+text = "Mouse sensitivity"
+
+[node name="MouseSlider" type="HSlider" parent="PauseMenu/Panel"]
+layout_mode = 0
+offset_left = 338.0
+offset_top = 154.0
+offset_right = 721.0
+offset_bottom = 170.0
+min_value = 0.001
+max_value = 0.01
+step = 0.001
+value = 0.001
+
+[node name="VolumeSlider" type="HSlider" parent="PauseMenu/Panel"]
+layout_mode = 0
+offset_left = 353.0
+offset_top = 209.0
+offset_right = 724.0
+offset_bottom = 232.0
+max_value = 1.0
+step = 0.01
+
+[node name="ConfirmButton" type="Button" parent="PauseMenu/Panel"]
+layout_mode = 0
+offset_left = 363.0
+offset_top = 308.0
+offset_right = 434.0
+offset_bottom = 339.0
+text = "Confirm"
