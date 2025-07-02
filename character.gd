@@ -7,6 +7,7 @@ extends CharacterBody3D
 @export var jump_charge_rate := 10.0 
 
 @export var move_speed := 8.0
+@export var bounce_speed := 8.0
 
 
 #Cam
@@ -37,9 +38,11 @@ var full_charge_sfx_played := false
 var jump_power := 0.0
 var jump_direction := 0 
 var jump_hight := 2
+var has_bounced := false
 
 
 var GRAVITY = 9.8 * jump_hight 
+var original_gravity: float  # Store the original gravity value
 
 
 var last_dash_time := -1.0
@@ -51,6 +54,7 @@ var pitch_input := 0.0
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	original_gravity = GRAVITY  # Store the original gravity value
 	
 
 
@@ -92,6 +96,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Only allow movement input on ground
 	if is_on_floor():
+		has_bounced = false # Reset bounce on landing
 		
 		var move_input := Input.get_axis("move_left", "move_right")
 		velocity.x = direction.x * speed
@@ -136,10 +141,36 @@ func _physics_process(delta: float) -> void:
 		
 	# Gravity
 	if not is_on_floor():
+		# Check if character is falling down (negative y velocity)
+		if velocity.y < 0:
+			# Increase gravity when falling to make character fall faster
+			GRAVITY = original_gravity + (0.5 * original_gravity)
+		else:
+			# Reset gravity to original when not falling (jumping up)
+			GRAVITY = original_gravity
+		
 		velocity.y -= GRAVITY * delta
-	#ihoihrweiofheiorfhewiofehiofehiofiohh
+	else:
+		# Reset gravity to original when on floor
+		GRAVITY = original_gravity
 
 	move_and_slide()
+
+	if not is_on_floor() and not has_bounced:
+		var collision_count = get_slide_collision_count()
+		if collision_count > 0:
+			for i in range(collision_count):
+				var collision = get_slide_collision(i)
+				# Check if the collision is with a wall (normal is mostly horizontal)
+				if abs(collision.get_normal().y) < 0.1:
+					var wall_normal = collision.get_normal()
+					# Stop upward movement and push away from the wall
+					velocity.x = wall_normal.x * bounce_speed
+					velocity.z = wall_normal.z * bounce_speed
+
+					has_bounced = true
+					break # We only want to bounce once
+
 	if not was_on_floor and is_on_floor():
 		landing_sfx.play()
 	was_on_floor = is_on_floor()
