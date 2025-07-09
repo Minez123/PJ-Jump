@@ -12,6 +12,7 @@
 transform = Transform3D(4.40143, 0, 0, 0, 2.35326, 0, 0, 0, 2.72811, 0, 0, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(3.36924, 0, 0, 0, 0.167523, 0, 0, 0, 3.13108, 0, 0, 0)

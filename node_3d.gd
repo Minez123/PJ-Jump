@@ -58,9 +58,10 @@ func _ready():
 
 		# Spawn random scene
 		if rng.randf() < scene_spawn_chance and struc_scene:
-			var instance = struc_scene.instantiate()
-			instance.global_position = current_position + Vector3(0, 0, 5)
-			add_child(instance)
+			var structure = struc_scene.instantiate()
+			structure.scale = Vector3(2, 2, 2) 
+			structure.global_position = current_position + Vector3(0, 0, 5)
+			add_child(structure)
 
 
 
