@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bf74y3ib587a2"]
+
+[ext_resource type="Script" uid="uid://cgo7jmkkwoc3c" path="res://collectible.gd" id="1_8orai"]
+[ext_resource type="AudioStream" uid="uid://bqoqxl7cxo5xf" path="res://knife_sfx-2.mp3" id="2_yciwo"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_h2yge"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_0xm2m"]
+
+[node name="Collectible" type="Node3D"]
+script = ExtResource("1_8orai")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_h2yge")
+
+[node name="collect_sfx" type="AudioStreamPlayer3D" parent="Area3D"]
+stream = ExtResource("2_yciwo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_0xm2m")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

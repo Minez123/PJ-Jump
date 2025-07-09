@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://c75ubi4gtnumo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2jccy"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_g5qmw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3irrl"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_68psd"]
+
+[node name="struc" type="Node3D"]
+transform = Transform3D(4.40143, 0, 0, 0, 2.35326, 0, 0, 0, 2.72811, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(3.36924, 0, 0, 0, 0.167523, 0, 0, 0, 3.13108, 0, 0, 0)
+shape = SubResource("BoxShape3D_2jccy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(3.36924, 0, 0, 0, 0.167523, 0, 0, 0, 3.13108, 0, 0, 0)
+mesh = SubResource("BoxMesh_g5qmw")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="StaticBody3D/MeshInstance3D"]
+transform = Transform3D(0.296803, 0, 0, 0, 5.96933, 0, 0, 0, 0.319379, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/MeshInstance3D/StaticBody3D"]
+transform = Transform3D(0.117241, 0, 0, 0, 1.93283, 0, 0, 0, 1, -0.721215, 1.0472, 0)
+shape = SubResource("BoxShape3D_3irrl")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D/MeshInstance3D/StaticBody3D/CollisionShape3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76837e-07, 0, 0)
+mesh = SubResource("BoxMesh_68psd")
+skeleton = NodePath("../../../../..")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="StaticBody3D/MeshInstance3D"]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D/MeshInstance3D/StaticBody3D2"]
+transform = Transform3D(0.0347973, 0, 0, 0, 11.5377, 0, 0, 0, 0.319379, 0.230122, 6.00637, 0)
+shape = SubResource("BoxShape3D_3irrl")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="StaticBody3D/MeshInstance3D/StaticBody3D2/CollisionShape3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76837e-07, 0, 0)
+mesh = SubResource("BoxMesh_68psd")
+skeleton = NodePath("../../../../..")
