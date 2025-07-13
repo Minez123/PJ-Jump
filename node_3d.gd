@@ -9,13 +9,15 @@ extends Node3D
 @export var item_spawn_chance: float = 0.5  #  chance to spawn item
 @export var struc_scene: PackedScene
 @export var scene_spawn_chance: float = 0.5  #
-
+@export var NavLevel_scene: PackedScene
+@export var Navscene_spawn_chance: float = 0.1  #
 
 var rng := RandomNumberGenerator.new()
 
 
 
 func _ready():
+	await get_tree().process_frame  # Let everything enter the scene tree
 	var current_position = Vector3.ZERO
 	if custom_seed == -1:
 		custom_seed = Time.get_unix_time_from_system()  # Get a random seed based on time
@@ -49,10 +51,12 @@ func _ready():
 		static_body.add_child(collision)
 		mesh_instance.add_child(static_body)
 		add_child(mesh_instance)
-
+		
+		await get_tree().process_frame  # Let everything enter the scene tree
 		# Spawn collectible
 		if rng.randf() < item_spawn_chance and collectible_scene:
 			var collectible = collectible_scene.instantiate()
+			await get_tree().process_frame  # Let everything enter the scene tree
 			collectible.global_position = current_position + Vector3(0, platform_size.y / 2 + 0.5, 0)
 			add_child(collectible)
 
@@ -60,10 +64,22 @@ func _ready():
 		if rng.randf() < scene_spawn_chance and struc_scene:
 			var structure = struc_scene.instantiate()
 			structure.scale = Vector3(2, 2, 2) 
-			structure.global_position = current_position + Vector3(0, 0, 5)
+			await get_tree().process_frame  # Let everything enter the scene tree
+			structure.global_position = current_position + Vector3(0, 0, 0)
+			add_child(structure)
+			
+		if rng.randf() < Navscene_spawn_chance and NavLevel_scene:
+			var structure = NavLevel_scene.instantiate()
+			structure.scale = Vector3(2, 2, 2) 
+			await get_tree().process_frame  # Let everything enter the scene tree
+			structure.global_position = current_position + Vector3(0, 0, 0)
 			add_child(structure)
 
 
 
 		
 	
+
+
+func _on_character_ready() -> void:
+	pass # Replace with function body.
