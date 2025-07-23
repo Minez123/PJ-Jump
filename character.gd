@@ -9,6 +9,8 @@ extends CharacterBody3D
 @export var move_speed := 8.0
 @export var bounce_speed := 8.0
 
+@export var respawn_position: Vector3 = Vector3(0, 15, 0)
+@export var fall_limit: float = -50.0  # Y-position considered "fell out"
 
 #Cam
 @export var min_zoom := -20.0
@@ -73,6 +75,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if global_transform.origin.y < fall_limit:
+		respawn()
 	# Camera rotation
 	twist_pivot.rotate_y(twist_input)
 	pitch_pivot.rotate_x(pitch_input)
@@ -175,3 +179,8 @@ func _physics_process(delta: float) -> void:
 	if not was_on_floor and is_on_floor():
 		landing_sfx.play()
 	was_on_floor = is_on_floor()
+
+
+func respawn():
+	global_transform.origin = respawn_position
+	velocity = Vector3.ZERO 

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dscw8tq7br8ob"]
+
+[ext_resource type="PackedScene" uid="uid://d0qdslovi1xcb" path="res://PJ-Jump/Fantasy-Free-Godot-617145cb2c96a443e2a61973b939ee0221364a3a/Fantasy_Free/assets/models_fbx/bag_001.fbx" id="1_77egh"]
+[ext_resource type="Material" uid="uid://bvyyg8r6dpfei" path="res://PJ-Jump/Fantasy-Free-Godot-617145cb2c96a443e2a61973b939ee0221364a3a/Fantasy_Free/materials/ITHappy.tres" id="2_6l1mr"]
+
+[node name="bag_001" instance=ExtResource("1_77egh")]
+
+[node name="bag_001" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_6l1mr")

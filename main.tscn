@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://cawyxa2honk7g"]
+[gd_scene load_steps=13 format=3 uid="uid://cawyxa2honk7g"]
 
-[ext_resource type="PackedScene" uid="uid://cotskyb82b6w2" path="res://character.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://pcuig3mu46ea" path="res://node_3d.gd" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bf74y3ib587a2" path="res://collectible.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c75ubi4gtnumo" path="res://struc.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://d3khx0wf0c0s" path="res://NavLevel.tscn" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://d0qdslovi1xcb" path="res://PJ-Jump/Fantasy-Free-Godot-617145cb2c96a443e2a61973b939ee0221364a3a/Fantasy_Free/assets/models_fbx/bag_001.fbx" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://cipq8ioqu1v4m" path="res://knight1.tscn" id="6_272bh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -76,9 +77,6 @@ offset_top = 59.0
 offset_right = 1134.0
 offset_bottom = 82.0
 
-[node name="Character" parent="." instance=ExtResource("1_ig7tw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.08812, 3.77277, 11.1132)
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.73079, 0)
 mesh = SubResource("BoxMesh_0xm2m")
@@ -100,4 +98,11 @@ shape = SubResource("ConcavePolygonShape3D_0xm2m")
 [node name="NavigationRegion3D" parent="." instance=ExtResource("5_lquwl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.2152, 3.09587, 11.7534)
 
-[connection signal="ready" from="Character" to="Platform_Gen" method="_on_character_ready"]
+[node name="bag_001" parent="." instance=ExtResource("6_7mycd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.408, 2.77277, 8.82193)
+
+[node name="bag_002" parent="." instance=ExtResource("6_7mycd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5576, 2.77277, 9.86035)
+
+[node name="Knight" parent="." instance=ExtResource("6_272bh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.1539, 2.77277, 19.4029)

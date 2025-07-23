@@ -10,7 +10,7 @@ func _ready():
 	add_to_group("AI_NPC")
 	agent.debug_enabled = true # draw line
 	await get_tree().process_frame  # Let everything enter the scene tree
-	player = get_node("/root/main/Character") 
+	player = get_node("/root/main/Knight") 
 
 	
 
