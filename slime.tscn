@@ -1,0 +1,85 @@
+[gd_scene load_steps=17 format=3 uid="uid://b8ndcejl05s0g"]
+
+[ext_resource type="PackedScene" uid="uid://c5vo5bbi8i8kt" path="res://PJ-Jump/-Animated-LowPoly-Slime-228941d20482249abbf064037c4e5ac1906cdf4e/-Animated-LowPoly-Slime-228941d20482249abbf064037c4e5ac1906cdf4e/scene.gltf" id="1_5jc4t"]
+[ext_resource type="Texture2D" uid="uid://bptnc1cwy7pjj" path="res://PJ-Jump/-Animated-LowPoly-Slime-228941d20482249abbf064037c4e5ac1906cdf4e/-Animated-LowPoly-Slime-228941d20482249abbf064037c4e5ac1906cdf4e/SlimeBody_baseColor.png" id="2_4l1t8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ppcr1"]
+albedo_texture = ExtResource("2_4l1t8")
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5b0gg"]
+animation = &"Slime_HIT"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4l1t8"]
+animation = &"Slime_IDLE"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ppcr1"]
+animation = &"Slime_WALK"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jayke"]
+animation = &"Slime_WALK"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2002g"]
+animation = &"Slime_WALK"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bratd"]
+animation = &"Slime_WALK"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_5b0gg"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_4l1t8")
+blend_point_0/pos = Vector2(0, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_ppcr1")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_jayke")
+blend_point_2/pos = Vector2(1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_2002g")
+blend_point_3/pos = Vector2(0, -0.9)
+blend_point_4/node = SubResource("AnimationNodeAnimation_bratd")
+blend_point_4/pos = Vector2(-1, 0)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5jc4t"]
+animation = &"Slime_DEAD"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5b0gg"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_da4t2"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jrxk1"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_alucd"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_da4t2"]
+states/HIT/node = SubResource("AnimationNodeAnimation_5b0gg")
+states/HIT/position = Vector2(383, 224)
+states/IW/node = SubResource("AnimationNodeBlendSpace2D_5b0gg")
+states/IW/position = Vector2(356, 124)
+states/Slime_DEAD/node = SubResource("AnimationNodeAnimation_5jc4t")
+states/Slime_DEAD/position = Vector2(910, 234)
+transitions = ["Slime_DEAD", "End", SubResource("AnimationNodeStateMachineTransition_5b0gg"), "Start", "IW", SubResource("AnimationNodeStateMachineTransition_da4t2"), "IW", "HIT", SubResource("AnimationNodeStateMachineTransition_jrxk1"), "HIT", "IW", SubResource("AnimationNodeStateMachineTransition_alucd")]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_5jc4t")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Sketchfab_model/8f4b526ad5bb40e8a038ee6183f7246d_fbx/Object_2/RootNode/Object_4" index="0"]
+bones/2/position = Vector3(0, 9.45117, -2.22862)
+bones/3/position = Vector3(0, 0.188223, 14.8254)
+bones/3/rotation = Quaternion(0.112614, 0, 0, 0.993639)
+bones/3/scale = Vector3(1.03104, 1, 0.951711)
+bones/4/position = Vector3(0, 0.215076, 16.2443)
+bones/4/rotation = Quaternion(0.112623, 0, 0, 0.993638)
+bones/4/scale = Vector3(1.03104, 1, 0.951711)
+bones/5/position = Vector3(0, 0.26177, 15.1317)
+bones/5/rotation = Quaternion(0.0421759, 0, 0, 0.99911)
+bones/5/scale = Vector3(1.03104, 1.00166, 0.94918)
+
+[node name="Object_7" parent="Sketchfab_model/8f4b526ad5bb40e8a038ee6183f7246d_fbx/Object_2/RootNode/Object_4/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ppcr1")
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2"]
+tree_root = SubResource("AnimationNodeStateMachine_da4t2")
+anim_player = NodePath("../AnimationPlayer")
+parameters/IW/blend_position = 0.64

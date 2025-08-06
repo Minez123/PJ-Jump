@@ -23,6 +23,7 @@ script = ExtResource("1_jbto4")
 
 [node name="NavigationNPC" parent="." instance=ExtResource("1_6fxdp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.47646, 0)
+collision_layer = 2
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0)

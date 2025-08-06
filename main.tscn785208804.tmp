@@ -1,7 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://cawyxa2honk7g"]
+[gd_scene load_steps=12 format=3 uid="uid://cawyxa2honk7g"]
 
 [ext_resource type="Script" uid="uid://pcuig3mu46ea" path="res://node_3d.gd" id="2_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://bf74y3ib587a2" path="res://collectible.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c75ubi4gtnumo" path="res://struc.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://d3khx0wf0c0s" path="res://NavLevel.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://d0qdslovi1xcb" path="res://PJ-Jump/Fantasy-Free-Godot-617145cb2c96a443e2a61973b939ee0221364a3a/Fantasy_Free/assets/models_fbx/bag_001.fbx" id="6_7mycd"]
@@ -62,26 +61,17 @@ offset_right = -221.424
 offset_bottom = -42.112
 max_value = 10.0
 
-[node name="ShotgunAmmoLabel" type="Label" parent="CanvasLayer"]
-offset_left = 709.0
-offset_top = 10.0
-offset_right = 749.0
-offset_bottom = 33.0
-
-[node name="Platform_Gen" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.602, -2, 15.142)
+[node name="Platform_Gen2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0449, 0, 66.3521)
 script = ExtResource("2_0xm2m")
-collectible_scene = ExtResource("3_h2yge")
-struc_scene = ExtResource("4_1bvp3")
-NavLevel_scene = ExtResource("5_lquwl")
+enemy_scene = ExtResource("5_lquwl")
+tree_scene = ExtResource("4_1bvp3")
+number_of_objects = null
+spawn_range = null
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Platform_Gen"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform_Gen2"]
 
-[node name="SeedLabel" type="Label" parent="Platform_Gen/CanvasLayer"]
-offset_left = 1006.0
-offset_top = 59.0
-offset_right = 1134.0
-offset_bottom = 82.0
+[node name="PathAnchor" type="Node3D" parent="Platform_Gen2"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.73079, 0)
@@ -101,14 +91,11 @@ mesh = SubResource("BoxMesh_0xm2m")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_0xm2m")
 
-[node name="NavigationRegion3D" parent="." instance=ExtResource("5_lquwl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.2152, 3.09587, 11.7534)
-
 [node name="bag_001" parent="." instance=ExtResource("6_7mycd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.408, 2.77277, 8.82193)
 
 [node name="bag_002" parent="." instance=ExtResource("6_7mycd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5576, 2.77277, 9.86035)
 
-[node name="Knight" parent="." groups=["Player"] instance=ExtResource("6_272bh")]
+[node name="Knight" parent="." instance=ExtResource("6_272bh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.1539, 2.77277, 19.4029)

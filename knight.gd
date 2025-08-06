@@ -1,6 +1,8 @@
 extends CharacterBody3D
 
 @export var mouse_sensitivity := 0.0015
+@export var can_move_in_air: bool = false
+@export var inf_Ammo = true
 
 @export var min_jump_power := 5.0
 @export var max_jump_power := 10.0
@@ -35,7 +37,7 @@ extends CharacterBody3D
 @onready var jump_sfx: AudioStreamPlayer2D = $jump_sfx
 @onready var landing_sfx: AudioStreamPlayer3D = $Landing_sfx
 @onready var full_charge_sfx: AudioStreamPlayer2D = $Full_Charge_sfx
-
+@onready var shotgun_sfx: AudioStreamPlayer3D = $ShotgunSfx
 var current_zoom := -10.0  # initial zoom distance
 
 var charging_jump := false
@@ -57,6 +59,17 @@ const DASH_COOLDOWN := 1.0  # seconds
 # Mouse input
 var twist_input := 0.0
 var pitch_input := 0.0
+
+# Shotgun
+@onready var shotgun_ammo_label := $"../CanvasLayer/ShotgunAmmoLabel"
+
+@export var shotgun_knockback_force := 15.0
+@export var shotgun_cooldown := 1.5  # Cooldown after 2 shots
+@export var shotgun_recoil_upward := 14.0
+const MAX_SHOTGUN_AMMO := 2
+var shotgun_shots_remaining := MAX_SHOTGUN_AMMO
+var shotgun_knockback := Vector3.ZERO
+
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -107,13 +120,12 @@ func _physics_process(delta: float) -> void:
 		var direction = twist_pivot.basis * input_dir
 		direction.y = 0
 		direction = direction.normalized()
-		var speed := move_speed
-		# Turn character to match camera's horizontal rotation (TwistPivot)
-		var camera_yaw = twist_pivot.global_rotation.y
+	
+
 		$Rig.rotation.y = twist_pivot.global_rotation.y
 		#Animetion
 		var model_var = velocity * model.transform.basis
-		anim_tree.set("parameters/IWR/blend_position",Vector2(model_var.x,-model_var.z)/speed)
+		anim_tree.set("parameters/IWR/blend_position",Vector2(model_var.x,-model_var.z)/move_speed)
 
 
 
@@ -122,12 +134,12 @@ func _physics_process(delta: float) -> void:
 			landed_timer -= delta
 
 		
-		# Only allow movement input on ground
-		if is_on_floor():
+		# Allow movement if grounded or if air movement is enabled
+		if is_on_floor() or can_move_in_air:
 			anim_tree.set("parameters/conditions/grounded",true)
 			var move_input := Input.get_axis("move_left", "move_right")
-			velocity.x = direction.x * speed
-			velocity.z = direction.z * speed
+			velocity.x = direction.x * move_speed
+			velocity.z = direction.z * move_speed
 			if move_input != 0:
 				jump_direction = sign(move_input)
 			
@@ -185,12 +197,40 @@ func _physics_process(delta: float) -> void:
 			
 		var velocity_before_slide := velocity
 		
+		# Bounce on enemy collision
+
 		
+
 		
+
+
+
+
+		# Shotgun shoot
+		if Input.is_action_just_pressed("shoot_shotgun") and shotgun_shots_remaining > 0:
+			if not inf_Ammo:
+				shotgun_shots_remaining -= 1
+			shotgun_sfx.play()
+
+			# Recoil knockback 
+			var shoot_dir = camera.global_transform.basis.z
+			shoot_dir = shoot_dir.normalized()
+
+
+			shotgun_knockback = shoot_dir * shotgun_knockback_force
+			shotgun_knockback.y += shotgun_recoil_upward
+
+
+			velocity = shotgun_knockback
+			shotgun_knockback = Vector3.ZERO  # Apply only once
+		shotgun_ammo_label.text = "Ammo: %d" % shotgun_shots_remaining
+
+
+
 		move_and_slide()
-	
+				
+				
 		#wall bouncing
-		
 		var collision_count = get_slide_collision_count()
 		if collision_count > 0:
 			for i in range(collision_count):
@@ -210,8 +250,25 @@ func _physics_process(delta: float) -> void:
 			landed_timer = 0.5 
 			anim_tree.set("parameters/conditions/grounded",true)
 			anim_tree.set("parameters/conditions/jumping",false)
+			jump_bar.value = 0
 		was_on_floor = is_on_floor()
 
+func refill_shotgun():
+	if shotgun_shots_remaining < MAX_SHOTGUN_AMMO:
+		shotgun_shots_remaining += 1
+
+func trigger_enemy_bounce(enemy_position: Vector3):
+	anim_tree.set("parameters/conditions/jumping", true)
+	anim_tree.set("parameters/conditions/grounded", false)
+	jump_sfx.play()
+
+	var bounce_dir = (global_position - enemy_position).normalized()
+	bounce_dir.y = 0
+	bounce_dir = bounce_dir.normalized()
+
+	velocity.x = bounce_dir.x * 5
+	velocity.z = bounce_dir.z * 5
+	velocity.y = 5 * jump_hight
 
 func respawn():
 	global_transform.origin = respawn_position
