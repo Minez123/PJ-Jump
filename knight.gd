@@ -4,6 +4,11 @@ extends CharacterBody3D
 @export var can_move_in_air: bool = false
 @export var inf_Ammo = true
 
+@export var shotgun_pellet_scene: PackedScene
+@export var pellets_per_shot := 8
+@export var pellet_speed := 60.0
+@export var pellet_spread_angle := 8.0 # degrees
+
 @export var min_jump_power := 5.0
 @export var max_jump_power := 10.0
 @export var jump_charge_rate := 10.0 
@@ -19,6 +24,11 @@ extends CharacterBody3D
 @export var max_zoom := 0.0
 @export var zoom_speed := 1.0
 @export var zoom_hide_threshold:= 0  # Distance at which the mesh disappears
+@export var zoom_fov := 30.0
+@export var normal_fov := 70.0
+@export var focus_speed := 10.0
+
+var zooming := false
 
 @onready var anim_tree = $AnimationTree
 @onready var anim_state = $AnimationTree.get("parameters/playback")
@@ -28,7 +38,7 @@ extends CharacterBody3D
 @onready var twist_pivot := $TwistPivot
 @onready var pitch_pivot := $TwistPivot/PitchPivot
 @onready var camera := $TwistPivot/PitchPivot/Camera3D
-
+@onready var crosshair: TextureRect = $"../CanvasLayer/TextureRect"
 #UI
 @onready var pause_menu: Node = $PauseMenu  
 @onready var jump_bar := $"../CanvasLayer/JumpPowerBar" 
@@ -63,7 +73,7 @@ var pitch_input := 0.0
 # Shotgun
 @onready var shotgun_ammo_label := $"../CanvasLayer/ShotgunAmmoLabel"
 
-@export var shotgun_knockback_force := 15.0
+@export var shotgun_knockback_force := -15.0
 @export var shotgun_cooldown := 1.5  # Cooldown after 2 shots
 @export var shotgun_recoil_upward := 14.0
 const MAX_SHOTGUN_AMMO := 2
@@ -90,11 +100,23 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and not pause_menu.visible:
 		pause_menu.game_script = self
 		pause_menu.show_menu()
-
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			zooming = event.pressed
 
 func _physics_process(delta: float) -> void:
 	if global_transform.origin.y < fall_limit:
 		respawn()
+	var target_fov = 1
+	# Smooth zoom transition
+	if zooming:
+		target_fov = zoom_fov
+	else:
+		target_fov = normal_fov
+	camera.fov = lerp(camera.fov, target_fov, delta * focus_speed)
+
+
+	crosshair.visible = zooming
 
 	
 	# Camera rotation
@@ -206,27 +228,24 @@ func _physics_process(delta: float) -> void:
 
 
 
-		# Shotgun shoot
 		if Input.is_action_just_pressed("shoot_shotgun") and shotgun_shots_remaining > 0:
 			if not inf_Ammo:
 				shotgun_shots_remaining -= 1
 			shotgun_sfx.play()
 
-			# Recoil knockback 
-			var shoot_dir = camera.global_transform.basis.z
-			shoot_dir = shoot_dir.normalized()
-
-
+			# Knockback
+			var shoot_dir = -camera.global_transform.basis.z.normalized()
 			shotgun_knockback = shoot_dir * shotgun_knockback_force
 			shotgun_knockback.y += shotgun_recoil_upward
-
-
 			velocity = shotgun_knockback
-			shotgun_knockback = Vector3.ZERO  # Apply only once
+			shotgun_knockback = Vector3.ZERO
+
+			# Spawn pellets
+			fire_shotgun(shoot_dir)
+			
+			
+			
 		shotgun_ammo_label.text = "Ammo: %d" % shotgun_shots_remaining
-
-
-
 		move_and_slide()
 				
 				
@@ -269,7 +288,30 @@ func trigger_enemy_bounce(enemy_position: Vector3):
 	velocity.x = bounce_dir.x * 5
 	velocity.z = bounce_dir.z * 5
 	velocity.y = 5 * jump_hight
+	
+func fire_shotgun(shoot_dir: Vector3):
+	for i in range(pellets_per_shot):
+		var pellet = shotgun_pellet_scene.instantiate()
+		get_parent().add_child(pellet)
 
+		pellet.global_transform.origin = twist_pivot.global_transform.origin + Vector3(0, 2, 0)
+
+		# Spread — randomize angles
+		var spread = deg_to_rad(pellet_spread_angle)
+		var random_rot = Basis(
+			Vector3.UP, randf_range(-spread, spread)
+		) * Basis(
+			Vector3.RIGHT, randf_range(-spread, spread)
+		)
+
+		var pellet_dir = (random_rot * shoot_dir).normalized()
+
+		# Give the pellet its velocity
+		if pellet.has_method("set_velocity"):
+			pellet.set_velocity(pellet_dir * pellet_speed)
+		elif pellet is RigidBody3D:
+			pellet.linear_velocity = pellet_dir * pellet_speed
+			
 func respawn():
 	global_transform.origin = respawn_position
 	velocity = Vector3.ZERO 

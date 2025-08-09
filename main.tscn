@@ -1,11 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://cawyxa2honk7g"]
+[gd_scene load_steps=16 format=3 uid="uid://cawyxa2honk7g"]
 
+[ext_resource type="Texture2D" uid="uid://7n4p1anjoe51" path="res://crosshair.png" id="1_272bh"]
 [ext_resource type="Script" uid="uid://pcuig3mu46ea" path="res://node_3d.gd" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bf74y3ib587a2" path="res://collectible.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c75ubi4gtnumo" path="res://struc.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://d3khx0wf0c0s" path="res://NavLevel.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://d0qdslovi1xcb" path="res://PJ-Jump/Fantasy-Free-Godot-617145cb2c96a443e2a61973b939ee0221364a3a/Fantasy_Free/assets/models_fbx/bag_001.fbx" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://cipq8ioqu1v4m" path="res://knight1.tscn" id="6_272bh"]
+[ext_resource type="PackedScene" uid="uid://d3vvp5opor4wj" path="res://bullet.tscn" id="8_5vw27"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -22,6 +24,8 @@ glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ig7tw"]
 albedo_color = Color(0, 0.298039, 1, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5vw27"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0xm2m"]
 size = Vector3(10, 10, 1)
@@ -68,6 +72,21 @@ offset_top = 10.0
 offset_right = 749.0
 offset_bottom = 33.0
 
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+top_level = true
+material = SubResource("CanvasItemMaterial_5vw27")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_272bh")
+expand_mode = 1
+stretch_mode = 3
+
 [node name="Platform_Gen" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.602, -2, 15.142)
 script = ExtResource("2_0xm2m")
@@ -112,3 +131,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5576, 2.77277, 9.86035)
 
 [node name="Knight" parent="." groups=["Player"] instance=ExtResource("6_272bh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.1539, 2.77277, 19.4029)
+shotgun_pellet_scene = ExtResource("8_5vw27")

@@ -66,15 +66,15 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 
 [node name="Skeleton3D" parent="Sketchfab_model/8f4b526ad5bb40e8a038ee6183f7246d_fbx/Object_2/RootNode/Object_4" index="0"]
 bones/2/position = Vector3(0, 9.45117, -2.22862)
-bones/3/position = Vector3(0, 0.188223, 14.8254)
-bones/3/rotation = Quaternion(0.112614, 0, 0, 0.993639)
-bones/3/scale = Vector3(1.03104, 1, 0.951711)
-bones/4/position = Vector3(0, 0.215076, 16.2443)
-bones/4/rotation = Quaternion(0.112623, 0, 0, 0.993638)
-bones/4/scale = Vector3(1.03104, 1, 0.951711)
-bones/5/position = Vector3(0, 0.26177, 15.1317)
-bones/5/rotation = Quaternion(0.0421759, 0, 0, 0.99911)
-bones/5/scale = Vector3(1.03104, 1.00166, 0.94918)
+bones/3/position = Vector3(0, 0.157962, 14.9608)
+bones/3/rotation = Quaternion(0.123581, 0, 0, 0.992335)
+bones/3/scale = Vector3(1.02767, 1, 0.962567)
+bones/4/position = Vector3(0, 0.184813, 16.3797)
+bones/4/rotation = Quaternion(0.123588, 0, 0, 0.992334)
+bones/4/scale = Vector3(1.02767, 1, 0.962568)
+bones/5/position = Vector3(0, 0.214024, 15.269)
+bones/5/rotation = Quaternion(0.0520813, 0, 0, 0.998643)
+bones/5/scale = Vector3(1.02767, 1.00186, 0.960108)
 
 [node name="Object_7" parent="Sketchfab_model/8f4b526ad5bb40e8a038ee6183f7246d_fbx/Object_2/RootNode/Object_4/Skeleton3D" index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_ppcr1")

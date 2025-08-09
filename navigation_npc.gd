@@ -1,10 +1,12 @@
 extends CharacterBody3D
 
 @export var speed := 4.0
+@export var health := 50
 @onready var agent := $NavigationAgent3D
 @onready var detect_area := $DetectArea 
 @onready var anim_tree = $Slime/AnimationTree
 @onready var anim_state = $Slime/AnimationTree.get("parameters/playback")
+@export var collectible_scene: PackedScene
 var should_move: bool = false
 var player: Node3D
 @export var hit_recover_time: float = 0.5
@@ -66,13 +68,25 @@ func _physics_process(delta):
 		move_and_slide()
 
 		
-		
+
+
+
+func take_damage(amount: int):
+	if collectible_scene:
+		var collectible_instance = collectible_scene.instantiate()
+		collectible_instance.global_transform = self.global_transform
+		get_parent().add_child(collectible_instance)
+	queue_free()
+
+	
 func _on_body_entered(body):
+
 	if body.is_in_group("Player") and not is_hit:
 		is_hit = true
 		hit_timer = hit_recover_time
 		anim_state.travel("HIT")
 		body.call_deferred("trigger_enemy_bounce", global_position)
+		
 
 		
 		

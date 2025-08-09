@@ -12,7 +12,7 @@ extends Node3D
 @export var NavLevel_scene: PackedScene
 @export var Navscene_spawn_chance: float = 0.2  #
 
-var jump_stats = get_max_jump_distance(9.0,2.0, 9.8 * 2.0, 8.0) #jump_power: float, jump_hight: float, gravity: float, move_speed: float
+var jump_stats = get_max_jump_distance(9.0,2.0, 9.8 * 2.0) #jump_power: float, jump_hight: float, gravity: float
 var max_jump_distance = jump_stats["horizontal"]
 var max_vertical_step = jump_stats["vertical"]
 var rng := RandomNumberGenerator.new()
@@ -181,7 +181,7 @@ func spawn_platform(pos: Vector3) -> void:
 					spawn_platform(bridge_pos)
 
 
-func get_max_jump_distance(jump_power: float, jump_hight: float, gravity: float, move_speed: float) -> Dictionary:
+func get_max_jump_distance(jump_power: float, jump_hight: float, gravity: float) -> Dictionary:
 	var v = jump_power * jump_hight
 	var g = gravity
 	var t = (2 * v) / g  # time in air
