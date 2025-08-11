@@ -74,9 +74,22 @@ func _physics_process(delta):
 func take_damage(amount: int):
 	if collectible_scene:
 		var collectible_instance = collectible_scene.instantiate()
-		collectible_instance.global_transform = self.global_transform
-		get_parent().add_child(collectible_instance)
+
+		# Add it to the same top-level (nav_level) before positioning
+		var nav_level = get_tree().get_root().get_node(".")
+		nav_level.add_child(collectible_instance)
+
+		# Now set position in world space
+		collectible_instance.global_position = global_position 
 	queue_free()
+
+
+func drop_collectible():
+	if collectible_scene:
+		var collectible_instance = collectible_scene.instantiate()
+		# Set collectible position to slime position
+		collectible_instance.global_position = global_position + Vector3(0, 0.5, 0)
+		get_parent().add_child(collectible_instance)
 
 	
 func _on_body_entered(body):
