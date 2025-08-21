@@ -2,7 +2,7 @@ extends Node3D
 
 #can custom
 @export var platform_count: int = 50
-@export var spacing_min: Vector3 = Vector3(-10, 1, -10)
+@export var spacing_min: Vector3 = Vector3(10, 0, 10)
 @export var spacing_max: Vector3 = Vector3(10, 2, 10)
 @export var custom_seed: int = -1  # -1 means random seed 
 @export var collectible_scene: PackedScene
@@ -11,6 +11,7 @@ extends Node3D
 @export var scene_spawn_chance: float = 0.2  #
 @export var NavLevel_scene: PackedScene
 @export var Navscene_spawn_chance: float = 0.2  #
+@export var platform_scene: PackedScene
 
 var jump_stats = get_max_jump_distance(9.0,2.0, 9.8 * 2.0) #jump_power: float, jump_hight: float, gravity: float
 var max_jump_distance = jump_stats["horizontal"]
@@ -18,7 +19,10 @@ var max_vertical_step = jump_stats["vertical"]
 var rng := RandomNumberGenerator.new()
 var last_platform_pos: Vector3 = Vector3.ZERO  # to track for nav-level bridging
 var spawned_positions: Array[Vector3] = []
-
+var platform_size: Vector3
+var struc_size: Vector3
+var nav_size: Vector3
+var last_spawned_size: Vector3 = Vector3.ZERO
 var platforms_created = 0
 var batch_phase = 0  # 0 = green batch, 1 = orange batch
 
@@ -27,158 +31,164 @@ func _ready():
 		custom_seed = Time.get_unix_time_from_system()
 	rng.seed = custom_seed
 	$CanvasLayer/SeedLabel.text = "Seed: %d" % custom_seed
+	platform_size = get_scene_size(platform_scene)
+	struc_size = get_scene_size(struc_scene)
+	nav_size = get_scene_size(NavLevel_scene)
+
+	print("Platform size:", platform_size)
+	print("Structure size:", struc_size)
+	print("Nav size:", nav_size)
+
 
 	generate_platform_batch(Vector3.ZERO)
 
 func generate_platform_batch(start_position: Vector3):
-	var last_position = start_position
+	var last_post = start_position   # this will store the top position
 	var local_created = 0
 
 	while local_created < platform_count:
-		
-		var radius = rng.randf_range(spacing_min.length(), spacing_max.length())
-		var theta = rng.randf_range(0, TAU)       
-		var phi = rng.randf_range(0, PI/2)          
+		var offset = get_random_offset(platform_size, 1.0)
+		var next_position = last_post + offset   # use top position
 
-		var offset = Vector3(
-			radius * sin(phi) * cos(theta),
-			radius * cos(phi),
-			radius * sin(phi) * sin(theta)
-		)
+		var vertical_distance = abs(next_position.y - last_post.y)
+		var total_distance = last_post.distance_to(next_position)
 
-		var next_position = last_position + offset
+		var horizontal_vector = Vector3(next_position.x, last_post.y, next_position.z)
+		var horizontal_distance = last_post.distance_to(horizontal_vector)
 
-
-		var vertical_distance = abs(next_position.y - last_position.y)
-		var total_distance = last_position.distance_to(next_position)
-
-
-
-		# Reject if vertical or flat distance exceeds what player can reach
-		var horizontal_vector = Vector3(next_position.x, last_position.y, next_position.z)
-		var horizontal_distance = last_position.distance_to(horizontal_vector)
-
-		if vertical_distance > max_vertical_step or horizontal_distance > max_jump_distance:
-			continue  # skip this platform placement and try again
-			var steps = ceil(total_distance / max_jump_distance)
-
-			for j in range(1, int(steps)):
-				var t = float(j) / steps
-				var step_pos = last_position.lerp(next_position, t)
-				step_pos.y = last_position.y
-				spawn_platform(step_pos)
-				platforms_created += 1
-				local_created += 1
-				if local_created >= platform_count:
-					break
+		#if vertical_distance > max_vertical_step or horizontal_distance > max_jump_distance:
+			#var steps = ceil(total_distance / max_jump_distance)
+			#for j in range(1, int(steps)):
+				#var t = float(j) / steps
+				#var step_pos = last_post.lerp(next_position, t)
+				#step_pos.y = last_post.y
+				#last_post = spawn_platform(step_pos)  # update with top position
+				#platforms_created += 1
+				#local_created += 1
+				#if local_created >= platform_count:
+					#break
+			#continue  
 
 		if local_created < platform_count:
-			spawn_platform(next_position)
+			last_post = spawn_platform(next_position)  # update with top position
 			platforms_created += 1
 			local_created += 1
-			last_position = next_position
-			last_platform_pos = next_position
+			last_platform_pos = last_post
 
 		await get_tree().process_frame
 
 	# After finishing first batch
 	if batch_phase == 0:
 		batch_phase = 1
-		await get_tree().create_timer(0.2).timeout  # small pause
-		var upward_start = last_platform_pos + Vector3(0, 0, 0)
-		generate_platform_batch(upward_start)
+		await get_tree().create_timer(0.2).timeout
+		generate_platform_batch(last_platform_pos)
 
 
-
-
-
-
-
-func spawn_platform(pos: Vector3) -> void:
-	var platform_size = Vector3(5, 0.5, 5)
+# === Spawn a single platform batch object ===
+func spawn_platform(pos: Vector3) -> Vector3:
+	# Avoid overlap
 	for existing_pos in spawned_positions:
 		if pos.distance_to(existing_pos) < 2.0:
-			return 
-
+			return pos
 	spawned_positions.append(pos)
 
-	# First check: will structure spawn?
-	var spawn_structure = rng.randf() < scene_spawn_chance and struc_scene
+	var top_pos: Vector3
+	var current_size: Vector3
 
-	if spawn_structure:
-		var structure = struc_scene.instantiate()
-		structure.scale = Vector3(1, 1, 1)
-		structure.position = pos
-		add_child(structure)
-		return  
-
-	# Now continue with platform spawn if no structure is placed
-	var mesh_instance = MeshInstance3D.new()
-	mesh_instance.mesh = BoxMesh.new()
-	mesh_instance.mesh.size = platform_size
-	mesh_instance.transform.origin = pos
-	mesh_instance.rotation.y = rng.randf_range(0, TAU)
-
-	var material = StandardMaterial3D.new()
-	if batch_phase == 0:
-		material.albedo_color = Color.GREEN
+	if rng.randf() < scene_spawn_chance and struc_scene:
+		var result = spawn_structure(pos)
+		top_pos = result[0]
+		current_size = result[1]
 	else:
-		material.albedo_color = Color.ORANGE
+		var result = spawn_normal_platform(pos, last_spawned_size)
+		top_pos = result[0]
+		current_size = result[1]
 
-	mesh_instance.material_override = material
+	last_spawned_size = current_size
+
+	# Spawn collectible slightly above the top of this object
+	spawn_collectible(top_pos, 0.0)
+
+	# Spawn nav-level if in batch phase 1
+	if batch_phase == 1 and rng.randf() < Navscene_spawn_chance and NavLevel_scene:
+		spawn_nav_level(top_pos, current_size)
+
+	return top_pos
 
 
-	var static_body = StaticBody3D.new()
-	var collision = CollisionShape3D.new()
-	collision.shape = BoxShape3D.new()
-	collision.shape.size = platform_size
-	static_body.add_child(collision)
-	mesh_instance.add_child(static_body)
-	add_child(mesh_instance)
 
-	await get_tree().process_frame
 
-	# Spawn collectible
-	if rng.randf() < item_spawn_chance and collectible_scene:
+# === Spawn a normal platform ===
+func spawn_normal_platform(pos: Vector3, last_size: Vector3) -> Array:
+	var platform_instance = platform_scene.instantiate()
+	var platform_pos = pos
+
+
+	platform_instance.position = platform_pos
+	platform_instance.rotation.y = rng.randf_range(0, TAU)
+
+	# Material recolor
+	var mesh_instance = platform_instance.get_node_or_null("MeshInstance3D/square_forest_detail") as MeshInstance3D
+	if mesh_instance:
+		var mat = mesh_instance.mesh.surface_get_material(0)
+		if mat:
+			mat = mat.duplicate()
+			if batch_phase != 0:
+				mat.albedo_color = Color.ORANGE
+			mesh_instance.set_surface_override_material(0, mat)
+
+	add_child(platform_instance)
+
+	var top_pos = Vector3(platform_pos.x, platform_pos.y + platform_size.y, platform_pos.z)
+	return [top_pos, platform_size]
+
+
+# === Spawn a structure ===
+func spawn_structure(pos: Vector3) -> Array:
+	var instance = struc_scene.instantiate()
+	instance.position = pos
+	add_child(instance)
+
+	var top_pos = Vector3(pos.x, pos.y + struc_size.y, pos.z)
+	return [top_pos, struc_size]
+
+
+# === Spawn collectible ===
+func spawn_collectible(top_pos: Vector3, offset: float ) -> void:
+	if collectible_scene and rng.randf() < item_spawn_chance:
 		var collectible = collectible_scene.instantiate()
-		collectible.position = pos + Vector3(0, platform_size.y / 2 + 0.5, 0)
+		collectible.position = Vector3(top_pos.x, top_pos.y + offset, top_pos.z)
 		add_child(collectible)
 
-	# Spawn nav level
-	if batch_phase == 1 and rng.randf() < Navscene_spawn_chance and NavLevel_scene:
-		var offset = Vector3(
-			rng.randf_range(-80, 80),
-			rng.randf_range(0, 0),
-			rng.randf_range(-80, 80)
-		)
 
-		if offset.length() < 40:
-			offset = offset.normalized() * 40
+# === Spawn nav-level with bridging ===
+func spawn_nav_level(pos: Vector3, parent_size: Vector3) -> void:
+	var nav_pos = pos + get_random_offset(nav_size, 1.0, parent_size.length() + 1.0)
+	var nav_instance = NavLevel_scene.instantiate()
+	nav_instance.position = nav_pos
+	add_child(nav_instance)
 
-		var nav_pos = pos + offset
-		var nav_structure = NavLevel_scene.instantiate()
-		nav_structure.scale = Vector3(1, 1, 1)
-		nav_structure.position = nav_pos
-		add_child(nav_structure)
+	# Bridge if distance too far
+	var distance = pos.distance_to(nav_pos)
+	if distance > max_jump_distance:
+		var steps = ceil(distance / max_jump_distance)
+		for i in range(1, int(steps)):
+			var t = float(i) / steps
+			var bridge_pos = pos.lerp(nav_pos, t)
+			var too_close := false
+			for existing_pos in spawned_positions:
+				if bridge_pos.distance_to(existing_pos) < 5.0:
+					too_close = true
+					break
+			if not too_close and batch_phase == 1:
+				spawn_normal_platform(bridge_pos, parent_size)
 
 
-		# Bridge with platforms if too far
-		var distance = pos.distance_to(nav_pos)
-		if distance > max_jump_distance:
-			var steps = ceil(distance / max_jump_distance)
-			for i in range(1, int(steps)):
-				var t = float(i) / steps
-				var bridge_pos = pos.lerp(nav_pos, t)
-				bridge_pos.y = pos.y  # flatten the path
+		
 
-				# Only spawn if not overlapping
-				var too_close := false
-				for existing_pos in spawned_positions:
-					if bridge_pos.distance_to(existing_pos) < 5.0:
-						too_close = true
-						break
-				if not too_close:
-					spawn_platform(bridge_pos)
+
+
+
 
 
 func get_max_jump_distance(jump_power: float, jump_hight: float, gravity: float) -> Dictionary:
@@ -192,5 +202,84 @@ func get_max_jump_distance(jump_power: float, jump_hight: float, gravity: float)
 		"vertical": vertical_distance
 	}
 
+
+# Apply a Transform3D to an AABB
+func aabb_transformed(aabb: AABB, transform: Transform3D) -> AABB:
+	var corners = [
+		aabb.position,
+		aabb.position + Vector3(aabb.size.x, 0, 0),
+		aabb.position + Vector3(0, aabb.size.y, 0),
+		aabb.position + Vector3(0, 0, aabb.size.z),
+		aabb.position + Vector3(aabb.size.x, aabb.size.y, 0),
+		aabb.position + Vector3(0, aabb.size.y, aabb.size.z),
+		aabb.position + Vector3(aabb.size.x, 0, aabb.size.z),
+		aabb.position + aabb.size
+	]
+
+	var new_aabb = AABB(corners[0], Vector3.ZERO)
+	for corner in corners:
+		var world_corner = transform * corner  # Apply transform
+		new_aabb = new_aabb.merge(AABB(world_corner, Vector3.ZERO))
+
+	return new_aabb
+
+# Recursively collect all MeshInstance3D AABBs transformed into world space
+func collect_mesh_aabb(node: Node, parent_transform: Transform3D) -> AABB:
+	var total_aabb = AABB(Vector3.ZERO, Vector3.ZERO)
+	var first = true
+
+	var current_transform = parent_transform
+	if node is Node3D:
+		current_transform = parent_transform * node.transform
+
+	if node is MeshInstance3D and node.mesh:
+		var mesh_aabb = node.mesh.get_aabb()
+		var world_aabb = aabb_transformed(mesh_aabb, current_transform)
+		total_aabb = world_aabb
+		first = false
+
+	for child in node.get_children():
+		var child_aabb = collect_mesh_aabb(child, current_transform)
+		if child_aabb.size != Vector3.ZERO:
+			if first:
+				total_aabb = child_aabb
+				first = false
+			else:
+				total_aabb = total_aabb.merge(child_aabb)
+
+	return total_aabb
+
+
+# Get the dynamic size of a PackedScene
+func get_scene_size(scene: PackedScene) -> Vector3:
+	if not scene:
+		return Vector3.ONE
+
+	var instance = scene.instantiate()
+	var aabb = collect_mesh_aabb(instance, Transform3D.IDENTITY)
+	instance.queue_free()
+	return aabb.size
+
+
+# base_size: size of last spawned object
+# scale: maximum multiplier for random distance
+# padding: extra distance to prevent collision
+func get_random_offset(base_size: Vector3, scale: float, padding: float = 2.0) -> Vector3:
+	# Horizontal spread radius (based on platform size & scale)
+	var base_radius = max(base_size.x, base_size.z)
+	var min_radius = base_radius + padding
+	var max_radius = base_radius * scale + padding
+	print(base_size,base_radius)
 	
-	
+	# Pick random horizontal position (big spread in X/Z)
+	var radius = rng.randf_range(min_radius, max_radius)
+	var theta = rng.randf_range(0, TAU)
+	var phi = rng.randf_range(0, PI/2)
+	# Small vertical variation only
+
+
+	return Vector3(
+		radius * cos(theta)*1.2,  # X spread
+		radius * cos(phi),   # Y 
+		radius * sin(theta)*1.2   # Z spread
+	)

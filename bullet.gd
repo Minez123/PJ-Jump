@@ -1,5 +1,5 @@
 extends RigidBody3D
-
+@export var spin_speed := 10.0  # radians per second
 @export var damage := 10
 @export var speed := 60.0
 @export var lifetime := 1.0
@@ -26,15 +26,14 @@ func set_velocity(v: Vector3):
 
 func _physics_process(delta):
 	global_translate(velocity * delta)
+	
 
+		
 func _on_body_entered(body):
 	var target = body
-	# Climb up until we find the parent in the group
-	print(target)
 
 
 	if target and target.is_in_group("AI_NPC"):
-		print("hit slime")
 		if target.has_method("take_damage"):
 			target.take_damage(damage)
 	queue_free()
