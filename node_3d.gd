@@ -7,20 +7,20 @@ extends Node3D
 @export var custom_seed: int = -1  # -1 means random seed 
 @export var collectible_scene: PackedScene
 @export var item_spawn_chance: float = 0.5  #  chance to spawn item
-@export var struc_scene: PackedScene
+@export var plat_up_scene: PackedScene
 @export var scene_spawn_chance: float = 0.2  #
 @export var NavLevel_scene: PackedScene
 @export var Navscene_spawn_chance: float = 0.2  #
 @export var platform_scene: PackedScene
 
-var jump_stats = get_max_jump_distance(9.0,2.0, 9.8 * 2.0) #jump_power: float, jump_hight: float, gravity: float
+var jump_stats = get_max_jump_distance(9.0,1.5, 9.8 * 2.0) #jump_power: float, jump_hight: float, gravity: float
 var max_jump_distance = jump_stats["horizontal"]
 var max_vertical_step = jump_stats["vertical"]
 var rng := RandomNumberGenerator.new()
 var last_platform_pos: Vector3 = Vector3.ZERO  # to track for nav-level bridging
 var spawned_positions: Array[Vector3] = []
 var platform_size: Vector3
-var struc_size: Vector3
+var plat_up_size: Vector3
 var nav_size: Vector3
 var last_spawned_size: Vector3 = Vector3.ZERO
 var platforms_created = 0
@@ -32,11 +32,11 @@ func _ready():
 	rng.seed = custom_seed
 	$CanvasLayer/SeedLabel.text = "Seed: %d" % custom_seed
 	platform_size = get_scene_size(platform_scene)
-	struc_size = get_scene_size(struc_scene)
+	plat_up_size = get_scene_size(plat_up_scene)
 	nav_size = get_scene_size(NavLevel_scene)
 
 	print("Platform size:", platform_size)
-	print("Structure size:", struc_size)
+	print("Structure size:", plat_up_size)
 	print("Nav size:", nav_size)
 
 
@@ -52,22 +52,6 @@ func generate_platform_batch(start_position: Vector3):
 
 		var vertical_distance = abs(next_position.y - last_post.y)
 		var total_distance = last_post.distance_to(next_position)
-
-		var horizontal_vector = Vector3(next_position.x, last_post.y, next_position.z)
-		var horizontal_distance = last_post.distance_to(horizontal_vector)
-
-		#if vertical_distance > max_vertical_step or horizontal_distance > max_jump_distance:
-			#var steps = ceil(total_distance / max_jump_distance)
-			#for j in range(1, int(steps)):
-				#var t = float(j) / steps
-				#var step_pos = last_post.lerp(next_position, t)
-				#step_pos.y = last_post.y
-				#last_post = spawn_platform(step_pos)  # update with top position
-				#platforms_created += 1
-				#local_created += 1
-				#if local_created >= platform_count:
-					#break
-			#continue  
 
 		if local_created < platform_count:
 			last_post = spawn_platform(next_position)  # update with top position
@@ -95,7 +79,7 @@ func spawn_platform(pos: Vector3) -> Vector3:
 	var top_pos: Vector3
 	var current_size: Vector3
 
-	if rng.randf() < scene_spawn_chance and struc_scene:
+	if rng.randf() < scene_spawn_chance and plat_up_scene:
 		var result = spawn_structure(pos)
 		top_pos = result[0]
 		current_size = result[1]
@@ -145,12 +129,12 @@ func spawn_normal_platform(pos: Vector3, last_size: Vector3) -> Array:
 
 # === Spawn a structure ===
 func spawn_structure(pos: Vector3) -> Array:
-	var instance = struc_scene.instantiate()
+	var instance = plat_up_scene.instantiate()
 	instance.position = pos
 	add_child(instance)
 
-	var top_pos = Vector3(pos.x, pos.y + struc_size.y, pos.z)
-	return [top_pos, struc_size]
+	var top_pos = Vector3(pos.x, pos.y + plat_up_size.y, pos.z)
+	return [top_pos, plat_up_size]
 
 
 # === Spawn collectible ===
@@ -164,24 +148,46 @@ func spawn_collectible(top_pos: Vector3, offset: float ) -> void:
 # === Spawn nav-level with bridging ===
 func spawn_nav_level(pos: Vector3, parent_size: Vector3) -> void:
 	var nav_pos = pos + get_random_offset(nav_size, 1.0, parent_size.length() + 1.0)
+	nav_pos.y=pos.y
 	var nav_instance = NavLevel_scene.instantiate()
 	nav_instance.position = nav_pos
 	add_child(nav_instance)
 
-	# Bridge if distance too far
-	var distance = pos.distance_to(nav_pos)
-	if distance > max_jump_distance:
-		var steps = ceil(distance / max_jump_distance)
-		for i in range(1, int(steps)):
-			var t = float(i) / steps
-			var bridge_pos = pos.lerp(nav_pos, t)
-			var too_close := false
-			for existing_pos in spawned_positions:
-				if bridge_pos.distance_to(existing_pos) < 5.0:
-					too_close = true
-					break
-			if not too_close and batch_phase == 1:
-				spawn_normal_platform(bridge_pos, parent_size)
+	# Call bridge logic
+	if batch_phase == 1:
+		spawn_bridge(pos, nav_pos, parent_size,nav_size)
+
+
+
+func spawn_bridge(start_pos: Vector3, end_pos: Vector3, start_size: Vector3, end_size: Vector3) -> void:
+	# Find direction from start to end
+	var dir = (end_pos - start_pos).normalized()
+
+	# Offset each position toward its nearest edge
+	var adjusted_start = start_pos + dir * (max(start_size.x, start_size.z) * 0.5)
+	var adjusted_end   = end_pos - dir * (max(end_size.x, end_size.z) * 0.5)
+
+	var distance = adjusted_start.distance_to(adjusted_end)
+	if distance <= max_jump_distance:
+		return  # No bridge needed
+
+	var steps = ceil(distance / max_jump_distance)
+	for i in range(1, int(steps)):
+		var t = float(i) / steps
+		var bridge_pos = adjusted_start.lerp(adjusted_end, t)
+
+		var too_close := false
+		for existing_pos in spawned_positions:
+			if bridge_pos.distance_to(existing_pos) < 5.0:
+				too_close = true
+				break
+
+		if not too_close:
+			spawn_normal_platform(bridge_pos, start_size)
+
+
+
+
 
 
 		
@@ -261,25 +267,22 @@ func get_scene_size(scene: PackedScene) -> Vector3:
 	return aabb.size
 
 
-# base_size: size of last spawned object
-# scale: maximum multiplier for random distance
-# padding: extra distance to prevent collision
-func get_random_offset(base_size: Vector3, scale: float, padding: float = 2.0) -> Vector3:
+
+func get_random_offset(base_size: Vector3, scaleoff: float, padding: float = 2.0) -> Vector3:
 	# Horizontal spread radius (based on platform size & scale)
 	var base_radius = max(base_size.x, base_size.z)
 	var min_radius = base_radius + padding
-	var max_radius = base_radius * scale + padding
-	print(base_size,base_radius)
+	var max_radius = base_radius * scaleoff + padding
 	
-	# Pick random horizontal position (big spread in X/Z)
+	# Random angle + radius for XZ spread
 	var radius = rng.randf_range(min_radius, max_radius)
 	var theta = rng.randf_range(0, TAU)
-	var phi = rng.randf_range(0, PI/2)
-	# Small vertical variation only
 
+	# Random Y, but limited
+	var y_offset = rng.randf_range(0.5, max_vertical_step)
 
 	return Vector3(
-		radius * cos(theta)*1.2,  # X spread
-		radius * cos(phi),   # Y 
-		radius * sin(theta)*1.2   # Z spread
+		radius * cos(theta) * 1.2,  # X spread
+		y_offset,                   # ✅ capped Y
+		radius * sin(theta) * 1.2   # Z spread
 	)

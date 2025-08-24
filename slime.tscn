@@ -65,15 +65,16 @@ transitions = ["Slime_DEAD", "End", SubResource("AnimationNodeStateMachineTransi
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Sketchfab_model/8f4b526ad5bb40e8a038ee6183f7246d_fbx/Object_2/RootNode/Object_4" index="0"]
-bones/3/position = Vector3(0, 0.266917, 14.4733)
-bones/3/rotation = Quaternion(0.12273, 0, 0, 0.99244)
-bones/3/scale = Vector3(1.04119, 1, 0.937361)
-bones/4/position = Vector3(0, 0.293767, 15.8923)
-bones/4/rotation = Quaternion(0.122745, 0, 0, 0.992438)
-bones/4/scale = Vector3(1.04119, 1, 0.937362)
-bones/5/position = Vector3(0, 0.397338, 14.7587)
-bones/5/rotation = Quaternion(0.0523338, 0, 0, 0.99863)
-bones/5/scale = Vector3(1.04119, 1.00281, 0.933723)
+bones/2/position = Vector3(0, 9.45117, -2.22862)
+bones/3/position = Vector3(0, 0.0981146, 15.2285)
+bones/3/rotation = Quaternion(0.104978, 0, 0, 0.994475)
+bones/3/scale = Vector3(1.01685, 1, 0.973055)
+bones/4/position = Vector3(0, 0.124964, 16.6475)
+bones/4/rotation = Quaternion(0.104982, 0, 0, 0.994474)
+bones/4/scale = Vector3(1.01685, 1, 0.973055)
+bones/5/position = Vector3(0, 0.0273041, 15.5403)
+bones/5/rotation = Quaternion(0.0342903, 0, 0, 0.999412)
+bones/5/scale = Vector3(1.01685, 1.00081, 0.971631)
 
 [node name="Object_7" parent="Sketchfab_model/8f4b526ad5bb40e8a038ee6183f7246d_fbx/Object_2/RootNode/Object_4/Skeleton3D" index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_ppcr1")

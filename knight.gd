@@ -83,6 +83,7 @@ var shotgun_knockback := Vector3.ZERO
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	add_to_group("player")
 	original_gravity = GRAVITY  # Store the original gravity value
 	
 
@@ -266,7 +267,7 @@ func _physics_process(delta: float) -> void:
 
 		if not was_on_floor and is_on_floor():
 			landing_sfx.play()
-			landed_timer = 0.5 
+			landed_timer = 0.0 
 			anim_tree.set("parameters/conditions/grounded",true)
 			anim_tree.set("parameters/conditions/jumping",false)
 			jump_bar.value = 0

@@ -93,7 +93,7 @@ stretch_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.602, -2, 15.142)
 script = ExtResource("2_0xm2m")
 collectible_scene = ExtResource("3_h2yge")
-struc_scene = ExtResource("4_1bvp3")
+plat_up_scene = ExtResource("4_1bvp3")
 NavLevel_scene = ExtResource("5_lquwl")
 platform_scene = ExtResource("10_4c57u")
 
