@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @export var mouse_sensitivity := 0.0015
 @export var can_move_in_air: bool = false
-@export var inf_Ammo = true
+@export var inf_Ammo = false
 
 @export var shotgun_pellet_scene: PackedScene
 @export var pellets_per_shot := 8
@@ -38,10 +38,12 @@ var zooming := false
 @onready var twist_pivot := $TwistPivot
 @onready var pitch_pivot := $TwistPivot/PitchPivot
 @onready var camera := $TwistPivot/PitchPivot/Camera3D
-@onready var crosshair: TextureRect = $"../CanvasLayer/TextureRect"
+@onready var crosshair: TextureRect = $"../HUD/TextureRect"
 #UI
 @onready var pause_menu: Node = $PauseMenu  
-@onready var jump_bar := $"../CanvasLayer/JumpPowerBar" 
+@onready var jump_bar := $"../HUD/JumpPowerBar" 
+# Shotgun
+@onready var shotgun_ammo_label := $"../HUD/ShotgunAmmoLabel"
 
 #sfx
 @onready var jump_sfx: AudioStreamPlayer2D = $jump_sfx
@@ -70,8 +72,7 @@ const DASH_COOLDOWN := 1.0  # seconds
 var twist_input := 0.0
 var pitch_input := 0.0
 
-# Shotgun
-@onready var shotgun_ammo_label := $"../CanvasLayer/ShotgunAmmoLabel"
+
 
 @export var shotgun_knockback_force := -15.0
 @export var shotgun_cooldown := 1.5  # Cooldown after 2 shots
@@ -230,7 +231,16 @@ func _physics_process(delta: float) -> void:
 
 
 		if Input.is_action_just_pressed("shoot_shotgun") and shotgun_shots_remaining > 0:
-			if not inf_Ammo:
+			var inventory = get_tree().get_first_node_in_group("inventory_ui")
+			var free_shot = false
+			if inventory.has_item("ammo_box") and 15>randf_range(1,100):
+				free_shot = true
+				var popup = get_tree().get_first_node_in_group("item_popup")
+				var item = inventory.get_item("ammo_box")
+				popup.show_item(item["icon"],item["id"],item["desc"],1)
+
+
+			if not inf_Ammo and not free_shot:
 				shotgun_shots_remaining -= 1
 			shotgun_sfx.play()
 
@@ -274,7 +284,6 @@ func _physics_process(delta: float) -> void:
 		was_on_floor = is_on_floor()
 
 func refill_shotgun():
-	if shotgun_shots_remaining < MAX_SHOTGUN_AMMO:
 		shotgun_shots_remaining += 1
 
 func trigger_enemy_bounce(enemy_position: Vector3):

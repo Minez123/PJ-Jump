@@ -95,7 +95,9 @@ func spawn_platform(pos: Vector3) -> Vector3:
 
 	# Spawn nav-level if in batch phase 1
 	if batch_phase == 1 and rng.randf() < Navscene_spawn_chance and NavLevel_scene:
-		spawn_nav_level(top_pos, current_size)
+		var result = spawn_nav_level(top_pos, current_size)
+		top_pos = result[0]
+		current_size = result[1]
 
 	return top_pos
 
@@ -146,7 +148,7 @@ func spawn_collectible(top_pos: Vector3, offset: float ) -> void:
 
 
 # === Spawn nav-level with bridging ===
-func spawn_nav_level(pos: Vector3, parent_size: Vector3) -> void:
+func spawn_nav_level(pos: Vector3, parent_size: Vector3) ->  Array:
 	var nav_pos = pos + get_random_offset(nav_size, 1.0, parent_size.length() + 1.0)
 	nav_pos.y=pos.y
 	var nav_instance = NavLevel_scene.instantiate()
@@ -156,6 +158,8 @@ func spawn_nav_level(pos: Vector3, parent_size: Vector3) -> void:
 	# Call bridge logic
 	if batch_phase == 1:
 		spawn_bridge(pos, nav_pos, parent_size,nav_size)
+	var top_pos = Vector3(nav_pos.x, nav_pos.y + nav_size.y, nav_pos.z)
+	return [top_pos, nav_size]
 
 
 

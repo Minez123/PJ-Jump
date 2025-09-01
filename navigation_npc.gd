@@ -91,14 +91,19 @@ func drop_collectible():
 		collectible_instance.global_position = global_position + Vector3(0, 0.5, 0)
 		get_parent().add_child(collectible_instance)
 
-	
+var is_hostile: bool = true
 func _on_body_entered(body):
-
+	var inventory = get_tree().get_first_node_in_group("inventory_ui")
+	if inventory and inventory.has_item("slime_jelly"):
+		is_hostile = false
+	else:
+		is_hostile = true
 	if body.is_in_group("Player") and not is_hit:
 		is_hit = true
 		hit_timer = hit_recover_time
 		anim_state.travel("HIT")
-		body.call_deferred("trigger_enemy_bounce", global_position)
+		if is_hostile:
+			body.call_deferred("trigger_enemy_bounce", global_position)
 		
 
 		

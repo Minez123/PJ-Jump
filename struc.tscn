@@ -141,7 +141,7 @@ transform = Transform3D(1, 0, 0, 0, 2.29611, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_jl63p")
 
 [node name="AnimatableBody3D" type="AnimatableBody3D" parent="."]
-transform = Transform3D(0.999965, 0.00812666, 1.5805e-07, -0.00812666, 0.999964, -1.20834e-07, -1.59026e-07, 1.19546e-07, 1, -0.000661582, -0.000621471, -2.19096e-08)
+transform = Transform3D(0.999965, 0.00812666, 1.5805e-07, -0.00812666, 0.999965, -1.20834e-07, -1.59026e-07, 1.19546e-07, 1, -0.000661537, -0.000621406, -2.19097e-08)
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="AnimatableBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00797821, 0.247463, 0.00238039)
@@ -149,6 +149,7 @@ shape = SubResource("BoxShape3D_mi635")
 
 [node name="square_forest_detail" type="MeshInstance3D" parent="AnimatableBody3D"]
 transform = Transform3D(3, 0, 0, 0, 0.5, 0, 0, 0, 3, 0, 0, 0)
+visibility_range_end = 300.0
 mesh = SubResource("ArrayMesh_ohbbh")
 skeleton = NodePath("")
 

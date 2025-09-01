@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwmbisth7yadx"]
+
+[ext_resource type="PackedScene" uid="uid://c1iaguhb38yd2" path="res://PJ-Jump/-Animated-LowPoly-Slime-228941d20482249abbf064037c4e5ac1906cdf4e/-Animated-LowPoly-Slime-228941d20482249abbf064037c4e5ac1906cdf4e/Jar of jam.glb" id="1_5v87e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8fcw6"]
+albedo_color = Color(0.298423, 0.793269, 1, 1)
+
+[node name="Jar of jam" instance=ExtResource("1_5v87e")]
+
+[node name="Node" parent="." index="0"]
+surface_material_override/1 = SubResource("StandardMaterial3D_8fcw6")
