@@ -1,8 +1,8 @@
-[gd_scene load_steps=13 format=4 uid="uid://c75ubi4gtnumo"]
+[gd_scene load_steps=14 format=4 uid="uid://cyruo4d2x7lxh"]
 
-[ext_resource type="Script" uid="uid://bl04agwohpx1x" path="res://struc.gd" id="1_jl63p"]
+[ext_resource type="Script" uid="uid://dhj0ioxlaw621" path="res://plat_move.gd" id="1_b17rw"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_mi635"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_b17rw"]
 size = Vector3(6, 0.5, 6)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5c71j"]
@@ -15,7 +15,7 @@ resource_name = "BrownDark"
 albedo_color = Color(0.607141, 0.351749, 0.27004, 1)
 roughness = 0.4
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_jl63p"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_nt7j2"]
 _surfaces = [{
 "aabb": AABB(-1, 0.5, -1, 2, 0.5, 2),
 "format": 34896613377,
@@ -41,7 +41,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_ohbbh"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_ypoff"]
 resource_name = "square_forest_detail_gltf_Cube_902"
 _surfaces = [{
 "aabb": AABB(-1, 0.5, -1, 2, 0.5, 2),
@@ -71,16 +71,37 @@ _surfaces = [{
 "vertex_data": PackedByteArray("+/z///v8FdT//wAA////vwAAAAD///+/AwP///v8dLH//wAA////v///AAAAAP+/AAAAAAAA/78AAAAA////vwMD///7/L7TAAAAAP//VNUAAAAAAABU1QMD//8DA3PD+/z//wMD1+7//wAAAABU1f//AAD//1TV+/z///v8udYDA///AwMe7gAAAAAAAP////8AAAAA///7/P//AwPv9P//6eoAAIzf///p6v//89UAAOnq///n1AAA6eoAAJnMAADp6gAAQvn//+nqAABw+v//6er//1vIAADp6v//57g/6OEO///////////r62AgAAD/fwAA/38AAP9/AAD/f27swMBU1VTVVNVU1XvMXcl9J+IkqiqqKqoqqir+PdsSYce6rP+//7//v/+/Farfw5Uo2SfIMpghVd6qzJDSWtEJwwq3wLYjwn70cQnh9G0N")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_jl63p")
+shadow_mesh = SubResource("ArrayMesh_nt7j2")
 
-[sub_resource type="Curve3D" id="Curve3D_me4sq"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_3i853"]
+size = Vector3(6, 0.5, 6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7j2io"]
+
+[sub_resource type="Curve3D" id="Curve3D_haci6"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.076827, 0.0810742, 0, 0, 0, 0, 0, 0, 0, -0.0379183, 10.5461, 0),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.0522308, 0, 0.940175, 0, 0, 0, 0, 0, 0, -0.1567, 0, 25.3847),
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
 
-[sub_resource type="Animation" id="Animation_87k8q"]
+[sub_resource type="Animation" id="Animation_b17rw"]
+resource_name = "platmove_right"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.93),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_ypoff"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -95,8 +116,8 @@ tracks/0/keys = {
 "values": [0.0]
 }
 
-[sub_resource type="Animation" id="Animation_28s1i"]
-resource_name = "platmove_down"
+[sub_resource type="Animation" id="Animation_3i853"]
+resource_name = "platmove_left"
 length = 4.0
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -105,77 +126,57 @@ tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 3.01),
+"times": PackedFloat32Array(0, 3.98),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [1.0, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_jl63p"]
-resource_name = "platmove_up"
-length = 6.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(-0.0333333, 3.46667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_28s1i"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7j2io"]
 _data = {
-&"RESET": SubResource("Animation_87k8q"),
-&"platmove_down": SubResource("Animation_28s1i"),
-&"platmove_up": SubResource("Animation_jl63p")
+&"RESET": SubResource("Animation_ypoff"),
+&"platmove_left": SubResource("Animation_3i853"),
+&"platmove_right": SubResource("Animation_b17rw")
 }
 
-[sub_resource type="BoxMesh" id="BoxMesh_me4sq"]
+[node name="plat_move" type="Node3D"]
+script = ExtResource("1_b17rw")
 
-[node name="plat_up" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 2.29611, 0, 0, 0, 1, 0, 0, 0)
-script = ExtResource("1_jl63p")
+[node name="ABody3D" type="AnimatableBody3D" parent="."]
+transform = Transform3D(-0.999991, 0, 0.00427379, 0, 1, 0, -0.00427379, 0, -0.999991, -0.0522308, 0, 0.940175)
 
-[node name="AnimatableBody3D" type="AnimatableBody3D" parent="."]
-transform = Transform3D(0.999964, 0.00812665, 1.58049e-07, -0.00812665, 0.999964, -1.20834e-07, -1.59026e-07, 1.19546e-07, 1, -0.000661619, -0.000621321, -2.19096e-08)
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="AnimatableBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="ABody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00797821, 0.247463, 0.00238039)
-shape = SubResource("BoxShape3D_mi635")
+shape = SubResource("BoxShape3D_b17rw")
 
-[node name="square_forest_detail" type="MeshInstance3D" parent="AnimatableBody3D"]
+[node name="square_forest_detail" type="MeshInstance3D" parent="ABody3D"]
 transform = Transform3D(3, 0, 0, 0, 0.5, 0, 0, 0, 3, 0, 0, 0)
 visibility_range_end = 300.0
-mesh = SubResource("ArrayMesh_ohbbh")
+mesh = SubResource("ArrayMesh_ypoff")
 skeleton = NodePath("")
-
-[node name="Path3D" type="Path3D" parent="."]
-curve = SubResource("Curve3D_me4sq")
-
-[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(1.20363e-08, 0.999986, -0.00371866, 5.99639e-08, -0.00371866, -0.999986, -1, 1.18143e-08, -6.00078e-08, -0.076827, 0.0810742, 0)
-
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Path3D/PathFollow3D"]
-transform = Transform3D(1.70576e-07, -5.94864e-08, -1, 0.999994, 0.00440808, 1.70312e-07, 0.00440808, -0.999994, 6.02379e-08, 1.79277e-08, 0.0764692, 0.0814123)
-remote_path = NodePath("../../../AnimatableBody3D")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_28s1i")
-}
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(5.91148, 0, 0, 0, 10.7979, 0, 0, 0, 1, 0, 5.47288, 0)
-visible = false
-mesh = SubResource("BoxMesh_me4sq")
 
 [node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1.16269, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00797821, 0.247463, 0.00238039)
-shape = SubResource("BoxShape3D_mi635")
+shape = SubResource("BoxShape3D_3i853")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 30, 0.689459, 2.44342, 12.5315)
+visible = false
+mesh = SubResource("BoxMesh_7j2io")
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_haci6")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(-0.999991, 0, 0.00427379, 0, 1, 0, -0.00427379, 0, -0.999991, -0.0522308, 0, 0.940175)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Path3D/PathFollow3D"]
+remote_path = NodePath("../../../ABody3D")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7j2io")
+}

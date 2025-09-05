@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cawyxa2honk7g"]
+[gd_scene load_steps=28 format=3 uid="uid://cawyxa2honk7g"]
 
 [ext_resource type="Texture2D" uid="uid://7n4p1anjoe51" path="res://crosshair.png" id="1_272bh"]
 [ext_resource type="Script" uid="uid://pcuig3mu46ea" path="res://node_3d.gd" id="2_0xm2m"]
@@ -9,11 +9,17 @@
 [ext_resource type="PackedScene" uid="uid://cipq8ioqu1v4m" path="res://knight1.tscn" id="6_272bh"]
 [ext_resource type="PackedScene" uid="uid://d3vvp5opor4wj" path="res://bullet.tscn" id="8_5vw27"]
 [ext_resource type="PackedScene" uid="uid://bjx6qjt6kt41q" path="res://navigation_npc.tscn" id="9_kek77"]
-[ext_resource type="PackedScene" uid="uid://cnhnvb2yv37y5" path="res://platform.tscn" id="10_4c57u"]
+[ext_resource type="PackedScene" uid="uid://cnhnvb2yv37y5" path="res://PJ-Jump/Platform/platform.tscn" id="10_4c57u"]
 [ext_resource type="Script" uid="uid://cx2of5la0e6uv" path="res://canvas_layer.gd" id="11_efxa6"]
 [ext_resource type="PackedScene" uid="uid://bj3johbul3w2t" path="res://PJ-Jump/Item/Slime_jelly.tscn" id="12_dg77c"]
 [ext_resource type="PackedScene" uid="uid://clmc7nyinhapt" path="res://PJ-Jump/Item/ammo_box.tscn" id="13_ycdy4"]
 [ext_resource type="Script" uid="uid://84tmxldu636e" path="res://item_popup_control.gd" id="14_w48qg"]
+[ext_resource type="PackedScene" uid="uid://4w3py2x8fgph" path="res://PJ-Jump/Platform/slime_platform.tscn" id="15_vivmo"]
+[ext_resource type="PackedScene" uid="uid://bc7wjqwss7bd1" path="res://PJ-Jump/Platform/ice_platform.tscn" id="16_2cqfq"]
+[ext_resource type="PackedScene" uid="uid://budo6ml1l5gc1" path="res://PJ-Jump/Item/ice_boot_item.tscn" id="17_yaehf"]
+[ext_resource type="PackedScene" uid="uid://dy25dq61huqvu" path="res://PJ-Jump/Item/slime_boot.tscn" id="18_074og"]
+[ext_resource type="Script" uid="uid://7y43sl7ui2po" path="res://shop_ui.gd" id="19_cegan"]
+[ext_resource type="PackedScene" uid="uid://cyruo4d2x7lxh" path="res://plat_move.tscn" id="20_82xsv"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -154,9 +160,6 @@ offset_bottom = 40.0
 [node name="Slime_jelly" parent="." instance=ExtResource("12_dg77c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.24008, 5.17074, 24.1904)
 
-[node name="Ammo_box" parent="." instance=ExtResource("13_ycdy4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 3.3, 25.3)
-
 [node name="Popup_UI" type="CanvasLayer" parent="."]
 
 [node name="ItemPopup" type="Control" parent="Popup_UI"]
@@ -194,3 +197,61 @@ layout_mode = 2
 
 [node name="description" type="Label" parent="Popup_UI/ItemPopup/PanelContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="Slime_Platform" parent="." instance=ExtResource("15_vivmo")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, -2.9, 3.998, 31.4923)
+
+[node name="Ice_Platform" parent="." instance=ExtResource("16_2cqfq")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, 8.3, 3.5, 32.7)
+
+[node name="Ice_boot" parent="." instance=ExtResource("17_yaehf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09274, 6.06407, 32.9387)
+
+[node name="Slime_boot" parent="." instance=ExtResource("18_074og")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2092, 5.5524, 31.5673)
+
+[node name="Ammo_box" parent="." instance=ExtResource("13_ycdy4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.27166, 3.98572, 24.789)
+
+[node name="Shop_UI" type="CanvasLayer" parent="."]
+script = ExtResource("19_cegan")
+
+[node name="Panel" type="Panel" parent="Shop_UI"]
+offset_left = 428.0
+offset_top = 3.0
+offset_right = 728.0
+offset_bottom = 84.0
+
+[node name="Icon" type="TextureRect" parent="Shop_UI/Panel"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 4.0
+offset_top = 5.0
+offset_right = 68.0
+offset_bottom = 69.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Shop_UI/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Price" type="Label" parent="Shop_UI/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Description" type="Label" parent="Shop_UI/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="plat_up" parent="." instance=ExtResource("4_1bvp3")]
+transform = Transform3D(1, 0, 0, 0, 2.29611, 0, 0, 0, 1, -6.03036, 6.02657, -13.6564)
+
+[node name="plat_move2" parent="." instance=ExtResource("20_82xsv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.373, 5.63611, -7.86244)
+
+[node name="plat_move" parent="." instance=ExtResource("20_82xsv")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.1285, 4.90665, -7.19905)

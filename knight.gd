@@ -60,6 +60,9 @@ var jump_direction := 0
 var jump_hight := 2
 var landed_timer := 0.0
 
+var current_platform_type = 0
+var platform_factor: float = 1.0
+
 
 var GRAVITY = 9.8 * jump_hight 
 var original_gravity: float  # Store the original gravity value
@@ -80,6 +83,7 @@ var pitch_input := 0.0
 const MAX_SHOTGUN_AMMO := 2
 var shotgun_shots_remaining := MAX_SHOTGUN_AMMO
 var shotgun_knockback := Vector3.ZERO
+
 
 
 func _ready() -> void:
@@ -107,6 +111,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			zooming = event.pressed
 
 func _physics_process(delta: float) -> void:
+	var inventory = get_tree().get_first_node_in_group("inventory_ui")
 	if global_transform.origin.y < fall_limit:
 		respawn()
 	var target_fov = 1
@@ -154,23 +159,42 @@ func _physics_process(delta: float) -> void:
 
 
 
+
+
 		if landed_timer > 0.0:
 			landed_timer -= delta
 
 		
 		# Allow movement if grounded or if air movement is enabled
 		if is_on_floor() or can_move_in_air:
-			anim_tree.set("parameters/conditions/grounded",true)
-			var move_input := Input.get_axis("move_left", "move_right")
-			velocity.x = direction.x * move_speed
-			velocity.z = direction.z * move_speed
-			if move_input != 0:
-				jump_direction = sign(move_input)
+			anim_tree.set("parameters/conditions/grounded", true)
+			var move_input := Vector2(
+				Input.get_axis("move_left", "move_right"),
+				Input.get_axis("move_forward", "move_back")
+			).normalized()
+
+
+			match current_platform_type:
+				0:  # NORMAL
+					velocity.x = direction.x * move_speed
+					velocity.z = direction.z * move_speed
+
+				1:  # STICKY
+					if inventory.has_item("slime_boot"):
+						platform_factor = 1
+					velocity.x = direction.x * move_speed * platform_factor
+					velocity.z = direction.z * move_speed * platform_factor
+
+				2:  # SLIPPERY
+					var target_velocity = direction * move_speed
+					if inventory.has_item("ice_boot"):
+						platform_factor = 1
+					velocity.x = lerp(velocity.x, target_velocity.x, delta * 5.0 * platform_factor)
+					velocity.z = lerp(velocity.z, target_velocity.z, delta * 5.0 * platform_factor)
+
 			
 			# Start charging
 			if Input.is_action_pressed("move_up"): 
-				velocity.x = 0
-				velocity.z = 0
 				charging_jump = true
 				jump_power = min(jump_power + jump_charge_rate * delta, max_jump_power)
 
@@ -191,6 +215,7 @@ func _physics_process(delta: float) -> void:
 				charging_jump = false
 				full_charge_sfx_played = false  
 				velocity.y = jump_power * jump_hight
+
 				# Get camera's forward direction (ignoring vertical tilt)
 				var forward = -twist_pivot.global_transform.basis.z
 				forward.y = 0
@@ -231,7 +256,6 @@ func _physics_process(delta: float) -> void:
 
 
 		if Input.is_action_just_pressed("shoot_shotgun") and shotgun_shots_remaining > 0:
-			var inventory = get_tree().get_first_node_in_group("inventory_ui")
 			var free_shot = false
 			if inventory.has_item("ammo_box") and 15>randf_range(1,100):
 				free_shot = true
@@ -325,3 +349,17 @@ func fire_shotgun(shoot_dir: Vector3):
 func respawn():
 	global_transform.origin = respawn_position
 	velocity = Vector3.ZERO 
+
+func consume_ammo(amount: int) -> void:
+	shotgun_shots_remaining  = max(shotgun_shots_remaining  - amount, 0)
+
+func get_ammo() -> int:
+	return shotgun_shots_remaining 
+
+func set_platform_state(p_type: int, factor: float) -> void:
+	current_platform_type = p_type
+	platform_factor = factor
+
+func reset_platform_state() -> void:
+	current_platform_type = 0
+	platform_factor = 1.0
