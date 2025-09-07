@@ -106,6 +106,7 @@ collectible_scene = ExtResource("3_h2yge")
 plat_up_scene = ExtResource("4_1bvp3")
 NavLevel_scene = ExtResource("5_lquwl")
 platform_scene = ExtResource("10_4c57u")
+plat_side_scene = ExtResource("20_82xsv")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Platform_Gen"]
 

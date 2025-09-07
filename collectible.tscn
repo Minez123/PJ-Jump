@@ -48,16 +48,18 @@ shape = SubResource("SphereShape3D_h2yge")
 stream = ExtResource("2_yciwo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+visibility_range_end = 300.0
 mesh = SubResource("SphereMesh_h1l3x")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.871248, 0.490843, 0, -0.490843, 0.871248, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_8orai")
-visibility_range_end = 50.0
+visibility_range_end = 300.0
 mesh = SubResource("CylinderMesh_yciwo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.177924, 0)
+visibility_range_end = 300.0
 mesh = SubResource("CylinderMesh_oc26g")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

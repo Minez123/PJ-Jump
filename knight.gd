@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @export var mouse_sensitivity := 0.0015
 @export var can_move_in_air: bool = false
-@export var inf_Ammo = false
+@export var inf_Ammo = true
 
 @export var shotgun_pellet_scene: PackedScene
 @export var pellets_per_shot := 8
