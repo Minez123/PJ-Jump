@@ -1,18 +1,19 @@
-[gd_scene load_steps=28 format=3 uid="uid://cawyxa2honk7g"]
+[gd_scene load_steps=35 format=3 uid="uid://cawyxa2honk7g"]
 
 [ext_resource type="Texture2D" uid="uid://7n4p1anjoe51" path="res://crosshair.png" id="1_272bh"]
+[ext_resource type="Script" uid="uid://camty0ert0fe6" path="res://main.gd" id="1_d13ii"]
+[ext_resource type="Shader" uid="uid://crpoheu3tfrgx" path="res://sky.gdshader" id="1_ryguw"]
 [ext_resource type="Script" uid="uid://pcuig3mu46ea" path="res://node_3d.gd" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://dcy75bfyfxwtv" path="res://PJ-Jump/shooting_star_sampler.png" id="3_1u8w0"]
 [ext_resource type="PackedScene" uid="uid://bf74y3ib587a2" path="res://collectible.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c75ubi4gtnumo" path="res://struc.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://d3khx0wf0c0s" path="res://NavLevel.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://d0qdslovi1xcb" path="res://PJ-Jump/Fantasy-Free-Godot-617145cb2c96a443e2a61973b939ee0221364a3a/Fantasy_Free/assets/models_fbx/bag_001.fbx" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://cipq8ioqu1v4m" path="res://knight1.tscn" id="6_272bh"]
+[ext_resource type="PackedScene" uid="uid://b70uqth72pdh" path="res://re_collectible.tscn" id="7_0odxb"]
 [ext_resource type="PackedScene" uid="uid://d3vvp5opor4wj" path="res://bullet.tscn" id="8_5vw27"]
-[ext_resource type="PackedScene" uid="uid://bjx6qjt6kt41q" path="res://navigation_npc.tscn" id="9_kek77"]
 [ext_resource type="PackedScene" uid="uid://cnhnvb2yv37y5" path="res://PJ-Jump/Platform/platform.tscn" id="10_4c57u"]
 [ext_resource type="Script" uid="uid://cx2of5la0e6uv" path="res://canvas_layer.gd" id="11_efxa6"]
-[ext_resource type="PackedScene" uid="uid://bj3johbul3w2t" path="res://PJ-Jump/Item/Slime_jelly.tscn" id="12_dg77c"]
-[ext_resource type="PackedScene" uid="uid://clmc7nyinhapt" path="res://PJ-Jump/Item/ammo_box.tscn" id="13_ycdy4"]
 [ext_resource type="Script" uid="uid://84tmxldu636e" path="res://item_popup_control.gd" id="14_w48qg"]
 [ext_resource type="PackedScene" uid="uid://4w3py2x8fgph" path="res://PJ-Jump/Platform/slime_platform.tscn" id="15_vivmo"]
 [ext_resource type="PackedScene" uid="uid://bc7wjqwss7bd1" path="res://PJ-Jump/Platform/ice_platform.tscn" id="16_2cqfq"]
@@ -20,50 +21,81 @@
 [ext_resource type="PackedScene" uid="uid://dy25dq61huqvu" path="res://PJ-Jump/Item/slime_boot.tscn" id="18_074og"]
 [ext_resource type="Script" uid="uid://7y43sl7ui2po" path="res://shop_ui.gd" id="19_cegan"]
 [ext_resource type="PackedScene" uid="uid://cyruo4d2x7lxh" path="res://plat_move.tscn" id="20_82xsv"]
+[ext_resource type="PackedScene" uid="uid://dga3u1similih" path="res://waterre.tscn" id="22_ryguw"]
+[ext_resource type="PackedScene" uid="uid://chs6oadi6fyef" path="res://goal.tscn" id="25_0odxb"]
+[ext_resource type="PackedScene" uid="uid://crrvknqgg1hu8" path="res://nav_2.tscn" id="26_a6jrf"]
+[ext_resource type="PackedScene" uid="uid://tpmym06j4c5a" path="res://shop.tscn" id="26_lswn8"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
-sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+[sub_resource type="Curve" id="Curve_d13ii"]
+_data = [Vector2(0.00322061, 0), 0.0, 0.0, 0, 0, Vector2(0.162641, 0.912162), 0.0, 0.0, 0, 0, Vector2(0.987118, 0.48443), 0.0, 0.0, 0, 0]
+point_count = 3
 
-[sub_resource type="Sky" id="Sky_ig7tw"]
-sky_material = SubResource("ProceduralSkyMaterial_7dm0k")
+[sub_resource type="CurveTexture" id="CurveTexture_1u8w0"]
+curve = SubResource("Curve_d13ii")
 
-[sub_resource type="Environment" id="Environment_0xm2m"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0odxb"]
+noise_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lswn8"]
+seamless = true
+noise = SubResource("FastNoiseLite_0odxb")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_a6jrf"]
+seamless = true
+noise = SubResource("FastNoiseLite_0odxb")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xuqvo"]
+shader = ExtResource("1_ryguw")
+shader_parameter/player_height = 0.0
+shader_parameter/cloud_shape_sampler = SubResource("NoiseTexture2D_a6jrf")
+shader_parameter/cloud_noise_sampler = SubResource("NoiseTexture2D_lswn8")
+shader_parameter/cloud_curves = SubResource("CurveTexture_1u8w0")
+shader_parameter/clouds_samples = 32
+shader_parameter/shadow_sample = 4
+shader_parameter/clouds_density = 0.4
+shader_parameter/clouds_scale = 1.0
+shader_parameter/clouds_smoothness = 0.03
+shader_parameter/clouds_light_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_shadow_intensity = 0.2
+shader_parameter/high_clouds_sampler = SubResource("NoiseTexture2D_lswn8")
+shader_parameter/high_clouds_density = 0.2
+shader_parameter/top_color = Color(0.34902, 0.588235, 1, 1)
+shader_parameter/bottom_color = Color(0, 0.329412, 0.968627, 1)
+shader_parameter/sun_scatter = Color(0.298039, 0.298039, 0.298039, 1)
+shader_parameter/astro_tint = Color(0.905882, 0.788235, 0.627451, 1)
+shader_parameter/astro_scale = 9.0
+shader_parameter/astro_intensity = 3.0
+shader_parameter/stars_intensity = 0.0
+shader_parameter/shooting_stars_intensity = 0.0
+shader_parameter/shooting_star_sampler = ExtResource("3_1u8w0")
+shader_parameter/shooting_star_tint = Color(0.904771, 0.461136, 0.172578, 1)
+
+[sub_resource type="Sky" id="Sky_qsp4k"]
+sky_material = SubResource("ShaderMaterial_xuqvo")
+
+[sub_resource type="Environment" id="Environment_kq58d"]
 background_mode = 2
-sky = SubResource("Sky_ig7tw")
-tonemap_mode = 2
+sky = SubResource("Sky_qsp4k")
+ambient_light_color = Color(0.564962, 0.564962, 0.564962, 1)
+ambient_light_sky_contribution = 0.0
+tonemap_white = 0.8
 glow_enabled = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ig7tw"]
-albedo_color = Color(0, 0.298039, 1, 1)
+fog_enabled = true
+fog_sky_affect = 0.0
+adjustment_enabled = true
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5vw27"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_0xm2m"]
-size = Vector3(10, 10, 1)
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0xm2m"]
-data = PackedVector3Array(-5, 5, 0.5, 5, 5, 0.5, -5, -5, 0.5, 5, 5, 0.5, 5, -5, 0.5, -5, -5, 0.5, 5, 5, -0.5, -5, 5, -0.5, 5, -5, -0.5, -5, 5, -0.5, -5, -5, -0.5, 5, -5, -0.5, 5, 5, 0.5, 5, 5, -0.5, 5, -5, 0.5, 5, 5, -0.5, 5, -5, -0.5, 5, -5, 0.5, -5, 5, -0.5, -5, 5, 0.5, -5, -5, -0.5, -5, 5, 0.5, -5, -5, 0.5, -5, -5, -0.5, 5, 5, 0.5, -5, 5, 0.5, 5, 5, -0.5, -5, 5, 0.5, -5, 5, -0.5, 5, 5, -0.5, -5, -5, 0.5, 5, -5, 0.5, -5, -5, -0.5, 5, -5, 0.5, 5, -5, -0.5, -5, -5, -0.5)
-
-[node name="main" type="Node3D"]
+[node name="main" type="Node3D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_d13ii")
+player = NodePath("Knight")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_0xm2m")
+environment = SubResource("Environment_kq58d")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 30.3661, 0)
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
-
-[node name="Floor" type="CSGBox3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10.952, -6.042, -1, -11.394)
-use_collision = true
-size = Vector3(31.35, 1, 22.75)
-material = SubResource("StandardMaterial3D_ig7tw")
-
-[node name="platform" type="CSGBox3D" parent="."]
-transform = Transform3D(1.46634, 0, 0, 0, 1, 0, 0, 0, 1.51054, -6.042, 2.27277, 10.45)
-use_collision = true
-size = Vector3(31.35, 1, 22.75)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -100,13 +132,17 @@ expand_mode = 1
 stretch_mode = 3
 
 [node name="Platform_Gen" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.602, -2, 15.142)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.096, 0.5, 15.142)
 script = ExtResource("2_0xm2m")
 collectible_scene = ExtResource("3_h2yge")
+re_collectible_scene = ExtResource("7_0odxb")
 plat_up_scene = ExtResource("4_1bvp3")
 NavLevel_scene = ExtResource("5_lquwl")
+NavLevel2_scene = ExtResource("26_a6jrf")
 platform_scene = ExtResource("10_4c57u")
 plat_side_scene = ExtResource("20_82xsv")
+shop_scene = ExtResource("26_lswn8")
+goal_scene = ExtResource("25_0odxb")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Platform_Gen"]
 
@@ -115,24 +151,6 @@ offset_left = 1011.0
 offset_top = 5.0
 offset_right = 1139.0
 offset_bottom = 28.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.73079, 0)
-mesh = SubResource("BoxMesh_0xm2m")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_0xm2m")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.03052, 16.5268)
-mesh = SubResource("BoxMesh_0xm2m")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D/MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_0xm2m")
 
 [node name="NavigationRegion3D" parent="." instance=ExtResource("5_lquwl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.2152, 3.09587, 11.7534)
@@ -147,9 +165,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5576, 2.77277, 9.86035)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.1539, 2.77277, 19.4029)
 shotgun_pellet_scene = ExtResource("8_5vw27")
 
-[node name="NavigationNPC" parent="." instance=ExtResource("9_kek77")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.728, 11.6744, 29.0428)
-
 [node name="InventoryUI" type="CanvasLayer" parent="." node_paths=PackedStringArray("grid")]
 script = ExtResource("11_efxa6")
 grid = NodePath("Grid")
@@ -157,9 +172,6 @@ grid = NodePath("Grid")
 [node name="Grid" type="GridContainer" parent="InventoryUI"]
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="Slime_jelly" parent="." instance=ExtResource("12_dg77c")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.24008, 5.17074, 24.1904)
 
 [node name="Popup_UI" type="CanvasLayer" parent="."]
 
@@ -211,9 +223,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09274, 6.06407, 32.9387)
 [node name="Slime_boot" parent="." instance=ExtResource("18_074og")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2092, 5.5524, 31.5673)
 
-[node name="Ammo_box" parent="." instance=ExtResource("13_ycdy4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.27166, 3.98572, 24.789)
-
 [node name="Shop_UI" type="CanvasLayer" parent="."]
 script = ExtResource("19_cegan")
 
@@ -248,11 +257,13 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="plat_up" parent="." instance=ExtResource("4_1bvp3")]
-transform = Transform3D(1, 0, 0, 0, 2.29611, 0, 0, 0, 1, -6.03036, 6.02657, -13.6564)
+[node name="Node3D" parent="." instance=ExtResource("22_ryguw")]
 
-[node name="plat_move2" parent="." instance=ExtResource("20_82xsv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.373, 5.63611, -7.86244)
+[node name="shop" parent="." instance=ExtResource("26_lswn8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4, 0.6, -26.3)
 
-[node name="plat_move" parent="." instance=ExtResource("20_82xsv")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.1285, 4.90665, -7.19905)
+[node name="Nav_2" parent="." instance=ExtResource("26_a6jrf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.6, 1.58021, 35.5)
+
+[node name="Platform" parent="." instance=ExtResource("10_4c57u")]
+transform = Transform3D(99, 0, 0, 0, 1, 0, 0, 0, 99, -17.7562, 0, 17.0846)

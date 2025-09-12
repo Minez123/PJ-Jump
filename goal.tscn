@@ -1,13 +1,13 @@
-[gd_scene load_steps=14 format=4 uid="uid://cyruo4d2x7lxh"]
+[gd_scene load_steps=8 format=4 uid="uid://chs6oadi6fyef"]
 
-[ext_resource type="Script" uid="uid://dhj0ioxlaw621" path="res://plat_move.gd" id="1_b17rw"]
+[ext_resource type="Script" uid="uid://ddbic8ttorf7h" path="res://goal.gd" id="1_6k3qi"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_b17rw"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_3i853"]
 size = Vector3(6, 0.5, 6)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5c71j"]
 resource_name = "Green"
-albedo_color = Color(0.283518, 0.735714, 0.552265, 1)
+albedo_color = Color(1, 0.898039, 0, 1)
 roughness = 0.4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tu0bo"]
@@ -73,110 +73,27 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_nt7j2")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_3i853"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_b17rw"]
 size = Vector3(6, 0.5, 6)
 
-[sub_resource type="BoxMesh" id="BoxMesh_7j2io"]
-
-[sub_resource type="Curve3D" id="Curve3D_haci6"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.0522308, 0, 0.940175, 0, 0, 0, 0, 0, 0, -0.1567, 0, 25.3847),
-"tilts": PackedFloat32Array(0, 0)
-}
-point_count = 2
-
-[sub_resource type="Animation" id="Animation_ypoff"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="Animation" id="Animation_3i853"]
-resource_name = "platmove_left"
-length = 4.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 3.98),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_b17rw"]
-resource_name = "platmove_right"
-length = 6.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 3.93),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_7j2io"]
-_data = {
-&"RESET": SubResource("Animation_ypoff"),
-&"platmove_left": SubResource("Animation_3i853"),
-&"platmove_right": SubResource("Animation_b17rw")
-}
-
-[node name="plat_move" type="Node3D"]
-script = ExtResource("1_b17rw")
-
-[node name="ABody3D" type="AnimatableBody3D" parent="."]
-transform = Transform3D(-0.999991, 0, 0.00427379, 0, 1, 0, -0.00427379, 0, -0.999991, -0.0522308, 0, 0.940175)
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="ABody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00797821, 0.247463, 0.00238039)
-shape = SubResource("BoxShape3D_b17rw")
-
-[node name="square_forest_detail" type="MeshInstance3D" parent="ABody3D"]
-transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 3, 0, -0.574414, 0)
-visibility_range_end = 300.0
-mesh = SubResource("ArrayMesh_ypoff")
-skeleton = NodePath("")
+[node name="goal" type="Node3D"]
+script = ExtResource("1_6k3qi")
 
 [node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1.16269, 0, 0, 0, 1, 0, 0, 0.926084)
+transform = Transform3D(1, 0, 0, 0, 1.16269, 0, 0, 0, 1, 0, 0.148456, 0.926084)
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00797821, 0.247463, 0.00238039)
 shape = SubResource("BoxShape3D_3i853")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(6, 0, 0, 0, 2, 0, 0, 0, 30, 0.0237591, -0.0209062, 12.8814)
-visible = false
-mesh = SubResource("BoxMesh_7j2io")
+[node name="square_forest_detail" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.99997, 0, 0.0128214, 0, 1, 0, -0.0128214, 0, -2.99997, -0.0522308, -0.574414, 0.940175)
+visibility_range_end = 300.0
+mesh = SubResource("ArrayMesh_ypoff")
+skeleton = NodePath("")
 
-[node name="Path3D" type="Path3D" parent="."]
-curve = SubResource("Curve3D_haci6")
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
 
-[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(-0.999991, 0, 0.00427379, 0, 1, 0, -0.00427379, 0, -0.999991, -0.0522308, 0, 0.940175)
-
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Path3D/PathFollow3D"]
-remote_path = NodePath("../../../ABody3D")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_7j2io")
-}
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(-0.999991, 0, 0.00427379, 0, 1, 0, -0.00427379, 0, -0.999991, -0.0601988, 0.247463, 0.937761)
+shape = SubResource("BoxShape3D_b17rw")

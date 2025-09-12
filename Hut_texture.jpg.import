@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dv6mt0c1lug32"
-path.s3tc="res://.godot/imported/360_F_281239239_WO4JiC37US1v5RGWvaEQBT6LNvSzywpL.jpg-4f1a99c08b3ffb8852a493e0f519e24d.s3tc.ctex"
+uid="uid://863cpivgg5w0"
+path.s3tc="res://.godot/imported/Hut_texture.jpg-1a88510a741c3091e99e1134866af7c9.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "21a11a583f7ab51eaa6dd97fd70ebd16"
+}
 
 [deps]
 
-source_file="res://360_F_281239239_WO4JiC37US1v5RGWvaEQBT6LNvSzywpL.jpg"
-dest_files=["res://.godot/imported/360_F_281239239_WO4JiC37US1v5RGWvaEQBT6LNvSzywpL.jpg-4f1a99c08b3ffb8852a493e0f519e24d.s3tc.ctex"]
+source_file="res://Hut_texture.jpg"
+dest_files=["res://.godot/imported/Hut_texture.jpg-1a88510a741c3091e99e1134866af7c9.s3tc.ctex"]
 
 [params]
 

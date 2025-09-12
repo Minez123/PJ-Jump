@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 @export var speed := 4.0
-@export var health := 50
+@export var health := 10
 @onready var agent := $NavigationAgent3D
 @onready var detect_area := $DetectArea 
 @onready var anim_tree = $Slime/AnimationTree
@@ -45,8 +45,6 @@ func _physics_process(delta):
 	else:
 		is_active = false
 
-
-
 	if time_passed > UPDATE_INTERVAL and is_active:
 		time_passed = 0
 		agent.target_position = player.global_position
@@ -69,9 +67,19 @@ func _physics_process(delta):
 
 		
 
+func take_damage(amount: int) -> void:
+	health -= amount
+	if health <= 0:
+		var drop = 5
+		if not is_queued_for_deletion():  # Prevent multiple triggers
+			while drop >0:
+				drop_collectible()
+				drop-=1
+			queue_free()
 
 
-func take_damage(amount: int):
+
+func  drop_collectible():
 	if collectible_scene:
 		var collectible_instance = collectible_scene.instantiate()
 
@@ -81,15 +89,6 @@ func take_damage(amount: int):
 
 		# Now set position in world space
 		collectible_instance.global_position = global_position 
-	queue_free()
-
-
-func drop_collectible():
-	if collectible_scene:
-		var collectible_instance = collectible_scene.instantiate()
-		# Set collectible position to slime position
-		collectible_instance.global_position = global_position + Vector3(0, 0.5, 0)
-		get_parent().add_child(collectible_instance)
 
 var is_hostile: bool = true
 func _on_body_entered(body):

@@ -168,12 +168,6 @@ func _physics_process(delta: float) -> void:
 		# Allow movement if grounded or if air movement is enabled
 		if is_on_floor() or can_move_in_air:
 			anim_tree.set("parameters/conditions/grounded", true)
-			var move_input := Vector2(
-				Input.get_axis("move_left", "move_right"),
-				Input.get_axis("move_forward", "move_back")
-			).normalized()
-
-
 			match current_platform_type:
 				0:  # NORMAL
 					velocity.x = direction.x * move_speed
@@ -266,8 +260,10 @@ func _physics_process(delta: float) -> void:
 
 			if not inf_Ammo and not free_shot:
 				shotgun_shots_remaining -= 1
-			shotgun_sfx.play()
 
+			shotgun_sfx.play()
+			charging_jump = false
+			jump_power = 0 
 			# Knockback
 			var shoot_dir = -camera.global_transform.basis.z.normalized()
 			shotgun_knockback = shoot_dir * shotgun_knockback_force
@@ -322,6 +318,8 @@ func trigger_enemy_bounce(enemy_position: Vector3):
 	velocity.x = bounce_dir.x * 5
 	velocity.z = bounce_dir.z * 5
 	velocity.y = 5 * jump_hight
+	charging_jump = false
+	jump_power = 0 
 	
 func fire_shotgun(shoot_dir: Vector3):
 	for i in range(pellets_per_shot):
@@ -345,6 +343,7 @@ func fire_shotgun(shoot_dir: Vector3):
 			pellet.set_velocity(pellet_dir * pellet_speed)
 		elif pellet is RigidBody3D:
 			pellet.linear_velocity = pellet_dir * pellet_speed
+		
 			
 func respawn():
 	global_transform.origin = respawn_position

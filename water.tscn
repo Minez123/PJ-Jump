@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbluud653m0a2"]
+
+[ext_resource type="Shader" uid="uid://dgu64m14ufu3n" path="res://water.gdshader" id="1_qi1wl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7wcun"]
+render_priority = 0
+shader = ExtResource("1_qi1wl")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dcmoc"]
+material = SubResource("ShaderMaterial_7wcun")
+size = Vector2(2000, 2000)
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+visibility_range_end = 300.0
+mesh = SubResource("PlaneMesh_dcmoc")

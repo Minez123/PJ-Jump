@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxfjccshg5q17"]
+
+[ext_resource type="Script" uid="uid://pggmlly8vlou" path="res://waternode.gd" id="1_in0uv"]
+[ext_resource type="PackedScene" uid="uid://bbluud653m0a2" path="res://water.tscn" id="2_xhbfg"]
+
+[node name="waterNode" type="Node3D"]
+script = ExtResource("1_in0uv")
+
+[node name="water" parent="." instance=ExtResource("2_xhbfg")]
+visibility_range_end = 0.0

@@ -1,0 +1,160 @@
+[gd_scene load_steps=14 format=3 uid="uid://tpmym06j4c5a"]
+
+[ext_resource type="Texture2D" uid="uid://dlej2ohjs38g5" path="res://2206_w032_n003_499a_p1_499.jpg" id="1_e7rdd"]
+[ext_resource type="Texture2D" uid="uid://dv6mt0c1lug32" path="res://360_F_281239239_WO4JiC37US1v5RGWvaEQBT6LNvSzywpL.jpg" id="2_blqjs"]
+[ext_resource type="PackedScene" uid="uid://clmc7nyinhapt" path="res://PJ-Jump/Item/ammo_box.tscn" id="3_fgaav"]
+[ext_resource type="PackedScene" uid="uid://bj3johbul3w2t" path="res://PJ-Jump/Item/Slime_jelly.tscn" id="4_6lah5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fgaav"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6lah5"]
+albedo_texture = ExtResource("1_e7rdd")
+
+[sub_resource type="BoxMesh" id="BoxMesh_gmb2m"]
+material = SubResource("StandardMaterial3D_6lah5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8kdgp"]
+albedo_color = Color(0.617261, 0.424413, 0, 1)
+albedo_texture = ExtResource("2_blqjs")
+
+[sub_resource type="BoxMesh" id="BoxMesh_myf4l"]
+material = SubResource("StandardMaterial3D_8kdgp")
+size = Vector3(0.5, 2, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p5a0g"]
+size = Vector3(0.5, 2, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xqmyw"]
+albedo_color = Color(0.611268, 0.54802, 0.501426, 1)
+albedo_texture = ExtResource("2_blqjs")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_sw5c6"]
+material = SubResource("StandardMaterial3D_xqmyw")
+top_radius = 0.23
+bottom_radius = 0.28
+height = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_msgp6"]
+height = 1.0
+radius = 0.3
+
+[node name="shop" type="Node3D"]
+
+[node name="shop_floor" type="StaticBody3D" parent="."]
+transform = Transform3D(30, 0, 0, 0, 1, 0, 0, 0, 30, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="shop_floor"]
+shape = SubResource("BoxShape3D_fgaav")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="shop_floor"]
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_gmb2m")
+
+[node name="shop_roof1" type="StaticBody3D" parent="."]
+transform = Transform3D(10.6066, -0.707107, 0, 10.6066, 0.707107, 0, 0, 0, 20, -5, 25, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="shop_roof1"]
+shape = SubResource("BoxShape3D_fgaav")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="shop_roof1"]
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_gmb2m")
+
+[node name="shop_roof2" type="StaticBody3D" parent="."]
+transform = Transform3D(-10.6066, -0.707107, 0, 10.6066, -0.707107, 0, 0, 0, 20, 5, 25, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="shop_roof2"]
+shape = SubResource("BoxShape3D_fgaav")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="shop_roof2"]
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_gmb2m")
+
+[node name="shop_poll" type="StaticBody3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 11, 0, 0, 0, 2, 7.6, 10.921, -9)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="shop_poll"]
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_myf4l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="shop_poll/MeshInstance3D"]
+shape = SubResource("BoxShape3D_p5a0g")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="shop_poll"]
+transform = Transform3D(2, 0, 0, 0, 0.3, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="shop_poll/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.71869, 0)
+mesh = SubResource("CylinderMesh_sw5c6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="shop_poll/StaticBody3D/MeshInstance3D"]
+shape = SubResource("CylinderShape3D_msgp6")
+
+[node name="shop_poll2" type="StaticBody3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 11, 0, 0, 0, 2, -7.6, 10.921, -9)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="shop_poll2"]
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_myf4l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="shop_poll2/MeshInstance3D"]
+shape = SubResource("BoxShape3D_p5a0g")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="shop_poll2"]
+transform = Transform3D(2, 0, 0, 0, 0.3, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="shop_poll2/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.71869, 0)
+visibility_range_end = 300.0
+mesh = SubResource("CylinderMesh_sw5c6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="shop_poll2/StaticBody3D/MeshInstance3D"]
+shape = SubResource("CylinderShape3D_msgp6")
+
+[node name="shop_poll3" type="StaticBody3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 11, 0, 0, 0, 2, -7.6, 10.921, 9)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="shop_poll3"]
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_myf4l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="shop_poll3/MeshInstance3D"]
+shape = SubResource("BoxShape3D_p5a0g")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="shop_poll3"]
+transform = Transform3D(2, 0, 0, 0, 0.3, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="shop_poll3/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.71869, 0)
+visibility_range_end = 300.0
+mesh = SubResource("CylinderMesh_sw5c6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="shop_poll3/StaticBody3D/MeshInstance3D"]
+shape = SubResource("CylinderShape3D_msgp6")
+
+[node name="shop_poll4" type="StaticBody3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 11, 0, 0, 0, 2, 7.6, 10.921, 9)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="shop_poll4"]
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_myf4l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="shop_poll4/MeshInstance3D"]
+shape = SubResource("BoxShape3D_p5a0g")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="shop_poll4"]
+transform = Transform3D(2, 0, 0, 0, 0.3, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="shop_poll4/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.71869, 0)
+visibility_range_end = 300.0
+mesh = SubResource("CylinderMesh_sw5c6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="shop_poll4/StaticBody3D/MeshInstance3D"]
+shape = SubResource("CylinderShape3D_msgp6")
+
+[node name="Ammo_box" parent="." instance=ExtResource("3_fgaav")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.41555, 1.93661, 0)
+
+[node name="Slime_jelly" parent="." instance=ExtResource("4_6lah5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.84771, 1.76937, 0)
