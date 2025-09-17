@@ -14,16 +14,10 @@ extends Node3D
 @export var NavLevel2_scene: PackedScene
 @export var Navscene_spawn_chance: float = 0.1  #
 @export var platform_scene: PackedScene
-@export var slime_platform_scene: PackedScene
-@export var slime_platform_spawn_chance: float = 0.05  #
-@export var ice_platform_scene: PackedScene
-@export var ice_platform_spawn_chance: float = 0.05  #
 @export var plat_side_scene: PackedScene
 @export var sidescene_spawn_chance: float = 0.05  #
 @export var shop_scene: PackedScene
 @export var goal_scene: PackedScene
-@export var ice_dun: PackedScene
-@export var slime_dun: PackedScene
 var jump_stats = get_max_jump_distance(9.0,1.5, 9.8 * 2.0) #jump_power: float, jump_hight: float, gravity: float
 var max_jump_distance = jump_stats["horizontal"]
 var max_vertical_step = jump_stats["vertical"]
@@ -39,8 +33,6 @@ var platforms_created = 0
 var batch_phase = 0  # 0 = green batch, 1 = orange batch
 var did_branch := false
 var shop_size: Vector3
-var ice_size: Vector3
-var slime_size: Vector3
 var collectible
 func _ready():
 	if custom_seed == -1:
@@ -52,48 +44,30 @@ func _ready():
 	nav_size = get_scene_size(NavLevel_scene)
 	plat_side_size = get_scene_size(plat_side_scene)
 	shop_size = get_scene_size(shop_scene)
-	ice_size = get_scene_size(ice_dun)
-	slime_size = get_scene_size(slime_dun)
 	print("Shop size:", shop_size)
 	print("Platform size:", platform_size)
 	print("Structure size:", plat_up_size)
 	print("Nav size:", nav_size)
 	print("side size:", plat_side_size)
-	print("ice size:", ice_size)
-	print("slime size:", slime_size)
 
 
 	generate_platform_batch(Vector3.ZERO, 0)  
 
 
-func generate_platform_batch(start_position: Vector3, branch_id: int = 0, platform_count: int = platform_count):
+func generate_platform_batch(start_position: Vector3, branch_id: int = 0):
 	var last_post = start_position
 	var local_created = 0
-	var last_size = platform_size   # default to base size for first spawn
 
 	while local_created < platform_count:
-		# use last_size instead of fixed platform_size
-		var offset = get_random_offset(last_size, 1.0, 2.0, branch_id)
+		var offset = get_random_offset(platform_size, 1.0)
 		var next_position = last_post + offset
 
-		var result = spawn_platform(next_position, branch_id)
-		last_post = result
-		last_size = last_spawned_size  # update size from actual spawn
-
+		last_post = spawn_platform(next_position, branch_id)
 		platforms_created += 1
 		local_created += 1
 		last_platform_pos = last_post
 
-		if platform_count - platforms_created <= 10 and not shop_spawned:
-			spawn_shop(last_post, last_size, branch_id)
-		elif local_created >= 20 and not ice_spawned and batch_phase == 1 and branch_id == 1:
-			spawn_ice_dun(last_post, last_size, branch_id)
-		elif local_created >= 20 and not slime_spawned and batch_phase == 1 and branch_id == 2:
-			spawn_slime_dun(last_post, last_size, branch_id)
-
 		await get_tree().process_frame
-
-
 
 	# Spawn goal at the end of each branch
 	if branch_id in [1, 2] and batch_phase == 2:
@@ -103,55 +77,58 @@ func generate_platform_batch(start_position: Vector3, branch_id: int = 0, platfo
 	if not did_branch and branch_id == 0:
 		did_branch = true
 		await get_tree().create_timer(0.3).timeout
-		batch_phase = 1
 		generate_platform_batch(last_post, 1)  # branch 1
+		batch_phase = 1
 		generate_platform_batch(last_post, 2)  # branch 2
 
 	# After Batch 1, continue each branch into Batch 2
 	elif branch_id in [1, 2] and batch_phase == 1:
-		if branch_id == 1:
-			batch_phase = 2
+		batch_phase = 2
 		await get_tree().create_timer(0.3).timeout
 		generate_platform_batch(last_post, branch_id)  # continue same branch
 
-
-
-
-
 func spawn_platform(pos: Vector3, branch_id: int = 0) -> Vector3:
-	var result : Array
 	var roll = rng.randf()
+	var next_pos: Vector3
+	var current_size: Vector3
 
+	# === Normal structure spawn logic ===
 	if roll < scene_spawn_chance and plat_up_scene:
-		result = spawn_structure(pos,branch_id)
+		var spawn_pos = get_structure_position(pos, plat_up_size)
+		next_pos = spawn_structure(spawn_pos, branch_id)
+		current_size = plat_up_size
+
 	elif roll < scene_spawn_chance + sidescene_spawn_chance and plat_side_scene:
-		result = spawn_moveplatform(pos,branch_id)
-	elif roll <  slime_platform_spawn_chance and batch_phase == 1:
-		result = spawn_slime_platform(pos,branch_id)
-	elif roll <  ice_platform_spawn_chance and batch_phase == 1:
-		result = spawn_ice_platform(pos,branch_id)
+		var spawn_pos = get_moveplatform_position(pos, plat_side_size)
+		next_pos = spawn_moveplatform(spawn_pos, branch_id)
+		current_size = plat_side_size
+
+	elif batch_phase == 1 and rng.randf() < Navscene_spawn_chance and NavLevel_scene:
+		var spawn_pos = get_nav_level_position(pos, nav_size)
+		next_pos = spawn_nav_level(spawn_pos, branch_id)
+		current_size = nav_size
+
+		# bridge logic stays here
+		spawn_bridge(pos, spawn_pos, last_spawned_size, nav_size, branch_id)
+
 	else:
-		result = spawn_normal_platform(pos, branch_id)
+		var spawn_pos = get_normal_platform_position(pos, platform_size)
+		next_pos = spawn_normal_platform(spawn_pos, branch_id)
+		current_size = platform_size
 
-	var top_pos = result[0]
-	var current_size = result[1]
+	# === Spawn collectibles ===
+	spawn_collectible(next_pos, 1.0)
 
+	# === Shop logic (only once, at batch 1) ===
+	if batch_phase == 1 and not shop_spawned:
+		var shop_pos = get_nav_level_position(pos, shop_size)
+		spawn_shop(shop_pos, shop_size, branch_id)
+		spawn_bridge(pos, shop_pos, last_spawned_size, shop_size, branch_id)
+
+	# Store last size
 	last_spawned_size = current_size
-	spawn_collectible(top_pos, 1)
+	return next_pos
 
-	if batch_phase == 1 and rng.randf() < Navscene_spawn_chance and NavLevel_scene:
-		result = spawn_nav_level(top_pos, current_size, branch_id)
-		top_pos = result[0]
-		current_size = result[1]
-
-	return top_pos
-
-var branch_colors = {
-	1: Color.RED,
-	2: Color.BLUE,
-	3: Color.GREEN,
-	4: Color.YELLOW
-}
 
 func _apply_branch_color(mesh_instance: MeshInstance3D, branch_id: int) -> void:
 	if not mesh_instance:
@@ -160,15 +137,13 @@ func _apply_branch_color(mesh_instance: MeshInstance3D, branch_id: int) -> void:
 	if not mat:
 		return
 	mat = mat.duplicate()
-
-	if branch_colors.has(branch_id):
-		mat.albedo_color = branch_colors[branch_id]
-
+	match branch_id:
+		1: mat.albedo_color = Color.RED
+		2: mat.albedo_color = Color.BLUE
 	mesh_instance.set_surface_override_material(0, mat)
 
-
-
-func spawn_normal_platform(pos: Vector3, branch_id: int) -> Array:
+# === Normal Platform ===
+func spawn_normal_platform(pos: Vector3, branch_id: int) -> Vector3:
 	var platform_instance = platform_scene.instantiate()
 	platform_instance.position = pos
 	platform_instance.rotation.y = rng.randf_range(0, TAU)
@@ -177,31 +152,18 @@ func spawn_normal_platform(pos: Vector3, branch_id: int) -> Array:
 	_apply_branch_color(mesh_instance, branch_id)
 
 	add_child(platform_instance)
-	return [Vector3(pos.x, pos.y + platform_size.y, pos.z), platform_size]
 
-func spawn_slime_platform(pos: Vector3, branch_id: int) -> Array:
-	var platform_instance =slime_platform_scene.instantiate()
-	platform_instance.position = pos
-	platform_instance.rotation.y = rng.randf_range(0, TAU)
+	# return top position
+	return Vector3(pos.x, pos.y + platform_size.y, pos.z)
 
-	var mesh_instance = platform_instance.get_node_or_null("MeshInstance3D/square_forest_detail") as MeshInstance3D
-	_apply_branch_color(mesh_instance, branch_id)
 
-	add_child(platform_instance)
-	return [Vector3(pos.x, pos.y + platform_size.y, pos.z), platform_size]
-	
-func spawn_ice_platform(pos: Vector3, branch_id: int) -> Array:
-	var platform_instance = ice_platform_scene.instantiate()
-	platform_instance.position = pos
-	platform_instance.rotation.y = rng.randf_range(0, TAU)
+func get_normal_platform_position(pos: Vector3, current_size: Vector3) -> Vector3:
+	var offset = get_random_offset(current_size, 1.0)
+	return pos + offset
 
-	var mesh_instance = platform_instance.get_node_or_null("MeshInstance3D/square_forest_detail") as MeshInstance3D
-	_apply_branch_color(mesh_instance, branch_id)
 
-	add_child(platform_instance)
-	return [Vector3(pos.x, pos.y + platform_size.y, pos.z), platform_size,true]
-
-func spawn_structure(pos: Vector3, branch_id: int) -> Array:
+# === Structure ===
+func spawn_structure(pos: Vector3, branch_id: int) -> Vector3:
 	var instance = plat_up_scene.instantiate()
 	instance.position = pos
 	instance.rotation.y = rng.randf_range(0, TAU)
@@ -210,10 +172,17 @@ func spawn_structure(pos: Vector3, branch_id: int) -> Array:
 	_apply_branch_color(mesh_instance, branch_id)
 
 	add_child(instance)
-	return [Vector3(pos.x, pos.y + plat_up_size.y, pos.z), plat_up_size]
+
+	return Vector3(pos.x, pos.y + plat_up_size.y, pos.z)
 
 
-func spawn_moveplatform(pos: Vector3, branch_id: int) -> Array:
+func get_structure_position(pos: Vector3, current_size: Vector3) -> Vector3:
+	var offset = get_random_offset(current_size, 1.0)
+	return pos + offset
+
+
+# === Moving Platform ===
+func spawn_moveplatform(pos: Vector3, branch_id: int) -> Vector3:
 	var instance = plat_side_scene.instantiate()
 	instance.position = pos
 	instance.rotation.y = rng.randf_range(0, TAU)
@@ -223,69 +192,70 @@ func spawn_moveplatform(pos: Vector3, branch_id: int) -> Array:
 
 	add_child(instance)
 
-	var forward = instance.global_transform.basis.z.normalized()
-	var offset = forward * plat_side_size.z *0.8
-	return [pos + offset,  platform_size]
+	return Vector3(pos.x, pos.y + plat_side_size.y, pos.z)
+
+
+func get_moveplatform_position(pos: Vector3, current_size: Vector3) -> Vector3:
+	var offset = get_random_offset(current_size, 1.0)
+	return pos + offset
+
+
+# === Nav Level ===
+func spawn_nav_level(pos: Vector3, branch_id: int) -> Vector3:
+	var nav_instance = NavLevel_scene.instantiate()
+	if rng.randf() < 0.5:
+		nav_instance = NavLevel2_scene.instantiate()
+	nav_instance.position = pos
+	add_child(nav_instance)
+
+	return Vector3(pos.x, pos.y + nav_size.y, pos.z)
+
+
+func get_nav_level_position(pos: Vector3, current_size: Vector3) -> Vector3:
+	var offset = get_random_offset(current_size, 1.0, current_size.length() + 1.0)
+	offset.y = 0  # keep Y same level
+	return pos + offset
+
 
 
 	
-func spawn_collectible(top_pos: Vector3, offset: float) -> void:
+# === Spawn collectible ===
+func spawn_collectible(top_pos: Vector3,offset: float) -> void:
 	if collectible_scene and rng.randf() < item_spawn_chance:
-		var collectible
-		if rng.randf() < 0.5:
+		if 	rng.randf() < item_spawn_chance:
 			collectible = re_collectible_scene.instantiate()
 		else:
 			collectible = collectible_scene.instantiate()
 
-		collectible.position = top_pos + Vector3(0, offset, 0)
+		collectible.position = Vector3(
+			top_pos.x,
+			top_pos.y + offset,
+			top_pos.z
+		)
+
 		add_child(collectible)
 
 
 
 
-# === Spawn nav-level with bridging ===
-func spawn_nav_level(pos: Vector3, parent_size: Vector3,branch_id: int) ->  Array:
-	var nav_pos = pos + get_random_offset(nav_size, 1.0, parent_size.length() + 1.0)
-	nav_pos.y=pos.y
-	var nav_instance = NavLevel_scene.instantiate()
-	if  rng.randf() < 0.5:
-		nav_instance = NavLevel2_scene.instantiate()
-	nav_instance.position = nav_pos
-	add_child(nav_instance)
-	spawn_bridge(pos, nav_pos, parent_size,nav_size,branch_id,false)
-	var top_pos = Vector3(nav_pos.x, nav_pos.y + nav_size.y, nav_pos.z)
-	return [top_pos, nav_size]
 
-
-
-func spawn_bridge(start_pos: Vector3, end_pos: Vector3, start_size: Vector3, end_size: Vector3, branch_id: int, full: bool) -> void:
+func spawn_bridge(start_pos: Vector3, end_pos: Vector3, start_size: Vector3, end_size: Vector3, branch_id: int) -> void:
+	# Find direction from start to end
 	var dir = (end_pos - start_pos).normalized()
-	var jumpdis = max_jump_distance
-	if full:
-		jumpdis *= 0.5
 
-	# Adjust start and end
-	var start_offset = max(start_size.x, start_size.z) * 0.5
-	var end_offset   = max(end_size.x, end_size.z) * 0.5
-
-	# ✅ Clamp offsets so they don't "eat" the whole distance
-	var total_dist = start_pos.distance_to(end_pos)
-	start_offset = min(start_offset, total_dist * 0.4)
-	end_offset   = min(end_offset, total_dist * 0.4)
-
-	var adjusted_start = start_pos + dir * start_offset
-	var adjusted_end   = end_pos   - dir * end_offset
+	# Offset each position toward its nearest edge
+	var adjusted_start = start_pos 
+	var adjusted_end   = end_pos - dir * (max(end_size.x, end_size.z) * 0.5)
 
 	var distance = adjusted_start.distance_to(adjusted_end)
 	if distance <= max_jump_distance:
-		return
+		return  # No bridge needed
 
-	var steps = ceil(distance / jumpdis)
+	var steps = ceil(distance / max_jump_distance)
 	for i in range(1, int(steps)):
 		var t = float(i) / steps
 		var bridge_pos = adjusted_start.lerp(adjusted_end, t)
 		spawn_normal_platform(bridge_pos, branch_id)
-
 
 
 
@@ -307,40 +277,9 @@ func spawn_shop(pos: Vector3, parent_size: Vector3, branch_id: int) -> void:
 
 	print("🛒 Shop spawned at: ", shop_pos)
 
-	spawn_bridge(pos, shop_pos, parent_size, shop_size, branch_id,false)
+	spawn_bridge(pos, shop_pos, parent_size, shop_size, branch_id)
 
-
-
-var ice_spawned := false
-
-func spawn_ice_dun(pos: Vector3, parent_size: Vector3, branch_id: int) -> void:
-
-	ice_spawned = true  
-	var dun_pos = pos + get_random_offset(ice_size*2, 1.0, parent_size.length() + 1.0)
-	dun_pos.y = pos.y
-
-	var ice_instance = ice_dun.instantiate()
-	ice_instance.position =  dun_pos
-	add_child(ice_instance)
-
-	print("🛒 ice spawned at: ", dun_pos)
-
-	spawn_bridge(pos,  dun_pos, parent_size, ice_size, branch_id,true)
-var slime_spawned := false
-
-func spawn_slime_dun(pos: Vector3, parent_size: Vector3, branch_id: int) -> void:
-
-	slime_spawned = true  
-	var dun_pos = pos + get_random_offset(slime_size*1.5, 1.0, parent_size.length() + 1.0)
-	dun_pos.y = pos.y
-
-	var slime_instance = slime_dun.instantiate()
-	slime_instance.position =  dun_pos
-	add_child(slime_instance)
-
-	print("🛒 slime spawned at: ", dun_pos)
-
-	spawn_bridge(pos,  dun_pos, parent_size, slime_size, branch_id,true)
+	var top_pos = Vector3(shop_pos.x, shop_pos.y + shop_size.y, shop_pos.z)
 
 func spawn_goal(pos: Vector3, parent_size: Vector3, branch_id: int) -> void:
 	if not goal_scene:
@@ -424,39 +363,23 @@ func get_scene_size(scene: PackedScene) -> Vector3:
 	instance.queue_free()
 	return aabb.size
 
-# Branch bias directions (normalized)
 
-var branch_bias := {
-	0: Vector3(0, 0, 0),   # main branch (no bias → full random)
-	1: Vector3(-1, 0, 0),  # branch 1 biased left
-	2: Vector3(1, 0, 0)    # branch 2 biased right
-}
 
-func get_random_offset(current_size: Vector3, scaleoff: float, padding: float = 2.0, branch_id: int = 0) -> Vector3:
-	var base_radius = max(current_size.x, current_size.z)
+func get_random_offset(base_size: Vector3, scaleoff: float, padding: float = 2.0) -> Vector3:
+	# Horizontal spread radius (based on platform size & scale)
+	var base_radius = max(base_size.x, base_size.z)
 	var min_radius = base_radius + padding
 	var max_radius = base_radius * scaleoff + padding
+	
+	# Random angle + radius for XZ spread
 	var radius = rng.randf_range(min_radius, max_radius)
+	var theta = rng.randf_range(0, TAU)
 
-	var dir: Vector3
-	if branch_bias.has(branch_id) and branch_bias[branch_id] != Vector3.ZERO:
-		# ✅ Use bias as base direction (normalized, only XZ plane)
-		dir = branch_bias[branch_id].normalized()
-		# Add some random spread (±90° → 180° cone around bias direction)
-		var angle_spread = rng.randf_range(-PI * 0.5, PI * 0.5)
-		var cos_a = cos(angle_spread)
-		var sin_a = sin(angle_spread)
-		dir = Vector3(
-			dir.x * cos_a - dir.z * sin_a,
-			0,
-			dir.x * sin_a + dir.z * cos_a
-		).normalized()
-	else:
-		# ✅ Default full random if no bias
-		var theta = rng.randf_range(0, TAU)
-		dir = Vector3(cos(theta), 0, sin(theta))
+	# Random Y, but limited
+	var y_offset = rng.randf_range(0.5, max_vertical_step)
 
-	# Final offset
-	var offset = dir * radius
-	offset.y = rng.randf_range(0.5, max_vertical_step)
-	return offset
+	return Vector3(
+		radius * cos(theta) * 1.2,  # X spread
+		y_offset,                   # ✅ capped Y
+		radius * sin(theta) * 1.2   # Z spread
+	)

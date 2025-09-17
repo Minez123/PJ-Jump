@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://b20t538kf5mfa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6x5gq"]
+transparency = 1
+albedo_color = Color(0.796243, 0.796243, 0.796243, 0.235294)
+metallic_specular = 1.0
+roughness = 0.5
+
+[sub_resource type="Curve" id="Curve_eu2mi"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_1uur8"]
+curve = SubResource("Curve_eu2mi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ep7mg"]
+direction = Vector3(0, -1, 0)
+spread = 180.0
+flatness = 1.0
+initial_velocity_min = 3.0
+initial_velocity_max = 4.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_1uur8")
+
+[sub_resource type="SphereMesh" id="SphereMesh_q01if"]
+
+[node name="JumpCloud" type="GPUParticles3D"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_6x5gq")
+emitting = false
+amount = 30
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ep7mg")
+draw_pass_1 = SubResource("SphereMesh_q01if")

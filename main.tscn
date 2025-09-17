@@ -1,30 +1,31 @@
-[gd_scene load_steps=35 format=3 uid="uid://cawyxa2honk7g"]
+[gd_scene load_steps=36 format=3 uid="uid://cawyxa2honk7g"]
 
 [ext_resource type="Texture2D" uid="uid://7n4p1anjoe51" path="res://crosshair.png" id="1_272bh"]
 [ext_resource type="Script" uid="uid://camty0ert0fe6" path="res://main.gd" id="1_d13ii"]
 [ext_resource type="Shader" uid="uid://crpoheu3tfrgx" path="res://sky.gdshader" id="1_ryguw"]
 [ext_resource type="Script" uid="uid://pcuig3mu46ea" path="res://node_3d.gd" id="2_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://dcy75bfyfxwtv" path="res://PJ-Jump/shooting_star_sampler.png" id="3_1u8w0"]
-[ext_resource type="PackedScene" uid="uid://bf74y3ib587a2" path="res://collectible.tscn" id="3_h2yge"]
-[ext_resource type="PackedScene" uid="uid://c75ubi4gtnumo" path="res://struc.tscn" id="4_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://d3khx0wf0c0s" path="res://NavLevel.tscn" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://bf74y3ib587a2" path="res://PJ-Jump/Item/collectible.tscn" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://c75ubi4gtnumo" path="res://PJ-Jump/Platform/struc.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://d3khx0wf0c0s" path="res://PJ-Jump/Platform/NavLevel.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://d0qdslovi1xcb" path="res://PJ-Jump/Fantasy-Free-Godot-617145cb2c96a443e2a61973b939ee0221364a3a/Fantasy_Free/assets/models_fbx/bag_001.fbx" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://cipq8ioqu1v4m" path="res://knight1.tscn" id="6_272bh"]
-[ext_resource type="PackedScene" uid="uid://b70uqth72pdh" path="res://re_collectible.tscn" id="7_0odxb"]
+[ext_resource type="PackedScene" uid="uid://b70uqth72pdh" path="res://PJ-Jump/Item/re_collectible.tscn" id="7_0odxb"]
 [ext_resource type="PackedScene" uid="uid://d3vvp5opor4wj" path="res://bullet.tscn" id="8_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cnhnvb2yv37y5" path="res://PJ-Jump/Platform/platform.tscn" id="10_4c57u"]
 [ext_resource type="Script" uid="uid://cx2of5la0e6uv" path="res://canvas_layer.gd" id="11_efxa6"]
 [ext_resource type="Script" uid="uid://84tmxldu636e" path="res://item_popup_control.gd" id="14_w48qg"]
 [ext_resource type="PackedScene" uid="uid://4w3py2x8fgph" path="res://PJ-Jump/Platform/slime_platform.tscn" id="15_vivmo"]
 [ext_resource type="PackedScene" uid="uid://bc7wjqwss7bd1" path="res://PJ-Jump/Platform/ice_platform.tscn" id="16_2cqfq"]
-[ext_resource type="PackedScene" uid="uid://budo6ml1l5gc1" path="res://PJ-Jump/Item/ice_boot_item.tscn" id="17_yaehf"]
-[ext_resource type="PackedScene" uid="uid://dy25dq61huqvu" path="res://PJ-Jump/Item/slime_boot.tscn" id="18_074og"]
 [ext_resource type="Script" uid="uid://7y43sl7ui2po" path="res://shop_ui.gd" id="19_cegan"]
-[ext_resource type="PackedScene" uid="uid://cyruo4d2x7lxh" path="res://plat_move.tscn" id="20_82xsv"]
+[ext_resource type="PackedScene" uid="uid://cyruo4d2x7lxh" path="res://PJ-Jump/Platform/plat_move.tscn" id="20_82xsv"]
 [ext_resource type="PackedScene" uid="uid://dga3u1similih" path="res://waterre.tscn" id="22_ryguw"]
-[ext_resource type="PackedScene" uid="uid://chs6oadi6fyef" path="res://goal.tscn" id="25_0odxb"]
-[ext_resource type="PackedScene" uid="uid://crrvknqgg1hu8" path="res://nav_2.tscn" id="26_a6jrf"]
-[ext_resource type="PackedScene" uid="uid://tpmym06j4c5a" path="res://shop.tscn" id="26_lswn8"]
+[ext_resource type="PackedScene" uid="uid://chs6oadi6fyef" path="res://PJ-Jump/Platform/goal.tscn" id="25_0odxb"]
+[ext_resource type="PackedScene" uid="uid://crrvknqgg1hu8" path="res://PJ-Jump/Platform/nav_2.tscn" id="26_a6jrf"]
+[ext_resource type="PackedScene" uid="uid://tpmym06j4c5a" path="res://PJ-Jump/Platform/shop.tscn" id="26_lswn8"]
+[ext_resource type="PackedScene" uid="uid://c3r4kqcvea8jt" path="res://PJ-Jump/Item/jump_boost.tscn" id="26_xuqvo"]
+[ext_resource type="PackedScene" uid="uid://dgfcv7iw8u25e" path="res://ice_dun.tscn" id="27_a6jrf"]
+[ext_resource type="PackedScene" uid="uid://dx6f6x1gg1tyl" path="res://slime_dun.tscn" id="28_xuqvo"]
 
 [sub_resource type="Curve" id="Curve_d13ii"]
 _data = [Vector2(0.00322061, 0), 0.0, 0.0, 0, 0, Vector2(0.162641, 0.912162), 0.0, 0.0, 0, 0, Vector2(0.987118, 0.48443), 0.0, 0.0, 0, 0]
@@ -134,15 +135,22 @@ stretch_mode = 3
 [node name="Platform_Gen" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.096, 0.5, 15.142)
 script = ExtResource("2_0xm2m")
+custom_seed = 1758116749
 collectible_scene = ExtResource("3_h2yge")
 re_collectible_scene = ExtResource("7_0odxb")
 plat_up_scene = ExtResource("4_1bvp3")
 NavLevel_scene = ExtResource("5_lquwl")
 NavLevel2_scene = ExtResource("26_a6jrf")
 platform_scene = ExtResource("10_4c57u")
+slime_platform_scene = ExtResource("15_vivmo")
+slime_platform_spawn_chance = 0.15
+ice_platform_scene = ExtResource("16_2cqfq")
+ice_platform_spawn_chance = 0.3
 plat_side_scene = ExtResource("20_82xsv")
 shop_scene = ExtResource("26_lswn8")
 goal_scene = ExtResource("25_0odxb")
+ice_dun = ExtResource("27_a6jrf")
+slime_dun = ExtResource("28_xuqvo")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Platform_Gen"]
 
@@ -211,18 +219,6 @@ layout_mode = 2
 [node name="description" type="Label" parent="Popup_UI/ItemPopup/PanelContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Slime_Platform" parent="." instance=ExtResource("15_vivmo")]
-transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, -2.9, 3.998, 31.4923)
-
-[node name="Ice_Platform" parent="." instance=ExtResource("16_2cqfq")]
-transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, 8.3, 3.5, 32.7)
-
-[node name="Ice_boot" parent="." instance=ExtResource("17_yaehf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09274, 6.06407, 32.9387)
-
-[node name="Slime_boot" parent="." instance=ExtResource("18_074og")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2092, 5.5524, 31.5673)
-
 [node name="Shop_UI" type="CanvasLayer" parent="."]
 script = ExtResource("19_cegan")
 
@@ -267,3 +263,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.6, 1.58021, 35.5)
 
 [node name="Platform" parent="." instance=ExtResource("10_4c57u")]
 transform = Transform3D(99, 0, 0, 0, 1, 0, 0, 0, 99, -17.7562, 0, 17.0846)
+
+[node name="Jump_boost" parent="." instance=ExtResource("26_xuqvo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.119934, 1, 24.6549)

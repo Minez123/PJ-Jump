@@ -39,6 +39,9 @@ var zooming := false
 @onready var pitch_pivot := $TwistPivot/PitchPivot
 @onready var camera := $TwistPivot/PitchPivot/Camera3D
 @onready var crosshair: TextureRect = $"../HUD/TextureRect"
+@onready var camera_raycast: RayCast3D = $TwistPivot/PitchPivot/CameraRayCast
+
+
 #UI
 @onready var pause_menu: Node = $PauseMenu  
 @onready var jump_bar := $"../HUD/JumpPowerBar" 
@@ -50,6 +53,9 @@ var zooming := false
 @onready var landing_sfx: AudioStreamPlayer3D = $Landing_sfx
 @onready var full_charge_sfx: AudioStreamPlayer2D = $Full_Charge_sfx
 @onready var shotgun_sfx: AudioStreamPlayer3D = $ShotgunSfx
+@onready var bouce_1: AudioStreamPlayer2D = $bouce_1
+@onready var bouce_2: AudioStreamPlayer2D = $bouce_2
+@onready var bouce_3: AudioStreamPlayer2D = $bouce_3
 var current_zoom := -10.0  # initial zoom distance
 
 var charging_jump := false
@@ -59,14 +65,13 @@ var jump_power := 0.0
 var jump_direction := 0 
 var jump_hight := 2
 var landed_timer := 0.0
-
 var current_platform_type = 0
 var platform_factor: float = 1.0
 
 
 var GRAVITY = 9.8 * jump_hight 
 var original_gravity: float  # Store the original gravity value
-
+var jump_boost = 1
 
 var last_dash_time := -1.0
 const DASH_COOLDOWN := 1.0  # seconds
@@ -115,6 +120,7 @@ func _physics_process(delta: float) -> void:
 	if global_transform.origin.y < fall_limit:
 		respawn()
 	var target_fov = 1
+
 	# Smooth zoom transition
 	if zooming:
 		target_fov = zoom_fov
@@ -135,6 +141,18 @@ func _physics_process(delta: float) -> void:
 	camera.transform.origin.z = -current_zoom
 	# Visibility toggle based on zoom
 	character_mesh.visible = current_zoom < zoom_hide_threshold
+	var desired_distance = -current_zoom
+	
+	# Update ray length to match zoom
+	camera_raycast.target_position = Vector3(0, 0, desired_distance)
+	camera_raycast.force_raycast_update()
+	
+	if camera_raycast.is_colliding():
+		var collision_point = camera_raycast.get_collision_point()
+		var local_pos = pitch_pivot.to_local(collision_point)
+		camera.position = local_pos + Vector3(0, 0, 0.3) # small offset so it doesn’t clip
+	else:
+		camera.position = Vector3(0, 0, desired_distance)
 	if landed_timer > 0.0:
 		landed_timer -= delta
 		velocity.x = 0.0
@@ -208,7 +226,15 @@ func _physics_process(delta: float) -> void:
 				anim_tree.set("parameters/conditions/grounded",false)
 				charging_jump = false
 				full_charge_sfx_played = false  
-				velocity.y = jump_power * jump_hight
+				if inventory.has_item("jump_boost"):
+					jump_boost = 1.2
+				velocity.y = jump_power * jump_hight *jump_boost
+				
+				var cloud_ring = preload("res://effects/jump_cloud.tscn").instantiate()
+				get_parent().add_child(cloud_ring)
+				cloud_ring.global_transform.origin = global_transform.origin
+				cloud_ring.emitting = true
+
 
 				# Get camera's forward direction (ignoring vertical tilt)
 				var forward = -twist_pivot.global_transform.basis.z
@@ -224,6 +250,7 @@ func _physics_process(delta: float) -> void:
 		if not is_on_floor():
 			anim_state.travel("Jump_Idle")
 			anim_tree.set("parameters/conditions/grounded",false)
+			$CloudTrail.emitting = true
 			# Check if character is falling down (negative y velocity)
 			if velocity.y < 0:
 
@@ -235,6 +262,7 @@ func _physics_process(delta: float) -> void:
 			
 			velocity.y -= GRAVITY * delta
 		else:
+			$CloudTrail.emitting = false
 			# Reset gravity to original when on floor
 			GRAVITY = original_gravity	
 			
@@ -289,9 +317,8 @@ func _physics_process(delta: float) -> void:
 					var wall_normal := collision.get_normal()
 					#R=L−2(N⋅L)N
 					var reflection := velocity_before_slide - 2*(wall_normal.dot(velocity_before_slide))*wall_normal
-					
 					velocity = reflection
-					
+					play_bounce_sfx()
 					
 					
 
@@ -302,7 +329,16 @@ func _physics_process(delta: float) -> void:
 			anim_tree.set("parameters/conditions/jumping",false)
 			jump_bar.value = 0
 		was_on_floor = is_on_floor()
+		
+var bounce_index := 0
 
+func play_bounce_sfx():
+	if is_on_floor(): 
+		return
+	var sounds = [bouce_1, bouce_2, bouce_3]
+	sounds[bounce_index].play()
+	bounce_index = (bounce_index + 1) % sounds.size()
+	
 func refill_shotgun():
 		shotgun_shots_remaining += 1
 
