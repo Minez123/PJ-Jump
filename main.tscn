@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cawyxa2honk7g"]
+[gd_scene load_steps=37 format=3 uid="uid://cawyxa2honk7g"]
 
 [ext_resource type="Texture2D" uid="uid://7n4p1anjoe51" path="res://crosshair.png" id="1_272bh"]
 [ext_resource type="Script" uid="uid://camty0ert0fe6" path="res://main.gd" id="1_d13ii"]
@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://tpmym06j4c5a" path="res://PJ-Jump/Platform/shop.tscn" id="26_lswn8"]
 [ext_resource type="PackedScene" uid="uid://c3r4kqcvea8jt" path="res://PJ-Jump/Item/jump_boost.tscn" id="26_xuqvo"]
 [ext_resource type="PackedScene" uid="uid://dgfcv7iw8u25e" path="res://ice_dun.tscn" id="27_a6jrf"]
+[ext_resource type="PackedScene" uid="uid://dpmigwt8wfj5s" path="res://nav_3.tscn" id="27_xuqvo"]
 [ext_resource type="PackedScene" uid="uid://dx6f6x1gg1tyl" path="res://slime_dun.tscn" id="28_xuqvo"]
 
 [sub_resource type="Curve" id="Curve_d13ii"]
@@ -120,11 +121,11 @@ offset_bottom = 33.0
 [node name="TextureRect" type="TextureRect" parent="HUD"]
 top_level = true
 material = SubResource("CanvasItemMaterial_5vw27")
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.389
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.524
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.1, 0.1)
@@ -135,17 +136,17 @@ stretch_mode = 3
 [node name="Platform_Gen" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.096, 0.5, 15.142)
 script = ExtResource("2_0xm2m")
-custom_seed = 1758116749
 collectible_scene = ExtResource("3_h2yge")
 re_collectible_scene = ExtResource("7_0odxb")
 plat_up_scene = ExtResource("4_1bvp3")
 NavLevel_scene = ExtResource("5_lquwl")
 NavLevel2_scene = ExtResource("26_a6jrf")
+NavLevel3_scene = ExtResource("27_xuqvo")
 platform_scene = ExtResource("10_4c57u")
 slime_platform_scene = ExtResource("15_vivmo")
-slime_platform_spawn_chance = 0.15
+slime_platform_spawn_chance = 0.5
 ice_platform_scene = ExtResource("16_2cqfq")
-ice_platform_spawn_chance = 0.3
+ice_platform_spawn_chance = 0.5
 plat_side_scene = ExtResource("20_82xsv")
 shop_scene = ExtResource("26_lswn8")
 goal_scene = ExtResource("25_0odxb")
@@ -266,3 +267,6 @@ transform = Transform3D(99, 0, 0, 0, 1, 0, 0, 0, 99, -17.7562, 0, 17.0846)
 
 [node name="Jump_boost" parent="." instance=ExtResource("26_xuqvo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.119934, 1, 24.6549)
+
+[node name="Nav_3" parent="." instance=ExtResource("27_xuqvo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7426, 0.664968, 51.6462)

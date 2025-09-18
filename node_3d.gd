@@ -12,6 +12,7 @@ extends Node3D
 @export var scene_spawn_chance: float = 0.05  #
 @export var NavLevel_scene: PackedScene
 @export var NavLevel2_scene: PackedScene
+@export var NavLevel3_scene: PackedScene
 @export var Navscene_spawn_chance: float = 0.1  #
 @export var platform_scene: PackedScene
 @export var slime_platform_scene: PackedScene
@@ -65,7 +66,7 @@ func _ready():
 
 	generate_platform_batch(Vector3.ZERO, 0)  
 
-
+var branch_phases := {0: 0, 1: 0, 2: 0}
 func generate_platform_batch(start_position: Vector3, branch_id: int = 0, platform_count: int = platform_count):
 	var last_post = start_position
 	var local_created = 0
@@ -95,25 +96,35 @@ func generate_platform_batch(start_position: Vector3, branch_id: int = 0, platfo
 
 
 
-	# Spawn goal at the end of each branch
-	if branch_id in [1, 2] and batch_phase == 2:
-		spawn_goal(last_post, last_spawned_size, branch_id)
+
+
+
+		
+	
 
 	# First split (Batch 1)
-	if not did_branch and branch_id == 0:
-		did_branch = true
+	if branch_id == 0 and branch_phases[0] == 0:
+		branch_phases[0] = 1
 		await get_tree().create_timer(0.3).timeout
-		batch_phase = 1
-		generate_platform_batch(last_post, 1)  # branch 1
-		generate_platform_batch(last_post, 2)  # branch 2
+		branch_phases[1] = 1
+		branch_phases[2] = 1
+		generate_platform_batch(last_post, 1)
+		generate_platform_batch(last_post, 2)
+		batch_phase=1
+		
 
-	# After Batch 1, continue each branch into Batch 2
-	elif branch_id in [1, 2] and batch_phase == 1:
-		if branch_id == 1:
-			batch_phase = 2
+	elif branch_id in [1, 2] and branch_phases[branch_id] == 1:
+		branch_phases[branch_id] = 2
 		await get_tree().create_timer(0.3).timeout
-		generate_platform_batch(last_post, branch_id)  # continue same branch
+		generate_platform_batch(last_post, branch_id)
+		
+	else:
+		spawn_goal(last_post, last_spawned_size, branch_id)
+		branch_phases[branch_id]=3
+		print(local_created , branch_id,branch_phases,batch_phase)
+		
 
+		
 
 
 
@@ -126,9 +137,9 @@ func spawn_platform(pos: Vector3, branch_id: int = 0) -> Vector3:
 		result = spawn_structure(pos,branch_id)
 	elif roll < scene_spawn_chance + sidescene_spawn_chance and plat_side_scene:
 		result = spawn_moveplatform(pos,branch_id)
-	elif roll <  slime_platform_spawn_chance and batch_phase == 1:
+	elif roll <  slime_platform_spawn_chance and batch_phase >= 1 and branch_id == 2:
 		result = spawn_slime_platform(pos,branch_id)
-	elif roll <  ice_platform_spawn_chance and batch_phase == 1:
+	elif roll <  ice_platform_spawn_chance and batch_phase >= 1 and branch_id == 1:
 		result = spawn_ice_platform(pos,branch_id)
 	else:
 		result = spawn_normal_platform(pos, branch_id)
@@ -139,7 +150,7 @@ func spawn_platform(pos: Vector3, branch_id: int = 0) -> Vector3:
 	last_spawned_size = current_size
 	spawn_collectible(top_pos, 1)
 
-	if batch_phase == 1 and rng.randf() < Navscene_spawn_chance and NavLevel_scene:
+	if batch_phase >= 1 and rng.randf() < Navscene_spawn_chance and NavLevel_scene:
 		result = spawn_nav_level(top_pos, current_size, branch_id)
 		top_pos = result[0]
 		current_size = result[1]
@@ -149,8 +160,6 @@ func spawn_platform(pos: Vector3, branch_id: int = 0) -> Vector3:
 var branch_colors = {
 	1: Color.RED,
 	2: Color.BLUE,
-	3: Color.GREEN,
-	4: Color.YELLOW
 }
 
 func _apply_branch_color(mesh_instance: MeshInstance3D, branch_id: int) -> void:
@@ -173,44 +182,67 @@ func spawn_normal_platform(pos: Vector3, branch_id: int) -> Array:
 	platform_instance.position = pos
 	platform_instance.rotation.y = rng.randf_range(0, TAU)
 
+	var random_scale = rng.randf_range(0.8, 1.5)
+	platform_instance.scale *=  random_scale
+
 	var mesh_instance = platform_instance.get_node_or_null("MeshInstance3D/square_forest_detail") as MeshInstance3D
 	_apply_branch_color(mesh_instance, branch_id)
 
 	add_child(platform_instance)
-	return [Vector3(pos.x, pos.y + platform_size.y, pos.z), platform_size]
+
+	var scaled_size = platform_size * random_scale
+	return [Vector3(pos.x, pos.y + scaled_size.y, pos.z), scaled_size]
+
 
 func spawn_slime_platform(pos: Vector3, branch_id: int) -> Array:
-	var platform_instance =slime_platform_scene.instantiate()
+	var platform_instance = slime_platform_scene.instantiate()
 	platform_instance.position = pos
 	platform_instance.rotation.y = rng.randf_range(0, TAU)
 
+	var random_scale = rng.randf_range(0.8, 1.5)
+	platform_instance.scale *=  random_scale
+
 	var mesh_instance = platform_instance.get_node_or_null("MeshInstance3D/square_forest_detail") as MeshInstance3D
 	_apply_branch_color(mesh_instance, branch_id)
 
 	add_child(platform_instance)
-	return [Vector3(pos.x, pos.y + platform_size.y, pos.z), platform_size]
-	
+
+	var scaled_size = platform_size * random_scale
+	return [Vector3(pos.x, pos.y + scaled_size.y, pos.z), scaled_size]
+
+
 func spawn_ice_platform(pos: Vector3, branch_id: int) -> Array:
 	var platform_instance = ice_platform_scene.instantiate()
 	platform_instance.position = pos
 	platform_instance.rotation.y = rng.randf_range(0, TAU)
 
+	var random_scale = rng.randf_range(0.8, 1.5)
+	platform_instance.scale *= random_scale
+
 	var mesh_instance = platform_instance.get_node_or_null("MeshInstance3D/square_forest_detail") as MeshInstance3D
 	_apply_branch_color(mesh_instance, branch_id)
 
 	add_child(platform_instance)
-	return [Vector3(pos.x, pos.y + platform_size.y, pos.z), platform_size,true]
+
+	var scaled_size = platform_size * random_scale
+	return [Vector3(pos.x, pos.y + scaled_size.y, pos.z), scaled_size, true]
+
 
 func spawn_structure(pos: Vector3, branch_id: int) -> Array:
 	var instance = plat_up_scene.instantiate()
 	instance.position = pos
 	instance.rotation.y = rng.randf_range(0, TAU)
 
+	var random_scale = rng.randf_range(0.8, 1.5)
+	instance.scale *=  random_scale
+
 	var mesh_instance = instance.get_node_or_null("AnimatableBody3D/square_forest_detail") as MeshInstance3D
 	_apply_branch_color(mesh_instance, branch_id)
 
 	add_child(instance)
-	return [Vector3(pos.x, pos.y + plat_up_size.y, pos.z), plat_up_size]
+
+	var scaled_size = plat_up_size * random_scale
+	return [Vector3(pos.x, pos.y + scaled_size.y, pos.z), scaled_size]
 
 
 func spawn_moveplatform(pos: Vector3, branch_id: int) -> Array:
@@ -218,14 +250,19 @@ func spawn_moveplatform(pos: Vector3, branch_id: int) -> Array:
 	instance.position = pos
 	instance.rotation.y = rng.randf_range(0, TAU)
 
+	var random_scale = rng.randf_range(0.8, 1.5)
+	instance.scale *=  random_scale
+
 	var mesh_instance = instance.get_node_or_null("ABody3D/square_forest_detail") as MeshInstance3D
 	_apply_branch_color(mesh_instance, branch_id)
 
 	add_child(instance)
 
+	var scaled_size = platform_size * random_scale
 	var forward = instance.global_transform.basis.z.normalized()
-	var offset = forward * plat_side_size.z *0.8
-	return [pos + offset,  platform_size]
+	var offset = forward * plat_side_size.z * 0.8 * random_scale
+	return [pos + offset, scaled_size]
+
 
 
 	
@@ -248,8 +285,10 @@ func spawn_nav_level(pos: Vector3, parent_size: Vector3,branch_id: int) ->  Arra
 	var nav_pos = pos + get_random_offset(nav_size, 1.0, parent_size.length() + 1.0)
 	nav_pos.y=pos.y
 	var nav_instance = NavLevel_scene.instantiate()
-	if  rng.randf() < 0.5:
+	if  rng.randf() < 0.3:
 		nav_instance = NavLevel2_scene.instantiate()
+	elif rng.randf() < 0.6:
+		nav_instance = NavLevel3_scene.instantiate()
 	nav_instance.position = nav_pos
 	add_child(nav_instance)
 	spawn_bridge(pos, nav_pos, parent_size,nav_size,branch_id,false)
@@ -458,5 +497,5 @@ func get_random_offset(current_size: Vector3, scaleoff: float, padding: float = 
 
 	# Final offset
 	var offset = dir * radius
-	offset.y = rng.randf_range(0.5, max_vertical_step)
+	offset.y = rng.randf_range(0.5, max_vertical_step)* scaleoff
 	return offset

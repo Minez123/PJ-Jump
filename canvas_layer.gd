@@ -30,9 +30,12 @@ func _update_inventory_ui() -> void:
 	for item_id in items.keys():
 		var tex_rect = TextureRect.new()
 		tex_rect.texture = items[item_id]["icon"]
+
+		# ✅ Fixed size & scaling
+		tex_rect.expand = true
 		tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		tex_rect.custom_minimum_size = Vector2(32, 32)
-		tex_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		tex_rect.custom_minimum_size = Vector2(48, 48)  # adjust grid slot size
+
 		grid.add_child(tex_rect)
 
 func has_item(item_id: String) -> bool:
