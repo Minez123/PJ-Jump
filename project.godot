@@ -11,14 +11,23 @@ config_version=5
 [application]
 
 config/name="player"
-run/main_scene="uid://cawyxa2honk7g"
+run/main_scene="uid://c5jow6o5qqdx7"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Savemanager="*res://savemanager.gd"
+GameData="*res://game_data.gd"
 
 [display]
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[editor]
+
+version_control/main_scene="uid://cawyxa2honk7g"
 
 [input]
 

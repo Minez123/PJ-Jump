@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://dxabyd5d7mapd"]
+
+[ext_resource type="Script" uid="uid://c214cp20i2584" path="res://items/item_resource.gd" id="1_r4ou4"]
+[ext_resource type="Texture2D" uid="uid://ncxsl3u2dvvj" path="res://items/ammoplus.jpg" id="2_lyl42"]
+
+[resource]
+script = ExtResource("1_r4ou4")
+uid = "ammo_box"
+item_name = "Ammo Box"
+description = "might not consume ammo when shoot"
+texture = ExtResource("2_lyl42")
+is_stackable = false
+stack_size = 1
+metadata/_custom_type_script = "uid://c214cp20i2584"

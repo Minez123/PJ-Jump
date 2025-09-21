@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://wsfup07ctdqb"]
+
+[ext_resource type="Script" uid="uid://c214cp20i2584" path="res://items/item_resource.gd" id="1_jkxsy"]
+[ext_resource type="Texture2D" uid="uid://3xwmn3rhjxta" path="res://ChatGPT Image Sep 18, 2025, 01_10_56 PM.png" id="2_blnoi"]
+
+[resource]
+script = ExtResource("1_jkxsy")
+uid = "jump_boost"
+item_name = "Jump_boost"
+description = "make you jump higher"
+texture = ExtResource("2_blnoi")
+is_stackable = false
+stack_size = 1
+metadata/_custom_type_script = "uid://c214cp20i2584"

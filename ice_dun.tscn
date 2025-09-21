@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bl04agwohpx1x" path="res://struc.gd" id="2_mffh1"]
 [ext_resource type="Script" uid="uid://dhj0ioxlaw621" path="res://plat_move.gd" id="3_so7w3"]
 [ext_resource type="Texture2D" uid="uid://dv6mt0c1lug32" path="res://360_F_281239239_WO4JiC37US1v5RGWvaEQBT6LNvSzywpL.jpg" id="5_ayqea"]
-[ext_resource type="PackedScene" uid="uid://budo6ml1l5gc1" path="res://PJ-Jump/Item/ice_boot_item.tscn" id="6_i426a"]
+[ext_resource type="PackedScene" uid="uid://budo6ml1l5gc1" path="res://items/ice_boot_item.tscn" id="6_i426a"]
 [ext_resource type="Texture2D" uid="uid://dptd2f7hj1osa" path="res://PJ-Jump/Fantasy-Free-Godot-617145cb2c96a443e2a61973b939ee0221364a3a/360_F_281239239_WO4JiC37US1v5RGWvaEQBT6LNvSzywpL.jpg" id="6_ki08j"]
 [ext_resource type="PackedScene" uid="uid://br4t4q50fjjek" path="res://ice.tscn" id="7_i426a"]
 

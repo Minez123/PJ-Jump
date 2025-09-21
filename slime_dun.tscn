@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cokc45t45xvl6" path="res://PJ-Jump/Platform/sticky_plat.gd" id="2_dcnog"]
 [ext_resource type="PackedScene" uid="uid://cllsusxda0vls" path="res://gltf/square_forest_detail.gltf.glb" id="3_27wup"]
 [ext_resource type="Texture2D" uid="uid://ceq62pu65kr5i" path="res://PJ-Jump/istockphoto-1459071236-612x612.jpg" id="4_hdj0d"]
-[ext_resource type="PackedScene" uid="uid://dy25dq61huqvu" path="res://PJ-Jump/Item/slime_boot.tscn" id="5_dcnog"]
+[ext_resource type="PackedScene" uid="uid://dy25dq61huqvu" path="res://items/slime_boot.tscn" id="5_dcnog"]
 [ext_resource type="Script" uid="uid://bl04agwohpx1x" path="res://struc.gd" id="6_27wup"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hdj0d"]

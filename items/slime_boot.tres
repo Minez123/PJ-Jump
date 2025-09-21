@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://bn3vj4a03liu1"]
+
+[ext_resource type="Script" uid="uid://c214cp20i2584" path="res://items/item_resource.gd" id="1_rcv43"]
+[ext_resource type="Texture2D" uid="uid://ceq62pu65kr5i" path="res://PJ-Jump/istockphoto-1459071236-612x612.jpg" id="2_afnr0"]
+
+[resource]
+script = ExtResource("1_rcv43")
+uid = "slime_boot"
+item_name = "Slime Boot"
+description = "negate sticky effect"
+texture = ExtResource("2_afnr0")
+is_stackable = false
+stack_size = 1
+metadata/_custom_type_script = "uid://c214cp20i2584"

@@ -1,0 +1,20 @@
+[gd_scene load_steps=6 format=3 uid="uid://dy25dq61huqvu"]
+
+[ext_resource type="Script" uid="uid://yucjp12201j2" path="res://items/slime_boot.gd" id="1_qyn2m"]
+[ext_resource type="Resource" uid="uid://bn3vj4a03liu1" path="res://items/slime_boot.tres" id="2_mk7y3"]
+[ext_resource type="AudioStream" uid="uid://bqoqxl7cxo5xf" path="res://knife_sfx-2.mp3" id="3_kh8ec"]
+[ext_resource type="PackedScene" uid="uid://4ec078vho0jd" path="res://green_boots.tscn" id="4_xw60a"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qs0bq"]
+
+[node name="Slime_boot" type="Area3D"]
+script = ExtResource("1_qyn2m")
+item_resource = ExtResource("2_mk7y3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_qs0bq")
+
+[node name="collect_sfx" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_kh8ec")
+
+[node name="Boots" parent="." instance=ExtResource("4_xw60a")]

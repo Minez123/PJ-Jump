@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @export var mouse_sensitivity := 0.0015
 @export var can_move_in_air: bool = false
-@export var inf_Ammo = true
+@export var inf_Ammo = false
 
 @export var shotgun_pellet_scene: PackedScene
 @export var pellets_per_shot := 8
@@ -114,6 +114,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			zooming = event.pressed
+
 
 func _physics_process(delta: float) -> void:
 	var inventory = get_tree().get_first_node_in_group("inventory_ui")
@@ -283,7 +284,7 @@ func _physics_process(delta: float) -> void:
 				free_shot = true
 				var popup = get_tree().get_first_node_in_group("item_popup")
 				var item = inventory.get_item("ammo_box")
-				popup.show_item(item["icon"],item["id"],item["desc"],1)
+				popup.show_item(item,1)
 
 
 			if not inf_Ammo and not free_shot:

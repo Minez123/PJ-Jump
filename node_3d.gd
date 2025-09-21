@@ -25,6 +25,7 @@ extends Node3D
 @export var goal_scene: PackedScene
 @export var ice_dun: PackedScene
 @export var slime_dun: PackedScene
+signal world_generation_finished
 var jump_stats = get_max_jump_distance(9.0,1.5, 9.8 * 2.0) #jump_power: float, jump_hight: float, gravity: float
 var max_jump_distance = jump_stats["horizontal"]
 var max_vertical_step = jump_stats["vertical"]
@@ -44,6 +45,9 @@ var ice_size: Vector3
 var slime_size: Vector3
 var collectible
 func _ready():
+	if GameData.loaded_save_data:
+		custom_seed = GameData.loaded_save_data["seed"]
+	add_to_group("world")
 	if custom_seed == -1:
 		custom_seed = Time.get_unix_time_from_system()
 	rng.seed = custom_seed
@@ -122,6 +126,7 @@ func generate_platform_batch(start_position: Vector3, branch_id: int = 0, platfo
 		spawn_goal(last_post, last_spawned_size, branch_id)
 		branch_phases[branch_id]=3
 		print(local_created , branch_id,branch_phases,batch_phase)
+		emit_signal("world_generation_finished")
 		
 
 		
@@ -269,10 +274,7 @@ func spawn_moveplatform(pos: Vector3, branch_id: int) -> Array:
 func spawn_collectible(top_pos: Vector3, offset: float) -> void:
 	if collectible_scene and rng.randf() < item_spawn_chance:
 		var collectible
-		if rng.randf() < 0.5:
-			collectible = re_collectible_scene.instantiate()
-		else:
-			collectible = collectible_scene.instantiate()
+		collectible = collectible_scene.instantiate()
 
 		collectible.position = top_pos + Vector3(0, offset, 0)
 		add_child(collectible)

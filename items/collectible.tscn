@@ -1,0 +1,67 @@
+[gd_scene load_steps=10 format=3 uid="uid://bf74y3ib587a2"]
+
+[ext_resource type="Script" uid="uid://cgo7jmkkwoc3c" path="res://collectible.gd" id="1_grcsk"]
+[ext_resource type="AudioStream" uid="uid://bqoqxl7cxo5xf" path="res://knife_sfx-2.mp3" id="2_vi4ii"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_h2yge"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8orai"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_yciwo"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.5
+radial_segments = 16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h1l3x"]
+albedo_color = Color(0.89, 0.7565, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_oc26g"]
+material = SubResource("StandardMaterial3D_h1l3x")
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.15
+radial_segments = 16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yciwo"]
+transparency = 2
+alpha_scissor_threshold = 1.0
+alpha_antialiasing_mode = 2
+alpha_antialiasing_edge = 0.3
+cull_mode = 1
+depth_draw_mode = 1
+albedo_color = Color(100, 0.767, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_h1l3x"]
+material = SubResource("StandardMaterial3D_yciwo")
+
+[node name="Collectible" type="Node3D"]
+script = ExtResource("1_grcsk")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_h2yge")
+
+[node name="collect_sfx" type="AudioStreamPlayer3D" parent="Area3D"]
+stream = ExtResource("2_vi4ii")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.871248, 0.490843, 0, -0.490843, 0.871248, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_8orai")
+visibility_range_end = 30.0
+mesh = SubResource("CylinderMesh_yciwo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.177924, 0)
+visibility_range_end = 300.0
+mesh = SubResource("CylinderMesh_oc26g")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 0.871248, -0.490843, 0, 0.490843, 0.871248, 0, 0, 0)
+visibility_range_end = 300.0
+mesh = SubResource("SphereMesh_h1l3x")
+skeleton = NodePath("../../Area3D")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

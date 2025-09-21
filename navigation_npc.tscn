@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bv7kaodfvv1vt" path="res://navigation_npc.gd" id="1_ia2wo"]
 [ext_resource type="PackedScene" uid="uid://b8ndcejl05s0g" path="res://slime.tscn" id="2_eqavq"]
-[ext_resource type="PackedScene" uid="uid://bf74y3ib587a2" path="res://PJ-Jump/Item/collectible.tscn" id="2_jxgvn"]
+[ext_resource type="PackedScene" uid="uid://bf74y3ib587a2" path="res://items/collectible.tscn" id="2_jxgvn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ia2wo"]
 height = 1.5

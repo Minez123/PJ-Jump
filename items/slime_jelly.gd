@@ -4,8 +4,8 @@ extends Area3D
 
 @export var item_resource: ItemResource
 @export var spin_speed: float = 90.0
-@export var price: int = 1
-@export var uid: String = "jump_boost"
+@export var uid: String = "Slime_jelly"
+@export var price: int = 7
 var player_in_range: Node = null
 @onready var interact_label: Label3D = $Label3D
 @onready var item_sfx: AudioStreamPlayer3D = $collect_sfx

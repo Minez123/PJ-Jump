@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://c3r4kqcvea8jt"]
+
+[ext_resource type="Script" uid="uid://dh5a5lxd3pxxw" path="res://jump_boost.gd" id="1_fdea6"]
+[ext_resource type="Resource" uid="uid://wsfup07ctdqb" path="res://items/jump_boost.tres" id="2_nx0tu"]
+[ext_resource type="AudioStream" uid="uid://bqoqxl7cxo5xf" path="res://knife_sfx-2.mp3" id="2_u28v6"]
+[ext_resource type="PackedScene" uid="uid://24vjsobh6ovw" path="res://Grasshopper.glb" id="4_u28v6"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qs0bq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yciwo"]
+transparency = 2
+alpha_scissor_threshold = 1.0
+alpha_antialiasing_mode = 2
+alpha_antialiasing_edge = 0.3
+cull_mode = 1
+depth_draw_mode = 1
+albedo_color = Color(0, 100, 100, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_fxw8f"]
+material = SubResource("StandardMaterial3D_yciwo")
+
+[node name="Jump_boost" type="Area3D"]
+script = ExtResource("1_fdea6")
+item_resource = ExtResource("2_nx0tu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_qs0bq")
+
+[node name="collect_sfx" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_u28v6")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.046951, 0.740474, 0)
+pixel_size = 0.01
+text = "E"
+
+[node name="Grasshopper" parent="." instance=ExtResource("4_u28v6")]
+transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 0, -0.12115, -0.228551)
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, -5.06639e-07, 0, 5.06639e-07, 1, 0, 0, 0, 1, 0, 0, 0)
+visibility_range_end = 300.0
+mesh = SubResource("SphereMesh_fxw8f")
+skeleton = NodePath("")

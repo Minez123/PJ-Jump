@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://bi7exvfig617x"]
+
+[ext_resource type="Script" uid="uid://c214cp20i2584" path="res://items/item_resource.gd" id="1_o44xo"]
+[ext_resource type="Texture2D" uid="uid://df14lplrw4hs7" path="res://1222 Iceberg.png" id="2_6vrw1"]
+
+[resource]
+script = ExtResource("1_o44xo")
+uid = "Ice_boot"
+item_name = "Ice Boot"
+description = "reduce slippery effect"
+texture = ExtResource("2_6vrw1")
+is_stackable = false
+stack_size = 1
+metadata/_custom_type_script = "uid://c214cp20i2584"

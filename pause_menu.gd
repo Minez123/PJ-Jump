@@ -32,3 +32,9 @@ func _on_confirm_pressed():
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel") and visible:
 		hide_menu()
+
+
+func _on_save_pressed() -> void:
+	var player = get_tree().get_first_node_in_group("player")
+	var world = get_tree().get_first_node_in_group("world")
+	Savemanager.save_game(player, world)

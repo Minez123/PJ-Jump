@@ -1,19 +1,19 @@
-[gd_scene load_steps=37 format=3 uid="uid://cawyxa2honk7g"]
+[gd_scene load_steps=41 format=3 uid="uid://cawyxa2honk7g"]
 
 [ext_resource type="Texture2D" uid="uid://7n4p1anjoe51" path="res://crosshair.png" id="1_272bh"]
 [ext_resource type="Script" uid="uid://camty0ert0fe6" path="res://main.gd" id="1_d13ii"]
 [ext_resource type="Shader" uid="uid://crpoheu3tfrgx" path="res://sky.gdshader" id="1_ryguw"]
 [ext_resource type="Script" uid="uid://pcuig3mu46ea" path="res://node_3d.gd" id="2_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://dcy75bfyfxwtv" path="res://PJ-Jump/shooting_star_sampler.png" id="3_1u8w0"]
-[ext_resource type="PackedScene" uid="uid://bf74y3ib587a2" path="res://PJ-Jump/Item/collectible.tscn" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bf74y3ib587a2" path="res://items/collectible.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c75ubi4gtnumo" path="res://PJ-Jump/Platform/struc.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://d3khx0wf0c0s" path="res://PJ-Jump/Platform/NavLevel.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://d0qdslovi1xcb" path="res://PJ-Jump/Fantasy-Free-Godot-617145cb2c96a443e2a61973b939ee0221364a3a/Fantasy_Free/assets/models_fbx/bag_001.fbx" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://cipq8ioqu1v4m" path="res://knight1.tscn" id="6_272bh"]
-[ext_resource type="PackedScene" uid="uid://b70uqth72pdh" path="res://PJ-Jump/Item/re_collectible.tscn" id="7_0odxb"]
+[ext_resource type="PackedScene" uid="uid://b70uqth72pdh" path="res://items/re_collectible.tscn" id="7_0odxb"]
 [ext_resource type="PackedScene" uid="uid://d3vvp5opor4wj" path="res://bullet.tscn" id="8_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cnhnvb2yv37y5" path="res://PJ-Jump/Platform/platform.tscn" id="10_4c57u"]
-[ext_resource type="Script" uid="uid://cx2of5la0e6uv" path="res://canvas_layer.gd" id="11_efxa6"]
+[ext_resource type="Script" uid="uid://cx2of5la0e6uv" path="res://inventorya.gd" id="11_efxa6"]
 [ext_resource type="Script" uid="uid://84tmxldu636e" path="res://item_popup_control.gd" id="14_w48qg"]
 [ext_resource type="PackedScene" uid="uid://4w3py2x8fgph" path="res://PJ-Jump/Platform/slime_platform.tscn" id="15_vivmo"]
 [ext_resource type="PackedScene" uid="uid://bc7wjqwss7bd1" path="res://PJ-Jump/Platform/ice_platform.tscn" id="16_2cqfq"]
@@ -23,10 +23,14 @@
 [ext_resource type="PackedScene" uid="uid://chs6oadi6fyef" path="res://PJ-Jump/Platform/goal.tscn" id="25_0odxb"]
 [ext_resource type="PackedScene" uid="uid://crrvknqgg1hu8" path="res://PJ-Jump/Platform/nav_2.tscn" id="26_a6jrf"]
 [ext_resource type="PackedScene" uid="uid://tpmym06j4c5a" path="res://PJ-Jump/Platform/shop.tscn" id="26_lswn8"]
-[ext_resource type="PackedScene" uid="uid://c3r4kqcvea8jt" path="res://PJ-Jump/Item/jump_boost.tscn" id="26_xuqvo"]
+[ext_resource type="PackedScene" uid="uid://c3r4kqcvea8jt" path="res://items/jump_boost.tscn" id="26_xuqvo"]
 [ext_resource type="PackedScene" uid="uid://dgfcv7iw8u25e" path="res://ice_dun.tscn" id="27_a6jrf"]
 [ext_resource type="PackedScene" uid="uid://dpmigwt8wfj5s" path="res://nav_3.tscn" id="27_xuqvo"]
+[ext_resource type="PackedScene" uid="uid://b2axm8p7blmji" path="res://fade_transition.tscn" id="28_qsp4k"]
 [ext_resource type="PackedScene" uid="uid://dx6f6x1gg1tyl" path="res://slime_dun.tscn" id="28_xuqvo"]
+[ext_resource type="PackedScene" uid="uid://dy25dq61huqvu" path="res://items/slime_boot.tscn" id="29_kq58d"]
+[ext_resource type="Script" uid="uid://dukhch41hvel3" path="res://save_manager.gd" id="29_qsp4k"]
+[ext_resource type="PackedScene" uid="uid://budo6ml1l5gc1" path="res://items/ice_boot_item.tscn" id="30_seu75"]
 
 [sub_resource type="Curve" id="Curve_d13ii"]
 _data = [Vector2(0.00322061, 0), 0.0, 0.0, 0, 0, Vector2(0.162641, 0.912162), 0.0, 0.0, 0, 0, Vector2(0.987118, 0.48443), 0.0, 0.0, 0, 0]
@@ -270,3 +274,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.119934, 1, 24.6549)
 
 [node name="Nav_3" parent="." instance=ExtResource("27_xuqvo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7426, 0.664968, 51.6462)
+
+[node name="Fade_transition" parent="." instance=ExtResource("28_qsp4k")]
+
+[node name="Fade_Timer" type="Timer" parent="Fade_transition"]
+
+[node name="Slime_boot" parent="." instance=ExtResource("29_kq58d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.9281, 1.14352, 1.40528)
+
+[node name="Ice_boot" parent="." instance=ExtResource("30_seu75")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.1117, 1.14352, 0.834702)
+
+[node name="SaveManager" type="Node" parent="Ice_boot"]
+script = ExtResource("29_qsp4k")
+
+[connection signal="timeout" from="Fade_transition/Fade_Timer" to="." method="_on_fade_timer_timeout"]
