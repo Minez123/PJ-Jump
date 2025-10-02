@@ -115,47 +115,47 @@ current = true
 [node name="Skeleton3D" parent="Rig" index="0"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 bones/0/rotation = Quaternion(-2.72263e-09, 0.0791169, 4.71573e-09, 0.996865)
-bones/1/position = Vector3(-9.00696e-17, 0.376578, 4.42762e-17)
-bones/1/rotation = Quaternion(0.0141289, 0.035612, -0.0110518, 0.999205)
-bones/2/rotation = Quaternion(0.021046, -0.0425331, 0.00877609, 0.998835)
-bones/3/rotation = Quaternion(0.0111527, -0.0238162, 0.00958503, 0.999608)
-bones/4/position = Vector3(0.208684, 0.131025, -0.00652622)
-bones/4/rotation = Quaternion(-0.60349, -0.0688157, -0.563376, 0.560064)
-bones/5/rotation = Quaternion(2.97464e-08, -6.59482e-08, -0.552332, 0.833624)
-bones/7/rotation = Quaternion(-0.293772, -0.356138, 0.134408, 0.876811)
+bones/1/position = Vector3(1.26448e-16, 0.391608, 2.68692e-16)
+bones/1/rotation = Quaternion(0.0141002, 0.035614, -0.0110508, 0.999205)
+bones/2/rotation = Quaternion(0.0200363, -0.00606345, 0.00677982, 0.999758)
+bones/3/rotation = Quaternion(0.00833577, -0.0230307, 0.0136219, 0.999607)
+bones/4/position = Vector3(0.211701, 0.132536, -0.00734134)
+bones/4/rotation = Quaternion(-0.594326, -0.0964364, -0.620525, 0.502419)
+bones/5/rotation = Quaternion(3.04948e-09, -3.73733e-08, -0.526365, 0.850259)
+bones/7/rotation = Quaternion(-0.275469, -0.334607, 0.146263, 0.889248)
 bones/8/position = Vector3(9.85064e-09, 0.0961252, -0.0575)
-bones/8/rotation = Quaternion(-0.00510214, 0.0153487, -0.669194, 0.742912)
-bones/14/position = Vector3(-0.211454, 0.132412, -0.00727452)
-bones/14/rotation = Quaternion(-0.629241, 0.149939, 0.616249, 0.449234)
-bones/15/rotation = Quaternion(3.51966e-08, 4.85755e-08, 0.507555, 0.861619)
-bones/17/rotation = Quaternion(-0.288841, 0.338375, -0.174817, 0.878358)
+bones/8/rotation = Quaternion(-0.00486139, 0.00920945, -0.669369, 0.742857)
+bones/14/position = Vector3(-0.208436, 0.130901, -0.00645941)
+bones/14/rotation = Quaternion(-0.645059, 0.125077, 0.596265, 0.461219)
+bones/15/rotation = Quaternion(-2.55743e-08, 4.89682e-08, 0.48409, 0.875018)
+bones/17/rotation = Quaternion(-0.292406, 0.329856, -0.153904, 0.884312)
 bones/18/position = Vector3(-1.3482e-08, 0.0961251, -0.0575)
-bones/18/rotation = Quaternion(-0.00722684, 0.0188284, 0.649533, 0.760066)
-bones/21/rotation = Quaternion(-0.018619, -0.00679912, 0.0083331, 0.999769)
-bones/24/position = Vector3(0.170945, 0.113587, -0.00655482)
-bones/24/rotation = Quaternion(0.991101, 0.0749909, 0.0667232, 0.0874302)
-bones/25/rotation = Quaternion(0.467374, 4.99319e-08, -3.17614e-07, 0.884059)
-bones/26/rotation = Quaternion(-0.590545, -0.175994, 0.0688013, 0.784569)
-bones/27/rotation = Quaternion(-1.32251e-08, 0.920355, -0.391084, 7.6864e-08)
-bones/28/position = Vector3(-0.170945, 0.113587, 0.00655485)
-bones/28/rotation = Quaternion(0.990171, -0.0214443, 0.0248184, 0.135962)
-bones/29/rotation = Quaternion(0.380277, -6.29929e-08, 2.64406e-07, 0.924873)
-bones/30/rotation = Quaternion(-0.616345, 0.0959056, -0.0240375, 0.781245)
-bones/31/rotation = Quaternion(2.90575e-08, 0.920355, -0.391084, -7.00804e-08)
-bones/32/position = Vector3(0.170945, 0.295653, 0.579155)
+bones/18/rotation = Quaternion(-0.0147212, 0.0162823, 0.653808, 0.756342)
+bones/21/rotation = Quaternion(-0.0213179, -0.0405327, 0.010312, 0.998898)
+bones/24/position = Vector3(0.170945, 0.113587, 0.0102989)
+bones/24/rotation = Quaternion(0.989337, 0.0742089, 0.07144, 0.102969)
+bones/25/rotation = Quaternion(0.294572, 6.11914e-08, -2.04881e-07, 0.955629)
+bones/26/rotation = Quaternion(-0.574236, -0.177057, 0.0396184, 0.798333)
+bones/27/rotation = Quaternion(-1.43769e-08, 0.920355, -0.391084, 7.73502e-08)
+bones/28/position = Vector3(-0.170945, 0.113587, -0.0102989)
+bones/28/rotation = Quaternion(0.996607, -0.0215022, 0.0249015, 0.075451)
+bones/29/rotation = Quaternion(0.379756, -6.17306e-08, 2.60868e-07, 0.925087)
+bones/30/rotation = Quaternion(-0.531142, 0.0905064, -0.017997, 0.842243)
+bones/31/rotation = Quaternion(2.9341e-08, 0.920355, -0.391084, -6.99381e-08)
+bones/32/position = Vector3(0.170945, 0.293864, 0.577366)
 bones/32/rotation = Quaternion(0.707107, -2.30896e-07, -4.44614e-08, 0.707107)
-bones/33/position = Vector3(0.197457, 0.0388233, 0.119655)
-bones/33/rotation = Quaternion(-0.601482, -8.04846e-08, -6.07884e-08, 0.798887)
+bones/33/position = Vector3(0.197457, 0.0545452, 0.250835)
+bones/33/rotation = Quaternion(-0.735252, -6.80995e-08, -7.34313e-08, 0.677794)
 bones/34/position = Vector3(1.72042e-08, 0.362833, -2.42861e-15)
 bones/34/rotation = Quaternion(6.19586e-09, 8.27295e-11, 0.989706, -0.143117)
 bones/35/position = Vector3(-2.37954e-08, 0.213436, -4.38926e-09)
 bones/35/rotation = Quaternion(-1.02576e-07, 0.391084, 0.920355, -3.08996e-08)
 bones/36/position = Vector3(8.58988e-09, 0.16565, -2.81527e-09)
 bones/37/rotation = Quaternion(1, -4.17164e-09, 1.9912e-07, 2.81742e-10)
-bones/39/position = Vector3(-0.170945, 0.295653, 0.579155)
+bones/39/position = Vector3(-0.170945, 0.293864, 0.577366)
 bones/39/rotation = Quaternion(0.707107, -3.98323e-08, 1.46602e-07, 0.707107)
-bones/40/position = Vector3(-0.170945, 0.0417219, 0.273712)
-bones/40/rotation = Quaternion(-0.723131, -6.91246e-08, -7.16124e-08, 0.690711)
+bones/40/position = Vector3(-0.170945, 0.0410589, 0.143789)
+bones/40/rotation = Quaternion(-0.5968, -8.05117e-08, -5.77207e-08, 0.80239)
 bones/41/rotation = Quaternion(-3.86245e-09, 4.51909e-10, 0.99626, 0.0864064)
 bones/42/position = Vector3(-6.64032e-09, 0.213436, 3.24511e-09)
 bones/42/rotation = Quaternion(-1.04769e-07, 0.391084, 0.920355, -2.62431e-08)
@@ -163,39 +163,39 @@ bones/43/position = Vector3(-6.31127e-09, 0.16565, -2.24739e-09)
 bones/44/rotation = Quaternion(1, 3.44723e-09, 1.95319e-07, 6.32361e-09)
 bones/46/position = Vector3(0.54947, 1.04626, -0.494756)
 bones/46/rotation = Quaternion(-0.70686, -0.0186654, -0.0186654, 0.70686)
-bones/47/position = Vector3(0.500505, 0.791037, 0.0300879)
+bones/47/position = Vector3(0.500505, 0.791833, 0.0300879)
 bones/47/rotation = Quaternion(0.801407, 0.084871, 0.590205, 0.0469222)
 bones/48/position = Vector3(-0.41639, 1.07651, -0.619693)
 bones/48/rotation = Quaternion(-0.70686, -0.0186654, -0.0186654, 0.70686)
-bones/49/position = Vector3(-0.511636, 0.791037, 0.0449102)
+bones/49/position = Vector3(-0.511636, 0.791833, 0.0449102)
 bones/49/rotation = Quaternion(-0.797733, 0.0620332, 0.599751, 0.00850078)
 
 [node name="1H_Sword_Offhand" parent="Rig/Skeleton3D" index="0"]
-transform = Transform3D(-0.134393, 0.342985, 0.929677, 0.989079, -0.0108436, 0.146981, 0.0604935, 0.939278, -0.337782, 0.562665, 0.67204, -0.000339888)
+transform = Transform3D(-0.104279, 0.332823, 0.937205, 0.993934, 0.00178575, 0.109957, 0.0349228, 0.942987, -0.330991, 0.545007, 0.655197, 0.00956952)
 visible = false
 
 [node name="Badge_Shield" parent="Rig/Skeleton3D" index="1"]
-transform = Transform3D(-0.134392, 0.342985, 0.929677, 0.989079, -0.0108462, 0.146981, 0.0604961, 0.939278, -0.337782, 0.707588, 0.694952, -0.0529952)
+transform = Transform3D(-0.104279, 0.332823, 0.937205, 0.993934, 0.00178321, 0.109958, 0.0349254, 0.942987, -0.330991, 0.691103, 0.672337, -0.0420271)
 visible = false
 
 [node name="Rectangle_Shield" parent="Rig/Skeleton3D" index="2"]
-transform = Transform3D(-0.134392, 0.342985, 0.929677, 0.989079, -0.0108462, 0.146981, 0.0604961, 0.939278, -0.337782, 0.707588, 0.694952, -0.0529952)
+transform = Transform3D(-0.104279, 0.332823, 0.937205, 0.993934, 0.00178321, 0.109958, 0.0349254, 0.942987, -0.330991, 0.691103, 0.672337, -0.0420271)
 visible = false
 
 [node name="Round_Shield" parent="Rig/Skeleton3D" index="3"]
-transform = Transform3D(-0.134392, 0.342985, 0.929677, 0.989079, -0.0108462, 0.146981, 0.0604961, 0.939278, -0.337782, 0.707588, 0.694952, -0.0529952)
+transform = Transform3D(-0.104279, 0.332823, 0.937205, 0.993934, 0.00178321, 0.109958, 0.0349254, 0.942987, -0.330991, 0.691103, 0.672337, -0.0420271)
 visible = false
 
 [node name="Spike_Shield" parent="Rig/Skeleton3D" index="4"]
-transform = Transform3D(-0.134392, 0.342985, 0.929677, 0.989079, -0.0108462, 0.146981, 0.0604961, 0.939278, -0.337782, 0.707588, 0.694952, -0.0529952)
+transform = Transform3D(-0.104279, 0.332823, 0.937205, 0.993934, 0.00178321, 0.109958, 0.0349254, 0.942987, -0.330991, 0.691103, 0.672337, -0.0420271)
 visible = false
 
 [node name="1H_Sword" parent="Rig/Skeleton3D" index="5"]
-transform = Transform3D(0.00778949, -0.155905, 0.987741, 0.999834, 0.0174557, -0.00513009, -0.0164416, 0.987617, 0.156015, -0.501329, 0.635239, 0.223725)
+transform = Transform3D(0.0132012, -0.140621, 0.989975, 0.9999, 0.00679922, -0.012368, -0.00499152, 0.990039, 0.140696, -0.505269, 0.639145, 0.216048)
 visible = false
 
 [node name="2H_Sword" parent="Rig/Skeleton3D" index="6"]
-transform = Transform3D(0.00778948, -0.155905, 0.987741, 0.999834, 0.0174557, -0.00513008, -0.0164416, 0.987617, 0.156015, -0.501329, 0.635239, 0.223725)
+transform = Transform3D(0.0132012, -0.140621, 0.989975, 0.9999, 0.0067992, -0.012368, -0.00499151, 0.990039, 0.140696, -0.505269, 0.639145, 0.216048)
 
 [node name="2H_Sword" parent="Rig/Skeleton3D/2H_Sword" index="0"]
 visible = false
@@ -204,10 +204,10 @@ visible = false
 transform = Transform3D(-2.62268e-08, 0.6, 0, 2.62268e-08, 1.14641e-15, -0.6, -0.6, -2.62268e-08, -2.62268e-08, 0, 1, 0)
 
 [node name="Knight_Helmet" parent="Rig/Skeleton3D" index="7"]
-transform = Transform3D(0.996514, -0.0185911, 0.0813302, 0.0231261, 0.998209, -0.0551783, -0.0801587, 0.0568668, 0.995159, 0.012663, 1.18465, 0.0534024)
+transform = Transform3D(0.995758, -0.026733, 0.0880467, 0.0307782, 0.998517, -0.0449117, -0.0867154, 0.0474311, 0.995103, 0.0142068, 1.19983, 0.0512066)
 
 [node name="Knight_Cape" parent="Rig/Skeleton3D" index="8"]
-transform = Transform3D(0.995457, 0.00129959, 0.095199, 0.00750822, 0.995721, -0.0921034, -0.0949113, 0.0923998, 0.991188, 0.0121547, 1.18471, 0.0524952)
+transform = Transform3D(0.98561, -0.000792182, 0.169033, 0.015482, 0.996209, -0.0856049, -0.168324, 0.08699, 0.981886, 0.0135439, 1.19989, 0.0501965)
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="3"]
 tree_root = SubResource("AnimationNodeStateMachine_hnm0a")
@@ -218,6 +218,7 @@ parameters/IWR/blend_position = Vector2(-0.15126, 0)
 
 [node name="jump_sfx" type="AudioStreamPlayer2D" parent="." index="4"]
 stream = ExtResource("3_6x5gq")
+bus = &"SFX"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
@@ -225,15 +226,18 @@ shape = SubResource("CylinderShape3D_y3qlt")
 
 [node name="Landing_sfx" type="AudioStreamPlayer3D" parent="." index="6"]
 stream = ExtResource("4_eu2mi")
+bus = &"SFX"
 
 [node name="ShotgunSfx" type="AudioStreamPlayer3D" parent="." index="7"]
 stream = ExtResource("8_6x5gq")
+bus = &"SFX"
 
 [node name="Full_Charge_sfx" type="AudioStreamPlayer2D" parent="." index="8"]
 stream = ExtResource("5_1uur8")
+bus = &"SFX"
 
 [node name="PauseMenu" type="CanvasLayer" parent="." index="9"]
-process_mode = 2
+process_mode = 3
 script = ExtResource("6_ep7mg")
 
 [node name="Panel" type="ColorRect" parent="PauseMenu" index="0"]
@@ -243,7 +247,7 @@ offset_right = 1125.0
 offset_bottom = 545.0
 color = Color(0.32, 0.32, 0.32, 0)
 
-[node name="Volume" type="Label" parent="PauseMenu/Panel" index="0"]
+[node name="SFX" type="Label" parent="PauseMenu/Panel" index="0"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 4.25
@@ -252,9 +256,20 @@ offset_left = 173.0
 offset_top = 204.0
 offset_right = -3720.5
 offset_bottom = -484.875
-text = "Volume"
+text = "SFX"
 
-[node name="Mouse sensitivity" type="Label" parent="PauseMenu/Panel" index="1"]
+[node name="Music" type="Label" parent="PauseMenu/Panel" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 4.25
+anchor_bottom = 1.675
+offset_left = 173.0
+offset_top = 247.0
+offset_right = -3720.5
+offset_bottom = -441.875
+text = "Music"
+
+[node name="Mouse sensitivity" type="Label" parent="PauseMenu/Panel" index="2"]
 layout_mode = 0
 offset_left = 138.0
 offset_top = 146.0
@@ -262,7 +277,7 @@ offset_right = 272.0
 offset_bottom = 169.0
 text = "Mouse sensitivity"
 
-[node name="MouseSlider" type="HSlider" parent="PauseMenu/Panel" index="2"]
+[node name="MouseSlider" type="HSlider" parent="PauseMenu/Panel" index="3"]
 layout_mode = 0
 offset_left = 338.0
 offset_top = 154.0
@@ -273,7 +288,7 @@ max_value = 0.01
 step = 0.001
 value = 0.001
 
-[node name="VolumeSlider" type="HSlider" parent="PauseMenu/Panel" index="3"]
+[node name="SFXSlider" type="HSlider" parent="PauseMenu/Panel" index="4"]
 layout_mode = 0
 offset_left = 353.0
 offset_top = 209.0
@@ -282,7 +297,16 @@ offset_bottom = 232.0
 max_value = 1.0
 step = 0.01
 
-[node name="ConfirmButton" type="Button" parent="PauseMenu/Panel" index="4"]
+[node name="MusicSlider" type="HSlider" parent="PauseMenu/Panel" index="5"]
+layout_mode = 0
+offset_left = 353.0
+offset_top = 252.0
+offset_right = 724.0
+offset_bottom = 275.0
+max_value = 1.0
+step = 0.01
+
+[node name="ConfirmButton" type="Button" parent="PauseMenu/Panel" index="6"]
 layout_mode = 0
 offset_left = 363.0
 offset_top = 308.0
@@ -290,13 +314,17 @@ offset_right = 434.0
 offset_bottom = 339.0
 text = "Confirm"
 
-[node name="save" type="Button" parent="PauseMenu/Panel" index="5"]
+[node name="save" type="Button" parent="PauseMenu/Panel" index="7"]
 layout_mode = 0
 offset_left = 464.0
 offset_top = 309.0
 offset_right = 535.0
 offset_bottom = 340.0
 text = "save"
+
+[node name="SaveConfirmDialog" type="ConfirmationDialog" parent="PauseMenu" index="1"]
+size = Vector2i(306, 100)
+dialog_text = "Do you want to go to the main menu?"
 
 [node name="CloudTrail" type="GPUParticles3D" parent="." index="10"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.127469, 0.0350828)
@@ -308,13 +336,18 @@ draw_pass_1 = SubResource("SphereMesh_eu2mi")
 [node name="bouce_1" type="AudioStreamPlayer2D" parent="." index="12"]
 stream = ExtResource("10_q01if")
 volume_db = -3.0
+bus = &"SFX"
 
 [node name="bouce_2" type="AudioStreamPlayer2D" parent="." index="13"]
 stream = ExtResource("11_0m85o")
 volume_db = -1.0
+bus = &"SFX"
 
 [node name="bouce_3" type="AudioStreamPlayer2D" parent="." index="14"]
 stream = ExtResource("12_tf46w")
 volume_db = -16.225
+bus = &"SFX"
 
 [connection signal="pressed" from="PauseMenu/Panel/save" to="PauseMenu" method="_on_save_pressed"]
+[connection signal="canceled" from="PauseMenu/SaveConfirmDialog" to="PauseMenu" method="_on_save_confirm_dialog_canceled"]
+[connection signal="confirmed" from="PauseMenu/SaveConfirmDialog" to="PauseMenu" method="_on_save_confirm_dialog_confirmed"]

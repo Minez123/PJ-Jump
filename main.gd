@@ -1,9 +1,12 @@
 extends Node3D
 @export var player: Node3D
 var saved_seed: int = -1
-
+@onready var music_low: AudioStreamPlayer = $WorldEnvironment/Music/MusicLow
+@onready var music_mid: AudioStreamPlayer = $WorldEnvironment/Music/MusicMid
+@onready var music_high: AudioStreamPlayer = $WorldEnvironment/Music/MusicHigh
+@onready var music_high2: AudioStreamPlayer = $WorldEnvironment/Music/MusicVeryHigh
 var sky_material: ShaderMaterial
-
+var current_music: AudioStreamPlayer = null
 
 
 func _ready() -> void:
@@ -13,16 +16,17 @@ func _ready() -> void:
 	if world:
 		world.connect("world_generation_finished", _on_world_generation_finished)
 
-	# The loading logic now moves into a separate function.
+
 
 func _on_world_generation_finished() -> void:
-	$Fade_transition/AnimationPlayer.play("fade_out")
-	$Fade_transition/Fade_Timer.start()
+
 	if not GameData.loaded_save_data:
+		$Fade_transition/AnimationPlayer.play("fade_out")
+		$Fade_transition/Fade_Timer.start()
 		return
 
 	var save_data = GameData.loaded_save_data
-
+	GameData.collected_keys = save_data["collected_keys"]
 	# Load Player Data
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
@@ -43,19 +47,41 @@ func _on_world_generation_finished() -> void:
 			for item in all_items:
 				if loaded_uids.has(item.uid):
 					item.queue_free()
-
-		# Remove collected coins from the world
-		var collected_coin_positions = save_data.get("collected_coin_positions", [])
-		if not collected_coin_positions.is_empty():
+						
+			var loaded_coins = save_data["collected_coin_positions"]
 			var all_coins = get_tree().get_nodes_in_group("coins")
-			print("Found coins to process:", all_coins.size())
-			for coin in all_coins:
-				for saved_pos_dict in collected_coin_positions:
-					var saved_vec = Vector3(saved_pos_dict.x, saved_pos_dict.y, saved_pos_dict.z)
-					if coin.global_position.is_equal_approx(saved_vec):
-						coin.queue_free()
-						break
+			var existing_ids = []
 
+			for coin in all_coins: 
+				if loaded_coins.has(coin.uid): 
+					var coin_state = loaded_coins[coin.uid] 
+					if not coin_state.collected:
+						saved_pos = coin_state.position 
+						coin.global_position = Vector3(saved_pos.x, saved_pos.y, saved_pos.z)
+					else: 
+						coin.set_coin_state()
+						GameData.collected_coin_positions[coin.uid] = coin.get_coin_state()
+						coin.queue_free()
+
+
+
+						
+		# Load NPC data
+		var loaded_npcs = save_data["npcs"]
+		var all_npcs = get_tree().get_nodes_in_group("AI_NPC")
+		for npc in all_npcs:
+			if loaded_npcs.has(npc.uid):
+				var npc_state = loaded_npcs[npc.uid]
+				if npc_state.exist:
+					saved_pos = npc_state.position
+					npc.global_position = Vector3(saved_pos.x, saved_pos.y, saved_pos.z)
+					npc.health = npc_state.health
+				else:
+					npc.set_npc_state()
+					GameData.npcs_to_save[npc.uid] = npc.get_npc_state()
+					npc.queue_free()
+		$Fade_transition/AnimationPlayer.play("fade_out")
+		$Fade_transition/Fade_Timer.start()
 		GameData.loaded_save_data = null
 
 
@@ -66,6 +92,23 @@ func _process(delta) -> void:
 	sky_material = $WorldEnvironment.environment.sky.sky_material
 	if sky_material :
 		sky_material.set("shader_parameter/player_height", h)
+	var target_music: AudioStreamPlayer = null
+	if h > 6000:
+		target_music = music_high
+	elif h > 450.0:
+		target_music = music_high
+	elif h > 250.0:
+		target_music = music_mid
+	else:
+		target_music = music_low
+
+	# 🎶 Switch music if needed
+	if target_music != current_music:
+		if current_music and current_music.playing:
+			current_music.stop()
+		if not target_music.playing:
+			target_music.play()
+		current_music = target_music
 
 
 

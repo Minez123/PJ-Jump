@@ -46,6 +46,7 @@ shape = SubResource("SphereShape3D_h2yge")
 
 [node name="collect_sfx" type="AudioStreamPlayer3D" parent="Area3D"]
 stream = ExtResource("2_vi4ii")
+bus = &"SFX"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.871248, 0.490843, 0, -0.490843, 0.871248, 0, 0, 0)

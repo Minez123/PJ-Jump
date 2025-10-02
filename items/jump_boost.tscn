@@ -28,6 +28,7 @@ shape = SubResource("SphereShape3D_qs0bq")
 
 [node name="collect_sfx" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("2_u28v6")
+bus = &"SFX"
 
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.046951, 0.740474, 0)
@@ -37,8 +38,13 @@ text = "E"
 [node name="Grasshopper" parent="." instance=ExtResource("4_u28v6")]
 transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 0, -0.12115, -0.228551)
 
+[node name="Sphere002" parent="Grasshopper" index="0"]
+visibility_range_end = 300.0
+
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, -5.06639e-07, 0, 5.06639e-07, 1, 0, 0, 0, 1, 0, 0, 0)
 visibility_range_end = 300.0
 mesh = SubResource("SphereMesh_fxw8f")
 skeleton = NodePath("")
+
+[editable path="Grasshopper"]

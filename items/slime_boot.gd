@@ -28,4 +28,3 @@ func _on_body_entered(body: Node) -> void:
 		item_sfx.play()
 		await get_tree().create_timer(0.2).timeout
 		queue_free()
-		queue_free()

@@ -44,6 +44,7 @@ shape = SubResource("SphereShape3D_qs0bq")
 
 [node name="collect_sfx" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_julyk")
+bus = &"SFX"
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 visibility_range_end = 300.0
@@ -52,6 +53,9 @@ skeleton = NodePath("")
 
 [node name="Jar of jam2" parent="." instance=ExtResource("4_uk2rk")]
 transform = Transform3D(0.173205, -0.1, 0, 0.1, 0.173205, 0, 0, 0, 0.2, 0, 0, 0)
+
+[node name="Node" parent="Jar of jam2" index="0"]
+visibility_range_end = 300.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Jar of jam2"]
 visibility_range_end = 300.0
@@ -71,5 +75,8 @@ skeleton = NodePath("../MeshInstance3D")
 
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.046951, 0.740474, 0)
+visibility_range_end = 300.0
 pixel_size = 0.01
 text = "E"
+
+[editable path="Jar of jam2"]

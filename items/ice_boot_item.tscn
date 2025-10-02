@@ -35,7 +35,6 @@ func _on_body_entered(body: Node) -> void:
 		item_sfx.play()
 		await get_tree().create_timer(0.2).timeout
 		queue_free()
-		queue_free()
 "
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_qs0bq"]
@@ -49,5 +48,6 @@ shape = SubResource("SphereShape3D_qs0bq")
 
 [node name="collect_sfx" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("2_ebjmj")
+bus = &"SFX"
 
 [node name="Boots2" parent="." instance=ExtResource("3_ebjmj")]

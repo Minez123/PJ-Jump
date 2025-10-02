@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cugg7invsk4cj"
+path="res://.godot/imported/Before the Sun Slips Away.mp3-99f370fae89e469077e3bca89d633de4.mp3str"
+
+[deps]
+
+source_file="res://music/Before the Sun Slips Away.mp3"
+dest_files=["res://.godot/imported/Before the Sun Slips Away.mp3-99f370fae89e469077e3bca89d633de4.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

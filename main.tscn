@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://cawyxa2honk7g"]
+[gd_scene load_steps=49 format=3 uid="uid://cawyxa2honk7g"]
 
 [ext_resource type="Texture2D" uid="uid://7n4p1anjoe51" path="res://crosshair.png" id="1_272bh"]
 [ext_resource type="Script" uid="uid://camty0ert0fe6" path="res://main.gd" id="1_d13ii"]
@@ -7,11 +7,14 @@
 [ext_resource type="Texture2D" uid="uid://dcy75bfyfxwtv" path="res://PJ-Jump/shooting_star_sampler.png" id="3_1u8w0"]
 [ext_resource type="PackedScene" uid="uid://bf74y3ib587a2" path="res://items/collectible.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c75ubi4gtnumo" path="res://PJ-Jump/Platform/struc.tscn" id="4_1bvp3"]
+[ext_resource type="AudioStream" uid="uid://bkwks5m14w4hc" path="res://music/Game1_Music.mp3" id="4_seu75"]
+[ext_resource type="AudioStream" uid="uid://cugg7invsk4cj" path="res://music/Before the Sun Slips Away.mp3" id="5_htxhm"]
 [ext_resource type="PackedScene" uid="uid://d3khx0wf0c0s" path="res://PJ-Jump/Platform/NavLevel.tscn" id="5_lquwl"]
-[ext_resource type="PackedScene" uid="uid://d0qdslovi1xcb" path="res://PJ-Jump/Fantasy-Free-Godot-617145cb2c96a443e2a61973b939ee0221364a3a/Fantasy_Free/assets/models_fbx/bag_001.fbx" id="6_7mycd"]
+[ext_resource type="AudioStream" uid="uid://k4h0a7qpfqsn" path="res://music/Pixel Dreams.mp3" id="6_4k2k6"]
 [ext_resource type="PackedScene" uid="uid://cipq8ioqu1v4m" path="res://knight1.tscn" id="6_272bh"]
-[ext_resource type="PackedScene" uid="uid://b70uqth72pdh" path="res://items/re_collectible.tscn" id="7_0odxb"]
+[ext_resource type="AudioStream" uid="uid://d4dmpgn8sanmt" path="res://music/hub_music.mp3" id="6_jq2sk"]
 [ext_resource type="PackedScene" uid="uid://d3vvp5opor4wj" path="res://bullet.tscn" id="8_5vw27"]
+[ext_resource type="Script" uid="uid://degjn5ylnhfgp" path="res://hud.gd" id="8_htxhm"]
 [ext_resource type="PackedScene" uid="uid://cnhnvb2yv37y5" path="res://PJ-Jump/Platform/platform.tscn" id="10_4c57u"]
 [ext_resource type="Script" uid="uid://cx2of5la0e6uv" path="res://inventorya.gd" id="11_efxa6"]
 [ext_resource type="Script" uid="uid://84tmxldu636e" path="res://item_popup_control.gd" id="14_w48qg"]
@@ -23,14 +26,19 @@
 [ext_resource type="PackedScene" uid="uid://chs6oadi6fyef" path="res://PJ-Jump/Platform/goal.tscn" id="25_0odxb"]
 [ext_resource type="PackedScene" uid="uid://crrvknqgg1hu8" path="res://PJ-Jump/Platform/nav_2.tscn" id="26_a6jrf"]
 [ext_resource type="PackedScene" uid="uid://tpmym06j4c5a" path="res://PJ-Jump/Platform/shop.tscn" id="26_lswn8"]
-[ext_resource type="PackedScene" uid="uid://c3r4kqcvea8jt" path="res://items/jump_boost.tscn" id="26_xuqvo"]
 [ext_resource type="PackedScene" uid="uid://dgfcv7iw8u25e" path="res://ice_dun.tscn" id="27_a6jrf"]
-[ext_resource type="PackedScene" uid="uid://dpmigwt8wfj5s" path="res://nav_3.tscn" id="27_xuqvo"]
+[ext_resource type="PackedScene" uid="uid://dpmigwt8wfj5s" path="res://PJ-Jump/Platform/nav_3.tscn" id="27_xuqvo"]
 [ext_resource type="PackedScene" uid="uid://b2axm8p7blmji" path="res://fade_transition.tscn" id="28_qsp4k"]
 [ext_resource type="PackedScene" uid="uid://dx6f6x1gg1tyl" path="res://slime_dun.tscn" id="28_xuqvo"]
-[ext_resource type="PackedScene" uid="uid://dy25dq61huqvu" path="res://items/slime_boot.tscn" id="29_kq58d"]
-[ext_resource type="Script" uid="uid://dukhch41hvel3" path="res://save_manager.gd" id="29_qsp4k"]
-[ext_resource type="PackedScene" uid="uid://budo6ml1l5gc1" path="res://items/ice_boot_item.tscn" id="30_seu75"]
+[ext_resource type="Script" uid="uid://c6bmimm7x4qq1" path="res://savemanager.gd" id="31_seu75"]
+[ext_resource type="PackedScene" uid="uid://d6bexx4c5ql4" path="res://items/key_k.tscn" id="34_0rl1p"]
+[ext_resource type="PackedScene" uid="uid://chibcsvxdewr8" path="res://items/key_u.tscn" id="35_0rl1p"]
+[ext_resource type="PackedScene" uid="uid://c147xobtvsbtk" path="res://items/key_c_2.tscn" id="36_b1qrp"]
+[ext_resource type="PackedScene" uid="uid://c1ly2c04wyyq5" path="res://items/key_c.tscn" id="36_facbu"]
+[ext_resource type="PackedScene" uid="uid://bnutox8n07gvt" path="res://items/key_s.tscn" id="37_b1qrp"]
+[ext_resource type="PackedScene" uid="uid://baqvmgxf544l1" path="res://items/key_o.tscn" id="37_come4"]
+[ext_resource type="PackedScene" uid="uid://dsq7mffeyblru" path="res://items/key_m.tscn" id="38_h8e4i"]
+[ext_resource type="PackedScene" uid="uid://dkrvj82yi2h0q" path="res://items/key_i.tscn" id="39_come4"]
 
 [sub_resource type="Curve" id="Curve_d13ii"]
 _data = [Vector2(0.00322061, 0), 0.0, 0.0, 0, 0, Vector2(0.162641, 0.912162), 0.0, 0.0, 0, 0, Vector2(0.987118, 0.48443), 0.0, 0.0, 0, 0]
@@ -99,11 +107,33 @@ player = NodePath("Knight")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kq58d")
 
+[node name="Music" type="Node" parent="WorldEnvironment"]
+
+[node name="MusicLow" type="AudioStreamPlayer" parent="WorldEnvironment/Music"]
+stream = ExtResource("4_seu75")
+volume_db = -1.0
+bus = &"Music"
+
+[node name="MusicMid" type="AudioStreamPlayer" parent="WorldEnvironment/Music"]
+stream = ExtResource("5_htxhm")
+volume_db = -1.0
+bus = &"Music"
+
+[node name="MusicHigh" type="AudioStreamPlayer" parent="WorldEnvironment/Music"]
+stream = ExtResource("6_4k2k6")
+volume_db = -1.0
+bus = &"Music"
+
+[node name="MusicVeryHigh" type="AudioStreamPlayer" parent="WorldEnvironment/Music"]
+stream = ExtResource("6_jq2sk")
+volume_db = -1.0
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("8_htxhm")
 
 [node name="JumpPowerBar" type="ProgressBar" parent="HUD"]
 anchors_preset = -1
@@ -137,11 +167,17 @@ texture = ExtResource("1_272bh")
 expand_mode = 1
 stretch_mode = 3
 
+[node name="TimerLabel" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.025
+anchor_right = 0.025
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="Platform_Gen" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.096, 0.5, 15.142)
 script = ExtResource("2_0xm2m")
 collectible_scene = ExtResource("3_h2yge")
-re_collectible_scene = ExtResource("7_0odxb")
 plat_up_scene = ExtResource("4_1bvp3")
 NavLevel_scene = ExtResource("5_lquwl")
 NavLevel2_scene = ExtResource("26_a6jrf")
@@ -164,15 +200,6 @@ offset_left = 1011.0
 offset_top = 5.0
 offset_right = 1139.0
 offset_bottom = 28.0
-
-[node name="NavigationRegion3D" parent="." instance=ExtResource("5_lquwl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.2152, 3.09587, 11.7534)
-
-[node name="bag_001" parent="." instance=ExtResource("6_7mycd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.408, 2.77277, 8.82193)
-
-[node name="bag_002" parent="." instance=ExtResource("6_7mycd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5576, 2.77277, 9.86035)
 
 [node name="Knight" parent="." groups=["Player"] instance=ExtResource("6_272bh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.1539, 2.77277, 19.4029)
@@ -260,32 +287,41 @@ offset_bottom = 23.0
 
 [node name="Node3D" parent="." instance=ExtResource("22_ryguw")]
 
-[node name="shop" parent="." instance=ExtResource("26_lswn8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4, 0.6, -26.3)
-
-[node name="Nav_2" parent="." instance=ExtResource("26_a6jrf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.6, 1.58021, 35.5)
-
 [node name="Platform" parent="." instance=ExtResource("10_4c57u")]
 transform = Transform3D(99, 0, 0, 0, 1, 0, 0, 0, 99, -17.7562, 0, 17.0846)
-
-[node name="Jump_boost" parent="." instance=ExtResource("26_xuqvo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.119934, 1, 24.6549)
-
-[node name="Nav_3" parent="." instance=ExtResource("27_xuqvo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7426, 0.664968, 51.6462)
 
 [node name="Fade_transition" parent="." instance=ExtResource("28_qsp4k")]
 
 [node name="Fade_Timer" type="Timer" parent="Fade_transition"]
 
-[node name="Slime_boot" parent="." instance=ExtResource("29_kq58d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.9281, 1.14352, 1.40528)
+[node name="SaveManager" type="Node" parent="."]
+script = ExtResource("31_seu75")
 
-[node name="Ice_boot" parent="." instance=ExtResource("30_seu75")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.1117, 1.14352, 0.834702)
+[node name="goal" parent="." instance=ExtResource("25_0odxb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10443, 1.07441, 45.3609)
 
-[node name="SaveManager" type="Node" parent="Ice_boot"]
-script = ExtResource("29_qsp4k")
+[node name="Key_K" parent="." instance=ExtResource("34_0rl1p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1064, 4.21745, 11.347)
+
+[node name="Key_U" parent="." instance=ExtResource("35_0rl1p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.39322, 3.8275, 17.2087)
+
+[node name="Key_C" parent="." instance=ExtResource("36_facbu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.3, 3.8, 12.2)
+
+[node name="Key_S" parent="." instance=ExtResource("37_b1qrp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.4, 3.8, 19.3)
+
+[node name="Key_O" parent="." instance=ExtResource("37_come4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.4404, 3.5, 35.9064)
+
+[node name="Key_M" parent="." instance=ExtResource("38_h8e4i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.8765, 3.5, 43.5405)
+
+[node name="Key_C2" parent="." instance=ExtResource("36_b1qrp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5751, 3.5, 31.967)
+
+[node name="Key_I" parent="." instance=ExtResource("39_come4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5156, 3.5, 25.6317)
 
 [connection signal="timeout" from="Fade_transition/Fade_Timer" to="." method="_on_fade_timer_timeout"]

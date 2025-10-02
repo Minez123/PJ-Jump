@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @export var mouse_sensitivity := 0.0015
 @export var can_move_in_air: bool = false
-@export var inf_Ammo = false
+@export var inf_Ammo = true
 
 @export var shotgun_pellet_scene: PackedScene
 @export var pellets_per_shot := 8
@@ -108,9 +108,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			current_zoom = max(min_zoom, current_zoom - zoom_speed)
 		elif event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
 			current_zoom = min(max_zoom, current_zoom + zoom_speed)
-	if event.is_action_pressed("ui_cancel") and not pause_menu.visible:
-		pause_menu.game_script = self
-		pause_menu.show_menu()
+
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			zooming = event.pressed

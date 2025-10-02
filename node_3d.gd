@@ -4,9 +4,9 @@ extends Node3D
 @export var platform_count: int = 50
 @export var spacing_min: Vector3 = Vector3(10, 0, 10)
 @export var spacing_max: Vector3 = Vector3(10, 2, 10)
-@export var custom_seed: int = -1  # -1 means random seed 
+@export var custom_seed: int = GameData.custom_seed
 @export var collectible_scene: PackedScene
-@export var re_collectible_scene: PackedScene
+
 @export var item_spawn_chance: float = 0.5  #  chance to spawn item
 @export var plat_up_scene: PackedScene
 @export var scene_spawn_chance: float = 0.05  #
@@ -36,6 +36,7 @@ var platform_size: Vector3
 var plat_up_size: Vector3
 var plat_side_size: Vector3
 var nav_size: Vector3
+var goal_size: Vector3
 var last_spawned_size: Vector3 = Vector3.ZERO
 var platforms_created = 0
 var batch_phase = 0  # 0 = green batch, 1 = orange batch
@@ -45,11 +46,12 @@ var ice_size: Vector3
 var slime_size: Vector3
 var collectible
 func _ready():
+
 	if GameData.loaded_save_data:
 		custom_seed = GameData.loaded_save_data["seed"]
-	add_to_group("world")
-	if custom_seed == -1:
+	elif custom_seed == -1:
 		custom_seed = Time.get_unix_time_from_system()
+	add_to_group("world")
 	rng.seed = custom_seed
 	$CanvasLayer/SeedLabel.text = "Seed: %d" % custom_seed
 	platform_size = get_scene_size(platform_scene)
@@ -59,13 +61,8 @@ func _ready():
 	shop_size = get_scene_size(shop_scene)
 	ice_size = get_scene_size(ice_dun)
 	slime_size = get_scene_size(slime_dun)
-	print("Shop size:", shop_size)
-	print("Platform size:", platform_size)
-	print("Structure size:", plat_up_size)
-	print("Nav size:", nav_size)
-	print("side size:", plat_side_size)
-	print("ice size:", ice_size)
-	print("slime size:", slime_size)
+	goal_size = get_scene_size(goal_scene)
+
 
 
 	generate_platform_batch(Vector3.ZERO, 0)  
@@ -187,16 +184,14 @@ func spawn_normal_platform(pos: Vector3, branch_id: int) -> Array:
 	platform_instance.position = pos
 	platform_instance.rotation.y = rng.randf_range(0, TAU)
 
-	var random_scale = rng.randf_range(0.8, 1.5)
-	platform_instance.scale *=  random_scale
 
 	var mesh_instance = platform_instance.get_node_or_null("MeshInstance3D/square_forest_detail") as MeshInstance3D
 	_apply_branch_color(mesh_instance, branch_id)
 
 	add_child(platform_instance)
 
-	var scaled_size = platform_size * random_scale
-	return [Vector3(pos.x, pos.y + scaled_size.y, pos.z), scaled_size]
+
+	return [Vector3(pos.x, pos.y +platform_size .y, pos.z), platform_size]
 
 
 func spawn_slime_platform(pos: Vector3, branch_id: int) -> Array:
@@ -273,7 +268,6 @@ func spawn_moveplatform(pos: Vector3, branch_id: int) -> Array:
 	
 func spawn_collectible(top_pos: Vector3, offset: float) -> void:
 	if collectible_scene and rng.randf() < item_spawn_chance:
-		var collectible
 		collectible = collectible_scene.instantiate()
 
 		collectible.position = top_pos + Vector3(0, offset, 0)
@@ -284,7 +278,7 @@ func spawn_collectible(top_pos: Vector3, offset: float) -> void:
 
 # === Spawn nav-level with bridging ===
 func spawn_nav_level(pos: Vector3, parent_size: Vector3,branch_id: int) ->  Array:
-	var nav_pos = pos + get_random_offset(nav_size, 1.0, parent_size.length() + 1.0)
+	var nav_pos = pos + get_random_offset(nav_size, 1.0, parent_size.length() + 1.0,branch_id)
 	nav_pos.y=pos.y
 	var nav_instance = NavLevel_scene.instantiate()
 	if  rng.randf() < 0.3:
@@ -339,7 +333,7 @@ var shop_spawned := false
 func spawn_shop(pos: Vector3, parent_size: Vector3, branch_id: int) -> void:
 
 	shop_spawned = true  
-	var shop_pos = pos + get_random_offset(shop_size, 1.0, parent_size.length() + 1.0)
+	var shop_pos = pos + get_random_offset(shop_size, 1.0, parent_size.length() + 1.0,branch_id)
 	shop_pos.y = pos.y
 
 	var shop_instance = shop_scene.instantiate()
@@ -357,7 +351,7 @@ var ice_spawned := false
 func spawn_ice_dun(pos: Vector3, parent_size: Vector3, branch_id: int) -> void:
 
 	ice_spawned = true  
-	var dun_pos = pos + get_random_offset(ice_size*2, 1.0, parent_size.length() + 1.0)
+	var dun_pos = pos + get_random_offset(ice_size*2, 1.0, parent_size.length() + 1.0,branch_id)
 	dun_pos.y = pos.y
 
 	var ice_instance = ice_dun.instantiate()
@@ -372,7 +366,7 @@ var slime_spawned := false
 func spawn_slime_dun(pos: Vector3, parent_size: Vector3, branch_id: int) -> void:
 
 	slime_spawned = true  
-	var dun_pos = pos + get_random_offset(slime_size*1.5, 1.0, parent_size.length() + 1.0)
+	var dun_pos = pos + get_random_offset(slime_size*1.5, 1.0, parent_size.length() + 1.0,branch_id)
 	dun_pos.y = pos.y
 
 	var slime_instance = slime_dun.instantiate()
@@ -386,12 +380,13 @@ func spawn_slime_dun(pos: Vector3, parent_size: Vector3, branch_id: int) -> void
 func spawn_goal(pos: Vector3, parent_size: Vector3, branch_id: int) -> void:
 	if not goal_scene:
 		return
-
+	var goal_pos  = pos + get_random_offset(goal_size, 1.0, parent_size.length() + 1.0,branch_id)
+	goal_pos.y = pos.y
 	var goal_instance = goal_scene.instantiate()
-	goal_instance.position = pos
+	goal_instance.position = goal_pos
 	add_child(goal_instance)
+	spawn_bridge(pos, goal_pos, parent_size, goal_size, branch_id,true)
 
-	print("🏁 Goal spawned for branch", branch_id, "at", pos)
 
 
 
@@ -475,15 +470,14 @@ var branch_bias := {
 
 func get_random_offset(current_size: Vector3, scaleoff: float, padding: float = 2.0, branch_id: int = 0) -> Vector3:
 	var base_radius = max(current_size.x, current_size.z)
-	var min_radius = base_radius + padding
-	var max_radius = base_radius * scaleoff + padding
+	var min_radius = base_radius * scaleoff + padding
+	var max_radius = base_radius * scaleoff + padding * 2 
 	var radius = rng.randf_range(min_radius, max_radius)
 
 	var dir: Vector3
 	if branch_bias.has(branch_id) and branch_bias[branch_id] != Vector3.ZERO:
-		# ✅ Use bias as base direction (normalized, only XZ plane)
 		dir = branch_bias[branch_id].normalized()
-		# Add some random spread (±90° → 180° cone around bias direction)
+		#(±90° → 180°)
 		var angle_spread = rng.randf_range(-PI * 0.5, PI * 0.5)
 		var cos_a = cos(angle_spread)
 		var sin_a = sin(angle_spread)
@@ -493,11 +487,12 @@ func get_random_offset(current_size: Vector3, scaleoff: float, padding: float = 
 			dir.x * sin_a + dir.z * cos_a
 		).normalized()
 	else:
-		# ✅ Default full random if no bias
+		# Default full random if no bias
 		var theta = rng.randf_range(0, TAU)
 		dir = Vector3(cos(theta), 0, sin(theta))
 
 	# Final offset
 	var offset = dir * radius
 	offset.y = rng.randf_range(0.5, max_vertical_step)* scaleoff
+	
 	return offset

@@ -84,11 +84,18 @@ shape = SubResource("SphereShape3D_qs0bq")
 
 [node name="collect_sfx" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_g07jd")
+bus = &"SFX"
 
 [node name="Root Scene" parent="." instance=ExtResource("3_f808g")]
 transform = Transform3D(3.4641, 0, 2, 0, 4, 0, -2, 0, 3.4641, 0.0799859, 0.102809, -0.166983)
 
+[node name="Ammo_gun" parent="Root Scene/RootNode" index="0"]
+visibility_range_end = 300.0
+
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.046951, 0.740474, 0)
+visibility_range_end = 300.0
 pixel_size = 0.01
 text = "E"
+
+[editable path="Root Scene"]

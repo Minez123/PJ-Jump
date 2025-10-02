@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c5jow6o5qqdx7"]
+[gd_scene load_steps=5 format=3 uid="uid://c5jow6o5qqdx7"]
 
 [ext_resource type="Script" uid="uid://bn35v1n7clj2c" path="res://main_menu.gd" id="1_80nbo"]
 [ext_resource type="PackedScene" uid="uid://b2axm8p7blmji" path="res://fade_transition.tscn" id="2_e2o6t"]
+[ext_resource type="AudioStream" uid="uid://d4dmpgn8sanmt" path="res://music/hub_music.mp3" id="3_feb5d"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_e2o6t"]
 
@@ -60,6 +61,37 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Faade_Timer" type="Timer" parent="button manager/Fade_transition"]
+
+[node name="SeedInput" type="LineEdit" parent="button manager"]
+layout_mode = 0
+offset_left = 227.0
+offset_top = 54.0
+offset_right = 360.0
+offset_bottom = 85.0
+placeholder_text = "Enter seed here, (e.g., 12345)"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_feb5d")
+volume_db = -1.0
+bus = &"Music"
+
+[node name="SFXSlider" type="HSlider" parent="."]
+visible = false
+offset_left = 353.0
+offset_top = 209.0
+offset_right = 724.0
+offset_bottom = 232.0
+max_value = 1.0
+step = 0.01
+
+[node name="MusicSlider" type="HSlider" parent="."]
+visible = false
+offset_left = 353.0
+offset_top = 252.0
+offset_right = 724.0
+offset_bottom = 275.0
+max_value = 1.0
+step = 0.01
 
 [connection signal="pressed" from="button manager/start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="button manager/load" to="." method="_on_load_pressed"]

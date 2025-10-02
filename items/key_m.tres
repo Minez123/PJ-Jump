@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=2 format=3 uid="uid://dub864hux1rqu"]
+
+[ext_resource type="Script" uid="uid://c214cp20i2584" path="res://items/item_resource.gd" id="1_f0uva"]
+
+[resource]
+script = ExtResource("1_f0uva")
+uid = "key_m"
+item_name = "M"
+description = "part of a key"
+is_stackable = false
+stack_size = 1
+metadata/_custom_type_script = "uid://c214cp20i2584"
