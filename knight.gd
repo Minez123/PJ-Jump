@@ -47,7 +47,7 @@ var zooming := false
 @onready var jump_bar := $"../HUD/JumpPowerBar" 
 # Shotgun
 @onready var shotgun_ammo_label := $"../HUD/ShotgunAmmoLabel"
-
+var tween: Tween
 #sfx
 @onready var jump_sfx: AudioStreamPlayer2D = $jump_sfx
 @onready var landing_sfx: AudioStreamPlayer3D = $Landing_sfx
@@ -287,6 +287,7 @@ func _physics_process(delta: float) -> void:
 
 			if not inf_Ammo and not free_shot:
 				shotgun_shots_remaining -= 1
+				update_ammo_label(-1)
 
 			shotgun_sfx.play()
 			charging_jump = false
@@ -331,6 +332,20 @@ func _physics_process(delta: float) -> void:
 		
 var bounce_index := 0
 
+func update_ammo_label(change: int):
+	shotgun_ammo_label.text = "Ammo: %d" % shotgun_shots_remaining
+	if tween and tween.is_running():
+		tween.kill()
+	tween = create_tween()
+	
+	# Pick color based on ammo change
+	var flash_color := Color(0, 1, 0) if change > 0 else Color(1, 0, 0)
+	
+	# Instantly set to flash color, then fade back to white
+	shotgun_ammo_label.modulate = flash_color
+	tween.tween_property(shotgun_ammo_label, "modulate", Color.WHITE, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+
 func play_bounce_sfx():
 	if is_on_floor(): 
 		return
@@ -340,6 +355,7 @@ func play_bounce_sfx():
 	
 func refill_shotgun():
 		shotgun_shots_remaining += 1
+		update_ammo_label(1)
 
 func trigger_enemy_bounce(enemy_position: Vector3):
 	anim_tree.set("parameters/conditions/jumping", true)
@@ -386,6 +402,7 @@ func respawn():
 
 func consume_ammo(amount: int) -> void:
 	shotgun_shots_remaining  = max(shotgun_shots_remaining  - amount, 0)
+
 
 func get_ammo() -> int:
 	return shotgun_shots_remaining 

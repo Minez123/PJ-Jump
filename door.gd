@@ -12,9 +12,12 @@ extends Node3D
 @onready var door = $AnimatableBody3D
 var opened= false
 func _ready():
-	opened = false
-	door_anim.stop()
-	door_anim.play("RESET")
+	if not GameData.loaded_save_data:
+		opened = false
+		door_anim.stop()
+		door_anim.play("RESET")
+
+		
 
 func _process(_delta):
 	# Update hint lights each frame
@@ -30,12 +33,13 @@ func _process(_delta):
 
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
-	if opened:
-		return
-	elif GameData.has_all_keys():
-		open_door()
+	if body is CharacterBody3D:
+		if GameData.has_all_keys() and not opened:
+			open_door()
 			
 func open_door():
+	print("nononono")
 	opened = true
 	if not door_anim.is_playing():
 		door_anim.play("open")  
+		

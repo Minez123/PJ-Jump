@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://cawyxa2honk7g"]
+[gd_scene load_steps=54 format=3 uid="uid://cawyxa2honk7g"]
 
 [ext_resource type="Texture2D" uid="uid://7n4p1anjoe51" path="res://crosshair.png" id="1_272bh"]
 [ext_resource type="Script" uid="uid://camty0ert0fe6" path="res://main.gd" id="1_d13ii"]
@@ -39,6 +39,11 @@
 [ext_resource type="PackedScene" uid="uid://baqvmgxf544l1" path="res://items/key_o.tscn" id="37_come4"]
 [ext_resource type="PackedScene" uid="uid://dsq7mffeyblru" path="res://items/key_m.tscn" id="38_h8e4i"]
 [ext_resource type="PackedScene" uid="uid://dkrvj82yi2h0q" path="res://items/key_i.tscn" id="39_come4"]
+[ext_resource type="PackedScene" uid="uid://dy25dq61huqvu" path="res://items/slime_boot.tscn" id="40_gngh3"]
+[ext_resource type="PackedScene" uid="uid://bj3johbul3w2t" path="res://items/Slime_jelly.tscn" id="41_0n3wm"]
+[ext_resource type="PackedScene" uid="uid://c3r4kqcvea8jt" path="res://items/jump_boost.tscn" id="42_qnost"]
+[ext_resource type="PackedScene" uid="uid://budo6ml1l5gc1" path="res://items/ice_boot_item.tscn" id="43_wnkbs"]
+[ext_resource type="PackedScene" uid="uid://clmc7nyinhapt" path="res://items/ammo_box.tscn" id="44_f6a44"]
 
 [sub_resource type="Curve" id="Curve_d13ii"]
 _data = [Vector2(0.00322061, 0), 0.0, 0.0, 0, 0, Vector2(0.162641, 0.912162), 0.0, 0.0, 0, 0, Vector2(0.987118, 0.48443), 0.0, 0.0, 0, 0]
@@ -94,8 +99,9 @@ ambient_light_color = Color(0.564962, 0.564962, 0.564962, 1)
 ambient_light_sky_contribution = 0.0
 tonemap_white = 0.8
 glow_enabled = true
-fog_enabled = true
 fog_sky_affect = 0.0
+volumetric_fog_enabled = true
+volumetric_fog_sky_affect = 0.0
 adjustment_enabled = true
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5vw27"]
@@ -178,6 +184,7 @@ offset_bottom = 23.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.096, 0.5, 15.142)
 script = ExtResource("2_0xm2m")
 collectible_scene = ExtResource("3_h2yge")
+key_scenes = Array[PackedScene]([ExtResource("36_facbu"), ExtResource("37_come4"), ExtResource("38_h8e4i"), ExtResource("37_b1qrp"), ExtResource("36_b1qrp"), ExtResource("39_come4"), ExtResource("34_0rl1p"), ExtResource("35_0rl1p")])
 plat_up_scene = ExtResource("4_1bvp3")
 NavLevel_scene = ExtResource("5_lquwl")
 NavLevel2_scene = ExtResource("26_a6jrf")
@@ -298,30 +305,54 @@ transform = Transform3D(99, 0, 0, 0, 1, 0, 0, 0, 99, -17.7562, 0, 17.0846)
 script = ExtResource("31_seu75")
 
 [node name="goal" parent="." instance=ExtResource("25_0odxb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10443, 1.07441, 45.3609)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.4985, 1.07441, 45.3609)
 
-[node name="Key_K" parent="." instance=ExtResource("34_0rl1p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1064, 4.21745, 11.347)
+[node name="Slime_boot" parent="." instance=ExtResource("40_gngh3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.66487, 1.14352, 34.164)
 
-[node name="Key_U" parent="." instance=ExtResource("35_0rl1p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.39322, 3.8275, 17.2087)
+[node name="Slime_jelly" parent="." instance=ExtResource("41_0n3wm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.48851, 1, 39.0793)
 
-[node name="Key_C" parent="." instance=ExtResource("36_facbu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.3, 3.8, 12.2)
+[node name="Area3D" parent="." instance=ExtResource("35_0rl1p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.7079, 3.8275, 33.3507)
 
-[node name="Key_S" parent="." instance=ExtResource("37_b1qrp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.4, 3.8, 19.3)
+[node name="Area3D2" parent="." instance=ExtResource("37_b1qrp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.62974, 3.8275, 37.5412)
 
-[node name="Key_O" parent="." instance=ExtResource("37_come4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.4404, 3.5, 35.9064)
+[node name="Area3D3" parent="." instance=ExtResource("37_come4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.19277, 3.8275, 41.3028)
 
-[node name="Key_M" parent="." instance=ExtResource("38_h8e4i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.8765, 3.5, 43.5405)
+[node name="Area3D4" parent="." instance=ExtResource("38_h8e4i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.19649, 3.8275, 36.0663)
 
-[node name="Key_C2" parent="." instance=ExtResource("36_b1qrp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5751, 3.5, 31.967)
+[node name="Area3D5" parent="." instance=ExtResource("34_0rl1p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.64142, 3.8275, 31.863)
 
-[node name="Key_I" parent="." instance=ExtResource("39_come4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5156, 3.5, 25.6317)
+[node name="Area3D6" parent="." instance=ExtResource("39_come4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.18795, 3.8275, 31.0371)
+
+[node name="Area3D7" parent="." instance=ExtResource("36_b1qrp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.07135, 3.8275, 34.3353)
+
+[node name="Area3D8" parent="." instance=ExtResource("36_facbu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.7487, 3.8275, 36.6364)
+
+[node name="Jump_boost" parent="." instance=ExtResource("42_qnost")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.78208, 1, 39.9825)
+
+[node name="Ice_boot" parent="." instance=ExtResource("43_wnkbs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.8331, 1.14352, 37.7857)
+
+[node name="Collectible" parent="." instance=ExtResource("3_h2yge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.4365, 1, 35.7199)
+
+[node name="Ammo_box" parent="." instance=ExtResource("44_f6a44")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.6871, 0.751093, 34.2276)
+
+[node name="goal2" parent="." instance=ExtResource("25_0odxb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.2803, 1, 7.05202)
+
+[node name="Node3D2" parent="." instance=ExtResource("5_lquwl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.51744, 0.5, 58.3421)
 
 [connection signal="timeout" from="Fade_transition/Fade_Timer" to="." method="_on_fade_timer_timeout"]

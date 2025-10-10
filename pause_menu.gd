@@ -65,7 +65,7 @@ func _on_save_pressed() -> void:
 func _on_save_confirm_dialog_confirmed() -> void:
 	visible = false
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://game.tscn")
+	get_tree().change_scene_to_file("res://main_menu.tscn")
 	
 
 

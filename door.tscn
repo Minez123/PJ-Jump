@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://cv7yig2grps82" path="res://door.gd" id="1_ba8gm"]
 
 [sub_resource type="FontFile" id="FontFile_v6xrn"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
@@ -282,7 +285,7 @@ libraries = {
 }
 
 [node name="AnimatableBody3D" type="AnimatableBody3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0.999985, 0.0053932, 0, 0.0053932, -0.999985, -1, -4.37108e-08, -2.35744e-10, 0.093646, -1.25257, 0)
+transform = Transform3D(-4.37114e-08, 0.999985, 0.00539319, 0, 0.00539319, -0.999985, -1, -4.37107e-08, -2.35744e-10, 0.093646, -1.25258, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="AnimatableBody3D"]
 transform = Transform3D(-7.10543e-15, -4.37114e-08, -1, -1, -4.37722e-08, 0, -4.37722e-08, 1, -4.37114e-08, 1.01, -2.60001, -0.250127)
@@ -307,7 +310,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.292915, 0)
 curve = SubResource("Curve3D_6hwww")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(-4.37114e-08, 0.999985, 0.0053932, 0, 0.0053932, -0.999985, -1, -4.37108e-08, -2.35744e-10, 0.093646, -1.54549, 0)
+transform = Transform3D(-4.37114e-08, 0.999985, 0.00539319, 0, 0.00539319, -0.999985, -1, -4.37107e-08, -2.35744e-10, 0.093646, -1.54549, 0)
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="Path3D/PathFollow3D"]
 remote_path = NodePath("../../../AnimatableBody3D")
@@ -324,6 +327,7 @@ skeleton = NodePath("../AnimatableBody3D")
 shape = SubResource("ConcavePolygonShape3D_ba8gm")
 
 [node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.05866)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_0phs7")

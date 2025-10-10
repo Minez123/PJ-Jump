@@ -6,7 +6,7 @@ extends Node3D
 @export var spacing_max: Vector3 = Vector3(10, 2, 10)
 @export var custom_seed: int = GameData.custom_seed
 @export var collectible_scene: PackedScene
-
+@export var key_scenes: Array[PackedScene] = []
 @export var item_spawn_chance: float = 0.5  #  chance to spawn item
 @export var plat_up_scene: PackedScene
 @export var scene_spawn_chance: float = 0.05  #
@@ -45,6 +45,9 @@ var shop_size: Vector3
 var ice_size: Vector3
 var slime_size: Vector3
 var collectible
+
+
+
 func _ready():
 
 	if GameData.loaded_save_data:
@@ -150,7 +153,7 @@ func spawn_platform(pos: Vector3, branch_id: int = 0) -> Vector3:
 	var current_size = result[1]
 
 	last_spawned_size = current_size
-	spawn_collectible(top_pos, 1)
+	spawn_collectible(top_pos, 1,branch_id)
 
 	if batch_phase >= 1 and rng.randf() < Navscene_spawn_chance and NavLevel_scene:
 		result = spawn_nav_level(top_pos, current_size, branch_id)
@@ -183,6 +186,7 @@ func spawn_normal_platform(pos: Vector3, branch_id: int) -> Array:
 	var platform_instance = platform_scene.instantiate()
 	platform_instance.position = pos
 	platform_instance.rotation.y = rng.randf_range(0, TAU)
+	
 
 
 	var mesh_instance = platform_instance.get_node_or_null("MeshInstance3D/square_forest_detail") as MeshInstance3D
@@ -264,14 +268,31 @@ func spawn_moveplatform(pos: Vector3, branch_id: int) -> Array:
 	return [pos + offset, scaled_size]
 
 
-
+var branch_key_index := {}
 	
-func spawn_collectible(top_pos: Vector3, offset: float) -> void:
-	if collectible_scene and rng.randf() < item_spawn_chance:
-		collectible = collectible_scene.instantiate()
+func spawn_collectible(top_pos: Vector3, offset: float, branch_id: int) -> void:
+	if not branch_key_index.has(branch_id):
+		branch_key_index[branch_id] = 0
 
+	if key_scenes.size() > 0 and rng.randf() < 0.1 and branch_id>0:
+		var index = branch_key_index[branch_id]
+		if index < key_scenes.size():
+			var key_instance = key_scenes[index].instantiate()
+			key_instance.position = top_pos + Vector3(0, offset + 2, 0)
+			add_child(key_instance)
+
+			print("Spawned key:", index, "at branch:", branch_id)
+
+			branch_key_index[branch_id] += 1
+		else:
+			print("Branch", branch_id, "has spawned all keys already.")
+
+	elif collectible_scene and rng.randf() < item_spawn_chance:
+		var collectible = collectible_scene.instantiate()
 		collectible.position = top_pos + Vector3(0, offset, 0)
 		add_child(collectible)
+
+
 
 
 

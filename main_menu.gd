@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 var button_type = null
 var loaded_save_data = null
@@ -83,8 +83,7 @@ func _on_faade_timer_timeout() -> void:
 		var save_data = Savemanager.load_game(Savemanager.SAVE_PATH)
 		GameData.loaded_save_data = save_data
 		get_tree().change_scene_to_file("res://main.tscn")
-	elif button_type == "option":
-		get_tree().change_scene_to_file("res://option_menu.tscn")
+
 		
 
 func _on_load_pressed() -> void:

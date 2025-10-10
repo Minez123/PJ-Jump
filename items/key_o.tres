@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="ItemResource" load_steps=2 format=3 uid="uid://cesofxq6tk8n8"]
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://cesofxq6tk8n8"]
 
 [ext_resource type="Script" uid="uid://c214cp20i2584" path="res://items/item_resource.gd" id="1_kqe8l"]
+[ext_resource type="Texture2D" uid="uid://dncbwngqvib43" path="res://Texture/O.png" id="2_hp2lk"]
 
 [resource]
 script = ExtResource("1_kqe8l")
 uid = "key_o"
 item_name = "O"
 description = "part of a key"
+texture = ExtResource("2_hp2lk")
 is_stackable = false
 stack_size = 1
 metadata/_custom_type_script = "uid://c214cp20i2584"

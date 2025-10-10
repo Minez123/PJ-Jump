@@ -23,6 +23,7 @@ offset_right = 755.0
 offset_bottom = 435.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 4
 
 [node name="start" type="Button" parent="button manager"]
 layout_mode = 0
@@ -69,6 +70,11 @@ offset_top = 54.0
 offset_right = 360.0
 offset_bottom = 85.0
 placeholder_text = "Enter seed here, (e.g., 12345)"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="button manager"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_feb5d")

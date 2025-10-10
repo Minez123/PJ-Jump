@@ -9,6 +9,7 @@ var collected_coin_positions: Dictionary = {}
 var npcs_to_save: Dictionary = {}
 var at_goal: bool = false
 var custom_seed = -1
+
 func reset_timer():
 	elapsed_time = 0.0
 	timing_active = true
