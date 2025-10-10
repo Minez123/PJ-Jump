@@ -11,7 +11,6 @@
 [ext_resource type="AudioStream" uid="uid://cugg7invsk4cj" path="res://music/Before the Sun Slips Away.mp3" id="5_htxhm"]
 [ext_resource type="PackedScene" uid="uid://d3khx0wf0c0s" path="res://PJ-Jump/Platform/NavLevel.tscn" id="5_lquwl"]
 [ext_resource type="AudioStream" uid="uid://k4h0a7qpfqsn" path="res://music/Pixel Dreams.mp3" id="6_4k2k6"]
-[ext_resource type="PackedScene" uid="uid://cipq8ioqu1v4m" path="res://knight1.tscn" id="6_272bh"]
 [ext_resource type="AudioStream" uid="uid://d4dmpgn8sanmt" path="res://music/hub_music.mp3" id="6_jq2sk"]
 [ext_resource type="PackedScene" uid="uid://d3vvp5opor4wj" path="res://bullet.tscn" id="8_5vw27"]
 [ext_resource type="Script" uid="uid://degjn5ylnhfgp" path="res://hud.gd" id="8_htxhm"]
@@ -37,6 +36,7 @@
 [ext_resource type="PackedScene" uid="uid://c1ly2c04wyyq5" path="res://items/key_c.tscn" id="36_facbu"]
 [ext_resource type="PackedScene" uid="uid://bnutox8n07gvt" path="res://items/key_s.tscn" id="37_b1qrp"]
 [ext_resource type="PackedScene" uid="uid://baqvmgxf544l1" path="res://items/key_o.tscn" id="37_come4"]
+[ext_resource type="PackedScene" uid="uid://cegy62tp3lcgb" path="res://player.tscn" id="38_b1qrp"]
 [ext_resource type="PackedScene" uid="uid://dsq7mffeyblru" path="res://items/key_m.tscn" id="38_h8e4i"]
 [ext_resource type="PackedScene" uid="uid://dkrvj82yi2h0q" path="res://items/key_i.tscn" id="39_come4"]
 
@@ -203,10 +203,6 @@ offset_top = 5.0
 offset_right = 1139.0
 offset_bottom = 28.0
 
-[node name="Knight" parent="." groups=["Player"] instance=ExtResource("6_272bh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.1539, 2.77277, 19.4029)
-shotgun_pellet_scene = ExtResource("8_5vw27")
-
 [node name="InventoryUI" type="CanvasLayer" parent="." node_paths=PackedStringArray("grid")]
 script = ExtResource("11_efxa6")
 grid = NodePath("Grid")
@@ -298,5 +294,8 @@ transform = Transform3D(99, 0, 0, 0, 1, 0, 0, 0, 99, -17.7562, 0, 17.0846)
 
 [node name="SaveManager" type="Node" parent="."]
 script = ExtResource("31_seu75")
+
+[node name="Knight" parent="." instance=ExtResource("38_b1qrp")]
+shotgun_pellet_scene = ExtResource("8_5vw27")
 
 [connection signal="timeout" from="Fade_transition/Fade_Timer" to="." method="_on_fade_timer_timeout"]

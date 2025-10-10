@@ -20,7 +20,7 @@ func _on_start_pressed() -> void:
 
 func _ready():
 	# Check save file
-	var settings = Savemanager.load_settings()
+	var settings = preload("res://savemanager.gd").load_settings()
 
 	SFX_slider.value = settings.get("sfx", 1.0)
 	Music_slider.value = settings.get("music", 0.7)
@@ -42,12 +42,11 @@ func _ready():
 
 func _on_number_line_edit_text_changed(new_text: String) -> void:
 	var cleaned_text = ""
-	var has_decimal_point = false
 	var MAX_LENGTH = 10
 	var was_truncated = false
-	for char in new_text:
-		if char >= "0" and char <= "9": 
-			cleaned_text += char
+	for num in new_text:
+		if num >= "0" and num <= "9": 
+			cleaned_text += num
 	if cleaned_text.length() > MAX_LENGTH:
 		cleaned_text = cleaned_text.substr(0, MAX_LENGTH)
 		was_truncated = true
@@ -61,7 +60,7 @@ func _on_number_line_edit_text_changed(new_text: String) -> void:
 			var removed_count = new_text.length() - cleaned_text.length()
 			seed_input.caret_column = _previous_caret_position - removed_count
 
-func _save_caret_position(new_text: String) -> void:
+func _save_caret_position() -> void:
 	_previous_caret_position = seed_input.caret_column
 	
 func _on_quit_pressed() -> void:
@@ -76,7 +75,6 @@ func _on_faade_timer_timeout() -> void:
 		else:
 			custom_seed = -1  # use random
 		GameData.custom_seed = custom_seed
-		var save_data = Savemanager.load_game(Savemanager.SAVE_PATH)
 		GameData.reset_timer()
 		get_tree().change_scene_to_file("res://main.tscn")
 	elif button_type == "load":

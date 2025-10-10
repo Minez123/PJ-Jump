@@ -11,10 +11,11 @@ var current_music: AudioStreamPlayer = null
 
 func _ready() -> void:
 
-
+	
 	var world = get_tree().get_first_node_in_group("world")
 	if world:
 		world.connect("world_generation_finished", _on_world_generation_finished)
+
 
 
 
@@ -28,7 +29,6 @@ func _on_world_generation_finished() -> void:
 	var save_data = GameData.loaded_save_data
 	GameData.collected_keys = save_data["collected_keys"]
 	# Load Player Data
-	var player = get_tree().get_first_node_in_group("player")
 	if player:
 		var saved_pos = save_data["player"]["position"]
 		player.global_position = Vector3(saved_pos.x, saved_pos.y, saved_pos.z)
@@ -50,7 +50,6 @@ func _on_world_generation_finished() -> void:
 						
 			var loaded_coins = save_data["collected_coin_positions"]
 			var all_coins = get_tree().get_nodes_in_group("coins")
-			var existing_ids = []
 
 			for coin in all_coins: 
 				if loaded_coins.has(coin.uid): 
@@ -83,9 +82,10 @@ func _on_world_generation_finished() -> void:
 		$Fade_transition/AnimationPlayer.play("fade_out")
 		$Fade_transition/Fade_Timer.start()
 		GameData.loaded_save_data = null
+		
 
 
-func _process(delta) -> void:
+func _process(_delta) -> void:
 	if not player:
 		return
 	var h = player.global_position.y

@@ -8,7 +8,6 @@ func save_game(player: Node, world: Node) -> void:
 	var coin_positions_to_save = GameData.collected_coin_positions
 	var npcs_to_save = GameData.npcs_to_save
 	var all_npcs = get_tree().get_nodes_in_group("AI_NPC")
-	var all_coins = get_tree().get_nodes_in_group("coins")
 	
 
 

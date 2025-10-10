@@ -71,7 +71,7 @@ func _ready():
 	generate_platform_batch(Vector3.ZERO, 0)  
 
 var branch_phases := {0: 0, 1: 0, 2: 0}
-func generate_platform_batch(start_position: Vector3, branch_id: int = 0, platform_count: int = platform_count):
+func generate_platform_batch(start_position: Vector3, branch_id: int = 0):
 	var last_post = start_position
 	var local_created = 0
 	var last_size = platform_size   # default to base size for first spawn
@@ -189,7 +189,7 @@ func spawn_normal_platform(pos: Vector3, branch_id: int) -> Array:
 	
 
 
-	var mesh_instance = platform_instance.get_node_or_null("MeshInstance3D/square_forest_detail") as MeshInstance3D
+	var mesh_instance = platform_instance.get_node_or_null("square_forest_detail") as MeshInstance3D
 	_apply_branch_color(mesh_instance, branch_id)
 
 	add_child(platform_instance)
@@ -281,14 +281,12 @@ func spawn_collectible(top_pos: Vector3, offset: float, branch_id: int) -> void:
 			key_instance.position = top_pos + Vector3(0, offset + 2, 0)
 			add_child(key_instance)
 
-			print("Spawned key:", index, "at branch:", branch_id)
-
 			branch_key_index[branch_id] += 1
 		else:
 			print("Branch", branch_id, "has spawned all keys already.")
 
 	elif collectible_scene and rng.randf() < item_spawn_chance:
-		var collectible = collectible_scene.instantiate()
+		collectible = collectible_scene.instantiate()
 		collectible.position = top_pos + Vector3(0, offset, 0)
 		add_child(collectible)
 

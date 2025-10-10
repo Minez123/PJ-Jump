@@ -11,7 +11,7 @@ func _ready():
 	visible = false
 	confirm_button.pressed.connect(_on_confirm_pressed)
 
-	var settings = Savemanager.load_settings()
+	var settings = preload("res://savemanager.gd").load_settings()
 	mouse_slider.value = settings.get("mouse_sensitivity", 0.0015)
 	SFX_slider.value = settings.get("sfx", 1.0)
 	Music_slider.value = settings.get("music", 0.7)
@@ -38,7 +38,7 @@ func _on_confirm_pressed():
 	game_script.mouse_sensitivity = sensitivity
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(SFX))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(Music))
-	Savemanager.save_settings(sensitivity, SFX, Music)
+	preload("res://savemanager.gd").save_settings(sensitivity, SFX, Music)
 
 	hide_menu()
 

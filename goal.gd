@@ -12,8 +12,6 @@ func _ready():
 	area.body_entered.connect(_on_area_body_entered)
 	ending_screen.visible = false
 
-func _process(delta: float) -> void:
-	pass
 
 func _on_area_body_entered(body: Node) -> void:
 	if body.is_in_group("player") and GameData.timing_active:
@@ -36,10 +34,8 @@ func _on_area_body_entered(body: Node) -> void:
 		if old_best < 0 or Finish_time  < old_best:
 			new_best = Finish_time 
 			GameData.best_time = new_best
-			print("new high")
 		else:
 			GameData.best_time = old_best
-			print("old high")
 
 		# Format PB
 

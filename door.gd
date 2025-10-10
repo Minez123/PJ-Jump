@@ -38,7 +38,6 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 			open_door()
 			
 func open_door():
-	print("nononono")
 	opened = true
 	if not door_anim.is_playing():
 		door_anim.play("open")  
