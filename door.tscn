@@ -1,0 +1,335 @@
+[gd_scene load_steps=14 format=4 uid="uid://b5uallty17yt0"]
+
+[ext_resource type="Script" uid="uid://cv7yig2grps82" path="res://door.gd" id="1_ba8gm"]
+
+[sub_resource type="FontFile" id="FontFile_v6xrn"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
+cache/0/33/0/ascent = 0.0
+cache/0/33/0/descent = 0.0
+cache/0/33/0/underline_position = 0.0
+cache/0/33/0/underline_thickness = 0.0
+cache/0/33/0/scale = 1.0
+cache/0/34/0/ascent = 0.0
+cache/0/34/0/descent = 0.0
+cache/0/34/0/underline_position = 0.0
+cache/0/34/0/underline_thickness = 0.0
+cache/0/34/0/scale = 1.0
+cache/0/35/0/ascent = 0.0
+cache/0/35/0/descent = 0.0
+cache/0/35/0/underline_position = 0.0
+cache/0/35/0/underline_thickness = 0.0
+cache/0/35/0/scale = 1.0
+cache/0/36/0/ascent = 0.0
+cache/0/36/0/descent = 0.0
+cache/0/36/0/underline_position = 0.0
+cache/0/36/0/underline_thickness = 0.0
+cache/0/36/0/scale = 1.0
+cache/0/37/0/ascent = 0.0
+cache/0/37/0/descent = 0.0
+cache/0/37/0/underline_position = 0.0
+cache/0/37/0/underline_thickness = 0.0
+cache/0/37/0/scale = 1.0
+cache/0/38/0/ascent = 0.0
+cache/0/38/0/descent = 0.0
+cache/0/38/0/underline_position = 0.0
+cache/0/38/0/underline_thickness = 0.0
+cache/0/38/0/scale = 1.0
+cache/0/39/0/ascent = 0.0
+cache/0/39/0/descent = 0.0
+cache/0/39/0/underline_position = 0.0
+cache/0/39/0/underline_thickness = 0.0
+cache/0/39/0/scale = 1.0
+cache/0/40/0/ascent = 0.0
+cache/0/40/0/descent = 0.0
+cache/0/40/0/underline_position = 0.0
+cache/0/40/0/underline_thickness = 0.0
+cache/0/40/0/scale = 1.0
+cache/0/41/0/ascent = 0.0
+cache/0/41/0/descent = 0.0
+cache/0/41/0/underline_position = 0.0
+cache/0/41/0/underline_thickness = 0.0
+cache/0/41/0/scale = 1.0
+cache/0/42/0/ascent = 0.0
+cache/0/42/0/descent = 0.0
+cache/0/42/0/underline_position = 0.0
+cache/0/42/0/underline_thickness = 0.0
+cache/0/42/0/scale = 1.0
+cache/0/43/0/ascent = 0.0
+cache/0/43/0/descent = 0.0
+cache/0/43/0/underline_position = 0.0
+cache/0/43/0/underline_thickness = 0.0
+cache/0/43/0/scale = 1.0
+cache/0/44/0/ascent = 0.0
+cache/0/44/0/descent = 0.0
+cache/0/44/0/underline_position = 0.0
+cache/0/44/0/underline_thickness = 0.0
+cache/0/44/0/scale = 1.0
+cache/0/45/0/ascent = 0.0
+cache/0/45/0/descent = 0.0
+cache/0/45/0/underline_position = 0.0
+cache/0/45/0/underline_thickness = 0.0
+cache/0/45/0/scale = 1.0
+cache/0/46/0/ascent = 0.0
+cache/0/46/0/descent = 0.0
+cache/0/46/0/underline_position = 0.0
+cache/0/46/0/underline_thickness = 0.0
+cache/0/46/0/scale = 1.0
+cache/0/47/0/ascent = 0.0
+cache/0/47/0/descent = 0.0
+cache/0/47/0/underline_position = 0.0
+cache/0/47/0/underline_thickness = 0.0
+cache/0/47/0/scale = 1.0
+cache/0/48/0/ascent = 0.0
+cache/0/48/0/descent = 0.0
+cache/0/48/0/underline_position = 0.0
+cache/0/48/0/underline_thickness = 0.0
+cache/0/48/0/scale = 1.0
+cache/0/49/0/ascent = 0.0
+cache/0/49/0/descent = 0.0
+cache/0/49/0/underline_position = 0.0
+cache/0/49/0/underline_thickness = 0.0
+cache/0/49/0/scale = 1.0
+cache/0/50/0/ascent = 0.0
+cache/0/50/0/descent = 0.0
+cache/0/50/0/underline_position = 0.0
+cache/0/50/0/underline_thickness = 0.0
+cache/0/50/0/scale = 1.0
+cache/0/500/0/ascent = 0.0
+cache/0/500/0/descent = 0.0
+cache/0/500/0/underline_position = 0.0
+cache/0/500/0/underline_thickness = 0.0
+cache/0/500/0/scale = 1.0
+cache/0/250/0/ascent = 0.0
+cache/0/250/0/descent = 0.0
+cache/0/250/0/underline_position = 0.0
+cache/0/250/0/underline_thickness = 0.0
+cache/0/250/0/scale = 1.0
+cache/0/200/0/ascent = 0.0
+cache/0/200/0/descent = 0.0
+cache/0/200/0/underline_position = 0.0
+cache/0/200/0/underline_thickness = 0.0
+cache/0/200/0/scale = 1.0
+cache/0/100/0/ascent = 0.0
+cache/0/100/0/descent = 0.0
+cache/0/100/0/underline_position = 0.0
+cache/0/100/0/underline_thickness = 0.0
+cache/0/100/0/scale = 1.0
+
+[sub_resource type="Animation" id="Animation_ba8gm"]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_v6xrn"]
+resource_name = "open"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0phs7"]
+_data = {
+&"RESET": SubResource("Animation_ba8gm"),
+&"open": SubResource("Animation_v6xrn")
+}
+
+[sub_resource type="BoxMesh" id="BoxMesh_50cdl"]
+size = Vector3(5, 8, 1.9)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y5njw"]
+size = Vector3(5, 8, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4xadh"]
+size = Vector3(5, 8, 2)
+
+[sub_resource type="Curve3D" id="Curve3D_6hwww"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.093646, -1.54549, 0, 0, 0, 0, 0, 0, 0, 0.0448256, 7.49501, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v1oua"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ptf7r"]
+_surfaces = [{
+"aabb": AABB(-7.5, -5, -1, 15, 10, 2),
+"attribute_data": PackedByteArray("AACAPwAAgD8AAIA/VVVVPwAAAAAAAIA/q6oqPs3MTD4AAAAAAAAAAAAAAAAAAIA/q6oqPs3MTD4AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAgD+rqio+zcxMPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD8AAIA/q6oqPs3MTD8AAAAAAACAP1VVVT/NzEw/q6oqPs3MTD4AAAAAAACAP6uqKj4AAIA/AACAPwAAAAAAAAAAAAAAAAAAgD8AAIA/AAAAAAAAgD8AAIA/VVVVPwAAAABVVVU/q6oqPs3MTD+rqio+AAAAAAAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD+rqio+VVVVP83MTD4AAIA/AAAAAKuqKj7NzEw+AACAPwAAgD8AAAAAAAAAAAAAAAAAAIA/AACAPwAAAABVVVU/zcxMPgAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/VVVVP83MTD8AAAAAAACAPwAAgD8AAIA/VVVVP83MTD8AAIA/AACAPwAAgD8AAAAAVVVVP83MTD5VVVU/AACAPwAAgD8AAIA/AACAP6uqKj4AAAAAAAAAAAAAAACrqio+AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAVVVVP83MTD8AAIA/AAAAAFVVVT8AAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAgD8AAAAAAAAAAAAAgD8AAAAAAACAPwAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAIA/AACAPwAAgD8AAAAAAAAAAAAAgD8AAAAA"),
+"format": 34359738391,
+"material": SubResource("StandardMaterial3D_v1oua"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 84,
+"vertex_data": PackedByteArray("AADwQAAAoMAAAIC/AACgQAAAoMAAAIC/AADwQAAAoMAAAIA/AACgQAAAQEAAAIA/AADwQAAAoEAAAIA/AADwQAAAoMAAAIA/AACgQAAAQEAAAIA/AADwwAAAoEAAAIA/AADwQAAAoEAAAIA/AADwQAAAoEAAAIA/AADwQAAAoEAAAIC/AADwQAAAoMAAAIC/AADwQAAAoEAAAIC/AACgQAAAQEAAAIC/AADwQAAAoMAAAIC/AADwQAAAoEAAAIC/AADwQAAAoEAAAIA/AADwwAAAoEAAAIC/AACgQAAAQEAAAIC/AADwQAAAoEAAAIC/AACgwAAAQEAAAIC/AACgQAAAQEAAAIA/AADwQAAAoMAAAIA/AACgQAAAoMAAAIA/AADwQAAAoMAAAIA/AADwQAAAoEAAAIA/AADwQAAAoMAAAIC/AADwQAAAoMAAAIA/AACgQAAAoMAAAIC/AACgQAAAoMAAAIA/AACgQAAAQEAAAIC/AACgQAAAoMAAAIC/AADwQAAAoMAAAIC/AADwwAAAoMAAAIC/AADwwAAAoMAAAIA/AACgwAAAoMAAAIC/AACgwAAAQEAAAIA/AADwwAAAoEAAAIA/AACgQAAAQEAAAIA/AADwwAAAoEAAAIC/AADwQAAAoEAAAIA/AADwwAAAoEAAAIA/AADwwAAAoEAAAIA/AACgwAAAQEAAAIA/AADwwAAAoMAAAIA/AADwwAAAoEAAAIC/AADwwAAAoEAAAIA/AADwwAAAoMAAAIA/AACgwAAAQEAAAIC/AADwQAAAoEAAAIC/AADwwAAAoEAAAIC/AACgwAAAQEAAAIC/AADwwAAAoEAAAIC/AADwwAAAoMAAAIC/AACgwAAAQEAAAIA/AACgwAAAoMAAAIA/AADwwAAAoMAAAIA/AACgwAAAoMAAAIC/AADwwAAAoMAAAIA/AACgwAAAoMAAAIA/AADwwAAAoMAAAIA/AADwwAAAoMAAAIC/AADwwAAAoEAAAIC/AACgwAAAQEAAAIC/AADwwAAAoMAAAIC/AACgwAAAoMAAAIC/AACgwAAAQEAAAIC/AACgwAAAQEAAAIA/AACgQAAAQEAAAIA/AACgwAAAoMAAAIA/AACgwAAAQEAAAIA/AACgwAAAQEAAAIC/AACgQAAAoMAAAIC/AACgQAAAQEAAAIA/AACgQAAAoMAAAIA/AACgwAAAQEAAAIC/AACgQAAAQEAAAIA/AACgQAAAQEAAAIC/AACgQAAAQEAAAIC/AACgQAAAQEAAAIA/AACgQAAAoMAAAIC/AACgwAAAoMAAAIA/AACgwAAAQEAAAIC/AACgwAAAoMAAAIC//38AAP//AAD/fwAA//8AAP9/AAD//wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8//3//fwAA/z//f/9/AAD/P/9//38AAP8/////f/9//n////9//3/+f////3//f/5//////wAA/z//////AAD/P/////8AAP8//3//////AAD/f/////8AAP9//////wAA/////wAA/z//////AAD/P/////8AAP8//3//fwAA/z//f/9/AAD/P/9//38AAP8/////f/9//n////9//3/+f////3//f/5//38AAP//AAD/fwAA//8AAP9/AAD//wAA/////wAA/z//////AAD/P/////8AAP8//38AAP//AAD/fwAA//8AAP9/AAD//wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8//3//////AAD/f/////8AAP9//////wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//////wAA/z//////AAD/P/////8AAP8//////wAA/z//////AAD/P/////8AAP8//3//fwAA/z//f/9/AAD/P/9//38AAP8//38AAP//AAD/fwAA//8AAP9/AAD//wAAAAD/f/9//n8AAP9//3/+fwAA/3//f/5//////wAA/z//////AAD/P/////8AAP8//38AAP//////fwAA//////9/AAD/////////f/9/AID///9//38AgP///3//fwCAAAD/f/9/AIAAAP9//38AgAAA/3//fwCA/38AAP//////fwAA//////9/AAD/////AAD/f/9/AIAAAP9//38AgAAA/3//fwCA////f/9/AID///9//38AgP///3//fwCA")
+}]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ba8gm"]
+data = PackedVector3Array(7.5, -5, -1, 5, -5, -1, 7.5, -5, 1, 5, 3, 1, 7.5, 5, 1, 7.5, -5, 1, 5, 3, 1, -7.5, 5, 1, 7.5, 5, 1, 7.5, 5, 1, 7.5, 5, -1, 7.5, -5, -1, 7.5, 5, -1, 5, 3, -1, 7.5, -5, -1, 7.5, 5, -1, 7.5, 5, 1, -7.5, 5, -1, 5, 3, -1, 7.5, 5, -1, -5, 3, -1, 5, 3, 1, 7.5, -5, 1, 5, -5, 1, 7.5, -5, 1, 7.5, 5, 1, 7.5, -5, -1, 7.5, -5, 1, 5, -5, -1, 5, -5, 1, 5, 3, -1, 5, -5, -1, 7.5, -5, -1, -7.5, -5, -1, -7.5, -5, 1, -5, -5, -1, -5, 3, 1, -7.5, 5, 1, 5, 3, 1, -7.5, 5, -1, 7.5, 5, 1, -7.5, 5, 1, -7.5, 5, 1, -5, 3, 1, -7.5, -5, 1, -7.5, 5, -1, -7.5, 5, 1, -7.5, -5, 1, -5, 3, -1, 7.5, 5, -1, -7.5, 5, -1, -5, 3, -1, -7.5, 5, -1, -7.5, -5, -1, -5, 3, 1, -5, -5, 1, -7.5, -5, 1, -5, -5, -1, -7.5, -5, 1, -5, -5, 1, -7.5, -5, 1, -7.5, -5, -1, -7.5, 5, -1, -5, 3, -1, -7.5, -5, -1, -5, -5, -1, -5, 3, -1, -5, 3, 1, 5, 3, 1, -5, -5, 1, -5, 3, 1, -5, 3, -1, 5, -5, -1, 5, 3, 1, 5, -5, 1, -5, 3, -1, 5, 3, 1, 5, 3, -1, 5, 3, -1, 5, 3, 1, 5, -5, -1, -5, -5, 1, -5, 3, -1, -5, -5, -1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0phs7"]
+size = Vector3(10, 10, 3)
+
+[node name="Door" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.20519, 0)
+script = ExtResource("1_ba8gm")
+
+[node name="Hints" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.57265, 4.13333, 0)
+
+[node name="K" type="Label3D" parent="Hints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.95711, 0, 0)
+visibility_range_end = 300.0
+text = "K"
+font = SubResource("FontFile_v6xrn")
+font_size = 500
+outline_size = 110
+uppercase = true
+
+[node name="U" type="Label3D" parent="Hints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.00718, 0, 0)
+visibility_range_end = 300.0
+text = "U
+"
+font = SubResource("FontFile_v6xrn")
+font_size = 500
+outline_size = 110
+uppercase = true
+
+[node name="C" type="Label3D" parent="Hints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+visibility_range_end = 300.0
+text = "C"
+font = SubResource("FontFile_v6xrn")
+font_size = 500
+outline_size = 110
+uppercase = true
+
+[node name="O" type="Label3D" parent="Hints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.10471, 0, 0)
+visibility_range_end = 300.0
+text = "O"
+font = SubResource("FontFile_v6xrn")
+font_size = 500
+outline_size = 110
+uppercase = true
+
+[node name="M" type="Label3D" parent="Hints"]
+visibility_range_end = 300.0
+text = "M
+"
+font = SubResource("FontFile_v6xrn")
+font_size = 500
+outline_size = 110
+uppercase = true
+
+[node name="S" type="Label3D" parent="Hints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.79997, 0, 0)
+visibility_range_end = 300.0
+text = "S"
+font = SubResource("FontFile_v6xrn")
+font_size = 500
+outline_size = 110
+uppercase = true
+
+[node name="C2" type="Label3D" parent="Hints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.39578, 0, 0)
+visibility_range_end = 300.0
+text = "C"
+font = SubResource("FontFile_v6xrn")
+font_size = 500
+outline_size = 110
+uppercase = true
+
+[node name="I" type="Label3D" parent="Hints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.80528, 0, 0)
+visibility_range_end = 300.0
+text = "I"
+font = SubResource("FontFile_v6xrn")
+font_size = 500
+outline_size = 110
+uppercase = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_0phs7")
+}
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0.999985, 0.00539319, 0, 0.00539319, -0.999985, -1, -4.37107e-08, -2.35744e-10, 0.093646, -1.25258, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AnimatableBody3D"]
+transform = Transform3D(-7.10543e-15, -4.37114e-08, -1, -1, -4.37722e-08, 0, -4.37722e-08, 1, -4.37114e-08, 1.01, -2.60001, -0.250127)
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_50cdl")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="AnimatableBody3D"]
+transform = Transform3D(-7.10543e-15, -4.37114e-08, -1, -1, -4.37722e-08, 0, -4.37722e-08, 1, -4.37114e-08, 1.01, 2.39992, -0.250127)
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_50cdl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AnimatableBody3D"]
+transform = Transform3D(-7.10543e-15, -4.37114e-08, -1, -1, -4.37722e-08, 0, -4.37722e-08, 1, -4.37114e-08, 1.01, -2.60001, -0.250127)
+shape = SubResource("BoxShape3D_y5njw")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="AnimatableBody3D"]
+transform = Transform3D(-7.10543e-15, -4.37114e-08, -1, -1, -4.37722e-08, 0, -4.37722e-08, 1, -4.37114e-08, 1.01, 2.36168, -0.250127)
+shape = SubResource("BoxShape3D_4xadh")
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.292915, 0)
+curve = SubResource("Curve3D_6hwww")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(-4.37114e-08, 0.999985, 0.00539319, 0, 0.00539319, -0.999985, -1, -4.37107e-08, -2.35744e-10, 0.093646, -1.54549, 0)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Path3D/PathFollow3D"]
+remote_path = NodePath("../../../AnimatableBody3D")
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.01)
+visibility_range_end = 300.0
+mesh = SubResource("ArrayMesh_ptf7r")
+skeleton = NodePath("../AnimatableBody3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CSGBakedMeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBakedMeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ba8gm")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.05866)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_0phs7")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

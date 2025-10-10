@@ -1,0 +1,97 @@
+[gd_scene load_steps=10 format=3 uid="uid://cawyxa2honk7g"]
+
+[ext_resource type="Script" uid="uid://pcuig3mu46ea" path="res://node_3d.gd" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://d0qdslovi1xcb" path="res://PJ-Jump/Fantasy-Free-Godot-617145cb2c96a443e2a61973b939ee0221364a3a/Fantasy_Free/assets/models_fbx/bag_001.fbx" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://cipq8ioqu1v4m" path="res://knight1.tscn" id="6_272bh"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_ig7tw"]
+sky_material = SubResource("ProceduralSkyMaterial_7dm0k")
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 2
+sky = SubResource("Sky_ig7tw")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ig7tw"]
+albedo_color = Color(0, 0.298039, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0xm2m"]
+size = Vector3(10, 10, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0xm2m"]
+data = PackedVector3Array(-5, 5, 0.5, 5, 5, 0.5, -5, -5, 0.5, 5, 5, 0.5, 5, -5, 0.5, -5, -5, 0.5, 5, 5, -0.5, -5, 5, -0.5, 5, -5, -0.5, -5, 5, -0.5, -5, -5, -0.5, 5, -5, -0.5, 5, 5, 0.5, 5, 5, -0.5, 5, -5, 0.5, 5, 5, -0.5, 5, -5, -0.5, 5, -5, 0.5, -5, 5, -0.5, -5, 5, 0.5, -5, -5, -0.5, -5, 5, 0.5, -5, -5, 0.5, -5, -5, -0.5, 5, 5, 0.5, -5, 5, 0.5, 5, 5, -0.5, -5, 5, 0.5, -5, 5, -0.5, 5, 5, -0.5, -5, -5, 0.5, 5, -5, 0.5, -5, -5, -0.5, 5, -5, 0.5, 5, -5, -0.5, -5, -5, -0.5)
+
+[node name="main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 30.3661, 0)
+shadow_enabled = true
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10.952, -6.042, -1, -11.394)
+use_collision = true
+size = Vector3(31.35, 1, 22.75)
+material = SubResource("StandardMaterial3D_ig7tw")
+
+[node name="platform" type="CSGBox3D" parent="."]
+transform = Transform3D(1.46634, 0, 0, 0, 1, 0, 0, 0, 1.51054, -6.042, 2.27277, 10.45)
+use_collision = true
+size = Vector3(31.35, 1, 22.75)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="JumpPowerBar" type="ProgressBar" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.547
+anchor_right = 0.937
+anchor_bottom = 0.119
+offset_left = 138.856
+offset_top = 7.0
+offset_right = -221.424
+offset_bottom = -42.112
+max_value = 10.0
+
+[node name="Platform_Gen2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0449, 0, 66.3521)
+script = ExtResource("2_0xm2m")
+number_of_objects = null
+spawn_range = null
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform_Gen2"]
+
+[node name="PathAnchor" type="Node3D" parent="Platform_Gen2"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.73079, 0)
+mesh = SubResource("BoxMesh_0xm2m")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_0xm2m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.03052, 16.5268)
+mesh = SubResource("BoxMesh_0xm2m")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_0xm2m")
+
+[node name="bag_001" parent="." instance=ExtResource("6_7mycd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.408, 2.77277, 8.82193)
+
+[node name="bag_002" parent="." instance=ExtResource("6_7mycd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5576, 2.77277, 9.86035)
+
+[node name="Knight" parent="." instance=ExtResource("6_272bh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.1539, 2.77277, 19.4029)

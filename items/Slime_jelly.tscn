@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://bj3johbul3w2t"]
+
+[ext_resource type="Script" uid="uid://y1ydobcbfre2" path="res://items/slime_jelly.gd" id="1_e851o"]
+[ext_resource type="Resource" uid="uid://g2rg0suvl2jb" path="res://items/Slime_Jelly.tres" id="2_uk2rk"]
+[ext_resource type="AudioStream" uid="uid://bqoqxl7cxo5xf" path="res://knife_sfx-2.mp3" id="3_julyk"]
+[ext_resource type="PackedScene" uid="uid://cwmbisth7yadx" path="res://jar_of_jam.tscn" id="4_uk2rk"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qs0bq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yciwo"]
+transparency = 2
+alpha_scissor_threshold = 1.0
+alpha_antialiasing_mode = 2
+alpha_antialiasing_edge = 0.3
+cull_mode = 1
+depth_draw_mode = 1
+albedo_color = Color(0, 3.315, 100, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_fxw8f"]
+material = SubResource("StandardMaterial3D_yciwo")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sjefn"]
+albedo_color = Color(0.497942, 0.567559, 0, 1)
+metallic_specular = 1.0
+roughness = 0.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_yxcov"]
+material = SubResource("StandardMaterial3D_sjefn")
+top_radius = 1.0
+bottom_radius = 1.0
+height = 2.5
+radial_segments = 32
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tewjm"]
+top_radius = 1.0
+bottom_radius = 0.99
+
+[node name="Slime_jelly" type="Area3D"]
+script = ExtResource("1_e851o")
+item_resource = ExtResource("2_uk2rk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_qs0bq")
+
+[node name="collect_sfx" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_julyk")
+bus = &"SFX"
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+visibility_range_end = 300.0
+mesh = SubResource("SphereMesh_fxw8f")
+skeleton = NodePath("")
+
+[node name="Jar of jam2" parent="." instance=ExtResource("4_uk2rk")]
+transform = Transform3D(0.173205, -0.1, 0, 0.1, 0.173205, 0, 0, 0, 0.2, 0, 0, 0)
+
+[node name="Node" parent="Jar of jam2" index="0"]
+visibility_range_end = 300.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Jar of jam2"]
+visibility_range_end = 300.0
+mesh = SubResource("CylinderMesh_yxcov")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Jar of jam2"]
+visibility_range_end = 300.0
+mesh = SubResource("CylinderMesh_tewjm")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Jar of jam2"]
+transform = Transform3D(1, -8.74228e-08, -8.74228e-08, -8.74228e-08, -1, 0, -8.74228e-08, 7.64274e-15, -1, 0, 0, 0)
+visibility_range_end = 300.0
+mesh = SubResource("CylinderMesh_tewjm")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.046951, 0.740474, 0)
+visibility_range_end = 300.0
+pixel_size = 0.01
+text = "E"
+
+[editable path="Jar of jam2"]

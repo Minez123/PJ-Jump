@@ -1,0 +1,101 @@
+[gd_scene load_steps=6 format=3 uid="uid://clmc7nyinhapt"]
+
+[ext_resource type="Resource" uid="uid://dxabyd5d7mapd" path="res://items/ammo_box.tres" id="1_f808g"]
+[ext_resource type="PackedScene" uid="uid://d1uxylc0g8567" path="res://PJ-Jump/Ammo Shotgun.glb" id="3_f808g"]
+[ext_resource type="AudioStream" uid="uid://bqoqxl7cxo5xf" path="res://knife_sfx-2.mp3" id="3_g07jd"]
+
+[sub_resource type="GDScript" id="GDScript_1xfmm"]
+script/source = "extends Area3D
+
+# Use a preloaded ItemResource for better data management
+@export var uid: String = \"ammo_box\"
+@export var item_resource: ItemResource
+@export var spin_speed: float = 90.0
+@export var price: int = 7
+var player_in_range: Node = null
+@onready var interact_label: Label3D = $Label3D
+@onready var item_sfx: AudioStreamPlayer3D = $collect_sfx
+
+func _ready() -> void:
+	add_to_group(\"items\")
+	interact_label.visible = false
+	connect(\"body_entered\", _on_body_entered)
+	connect(\"body_exited\", _on_body_exited)
+	
+func _process(delta: float) -> void:
+	rotate_y(deg_to_rad(spin_speed * delta))
+	
+func _on_body_entered(body: Node) -> void:
+	if body.is_in_group(\"player\"):
+		player_in_range = body
+		interact_label.visible = true
+		var shop_ui = get_tree().get_first_node_in_group(\"shop_ui\")
+		if shop_ui:
+			shop_ui.show_item(price, body.get_ammo())
+
+
+func _input(event: InputEvent) -> void:
+	if player_in_range and event.is_action_pressed(\"interact\"):
+		_try_buy_item()
+
+
+func _on_body_exited(body: Node) -> void:
+	if body.is_in_group(\"player\"):
+		player_in_range = null
+		interact_label.visible = false
+		var shop_ui = get_tree().get_first_node_in_group(\"shop_ui\")
+		if shop_ui:
+			shop_ui.hide_item()
+
+func _try_buy_item() -> void:
+	if not player_in_range:
+		return
+	
+	if player_in_range.get_ammo() >= price:
+		player_in_range.consume_ammo(price)
+
+		var inventory = get_tree().get_first_node_in_group(\"inventory_ui\")
+		if inventory:
+			item_sfx.play()
+			# Pass the ItemResource object directly to the inventory
+			inventory.add_item(item_resource)
+		
+		var popup = get_tree().get_first_node_in_group(\"item_popup\")
+		if popup:
+			popup.show_item(item_resource,3)
+		
+		# Separate SFX and `queue_free()` call for better control
+		item_sfx.play()
+		await get_tree().create_timer(0.2).timeout
+		queue_free()
+	else:
+		var shop_ui = get_tree().get_first_node_in_group(\"shop_ui\")
+		shop_ui.reject()
+"
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qs0bq"]
+
+[node name="Ammo_box" type="Area3D"]
+script = SubResource("GDScript_1xfmm")
+item_resource = ExtResource("1_f808g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_qs0bq")
+
+[node name="collect_sfx" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_g07jd")
+bus = &"SFX"
+
+[node name="Root Scene" parent="." instance=ExtResource("3_f808g")]
+transform = Transform3D(3.4641, 0, 2, 0, 4, 0, -2, 0, 3.4641, 0.0799859, 0.102809, -0.166983)
+
+[node name="Ammo_gun" parent="Root Scene/RootNode" index="0"]
+visibility_range_end = 300.0
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.046951, 0.740474, 0)
+visibility_range_end = 300.0
+pixel_size = 0.01
+text = "E"
+
+[editable path="Root Scene"]

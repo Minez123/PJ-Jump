@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://g2rg0suvl2jb"]
+
+[ext_resource type="Script" uid="uid://c214cp20i2584" path="res://items/item_resource.gd" id="1_n4kf6"]
+[ext_resource type="Texture2D" uid="uid://bptnc1cwy7pjj" path="res://PJ-Jump/-Animated-LowPoly-Slime-228941d20482249abbf064037c4e5ac1906cdf4e/-Animated-LowPoly-Slime-228941d20482249abbf064037c4e5ac1906cdf4e/SlimeBody_baseColor.png" id="2_usvpd"]
+
+[resource]
+script = ExtResource("1_n4kf6")
+uid = "Slime_jelly"
+item_name = "Slime Jelly"
+description = "friend with slime"
+texture = ExtResource("2_usvpd")
+is_stackable = false
+stack_size = 1
+metadata/_custom_type_script = "uid://c214cp20i2584"

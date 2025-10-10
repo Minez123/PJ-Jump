@@ -1,0 +1,105 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5jow6o5qqdx7"]
+
+[ext_resource type="Script" uid="uid://bn35v1n7clj2c" path="res://main_menu.gd" id="1_80nbo"]
+[ext_resource type="PackedScene" uid="uid://b2axm8p7blmji" path="res://fade_transition.tscn" id="2_e2o6t"]
+[ext_resource type="AudioStream" uid="uid://d4dmpgn8sanmt" path="res://music/hub_music.mp3" id="3_feb5d"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_e2o6t"]
+
+[node name="Main Menu" type="Node2D"]
+material = SubResource("CanvasItemMaterial_e2o6t")
+script = ExtResource("1_80nbo")
+
+[node name="button manager" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 435.0
+offset_top = 214.0
+offset_right = 755.0
+offset_bottom = 435.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+
+[node name="start" type="Button" parent="button manager"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 200.0
+offset_bottom = 100.0
+text = "start"
+
+[node name="load" type="Button" parent="button manager"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 100.0
+offset_right = 200.0
+offset_bottom = 150.0
+text = "load
+"
+
+[node name="quit" type="Button" parent="button manager"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 150.0
+offset_right = 200.0
+offset_bottom = 200.0
+text = "quit"
+
+[node name="Fade_transition" parent="button manager" instance=ExtResource("2_e2o6t")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = -435.0
+offset_top = -214.0
+offset_right = 2113.0
+offset_bottom = 1145.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Faade_Timer" type="Timer" parent="button manager/Fade_transition"]
+
+[node name="SeedInput" type="LineEdit" parent="button manager"]
+layout_mode = 0
+offset_left = 227.0
+offset_top = 54.0
+offset_right = 360.0
+offset_bottom = 85.0
+placeholder_text = "Enter seed here, (e.g., 12345)"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="button manager"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_feb5d")
+volume_db = -1.0
+bus = &"Music"
+
+[node name="SFXSlider" type="HSlider" parent="."]
+visible = false
+offset_left = 353.0
+offset_top = 209.0
+offset_right = 724.0
+offset_bottom = 232.0
+max_value = 1.0
+step = 0.01
+
+[node name="MusicSlider" type="HSlider" parent="."]
+visible = false
+offset_left = 353.0
+offset_top = 252.0
+offset_right = 724.0
+offset_bottom = 275.0
+max_value = 1.0
+step = 0.01
+
+[connection signal="pressed" from="button manager/start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="button manager/load" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="button manager/quit" to="." method="_on_quit_pressed"]
+[connection signal="timeout" from="button manager/Fade_transition/Faade_Timer" to="." method="_on_faade_timer_timeout"]

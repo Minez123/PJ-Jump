@@ -1,0 +1,671 @@
+[gd_scene load_steps=30 format=4 uid="uid://dgfcv7iw8u25e"]
+
+[ext_resource type="PackedScene" uid="uid://bc7wjqwss7bd1" path="res://PJ-Jump/Platform/ice_platform.tscn" id="1_gmmf0"]
+[ext_resource type="Script" uid="uid://bl04agwohpx1x" path="res://struc.gd" id="2_mffh1"]
+[ext_resource type="Script" uid="uid://dhj0ioxlaw621" path="res://plat_move.gd" id="3_so7w3"]
+[ext_resource type="Texture2D" uid="uid://dv6mt0c1lug32" path="res://360_F_281239239_WO4JiC37US1v5RGWvaEQBT6LNvSzywpL.jpg" id="5_ayqea"]
+[ext_resource type="PackedScene" uid="uid://budo6ml1l5gc1" path="res://items/ice_boot_item.tscn" id="6_i426a"]
+[ext_resource type="Texture2D" uid="uid://dptd2f7hj1osa" path="res://PJ-Jump/Fantasy-Free-Godot-617145cb2c96a443e2a61973b939ee0221364a3a/360_F_281239239_WO4JiC37US1v5RGWvaEQBT6LNvSzywpL.jpg" id="6_ki08j"]
+[ext_resource type="PackedScene" uid="uid://br4t4q50fjjek" path="res://ice.tscn" id="7_i426a"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ayqea"]
+albedo_color = Color(0.537, 0.537, 100, 1)
+albedo_texture = ExtResource("5_ayqea")
+
+[sub_resource type="BoxMesh" id="BoxMesh_i426a"]
+material = SubResource("StandardMaterial3D_ayqea")
+size = Vector3(6, 0.1, 6)
+
+[sub_resource type="Curve3D" id="Curve3D_me4sq"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.076827, 0.0810742, 0, 0, 0, 0, 0, 0, 0, -0.0379183, 10.5461, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Animation" id="Animation_87k8q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_28s1i"]
+resource_name = "platmove_down"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.01),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_jl63p"]
+resource_name = "platmove_up"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.0333333, 3.46667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_28s1i"]
+_data = {
+&"RESET": SubResource("Animation_87k8q"),
+&"platmove_down": SubResource("Animation_28s1i"),
+&"platmove_up": SubResource("Animation_jl63p")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mi635"]
+size = Vector3(6, 0.5, 6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_me4sq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3i853"]
+size = Vector3(6, 0.5, 6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7j2io"]
+
+[sub_resource type="Curve3D" id="Curve3D_haci6"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.0522308, 0, 0.940175, 0, 0, 0, 0, 0, 0, -0.1567, 0, 25.3847),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Animation" id="Animation_ypoff"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_3i853"]
+resource_name = "platmove_left"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.98),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_b17rw"]
+resource_name = "platmove_right"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.93),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7j2io"]
+_data = {
+&"RESET": SubResource("Animation_ypoff"),
+&"platmove_left": SubResource("Animation_3i853"),
+&"platmove_right": SubResource("Animation_b17rw")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nymv0"]
+albedo_color = Color(0.501265, 0.89708, 1, 1)
+albedo_texture = ExtResource("6_ki08j")
+albedo_texture_force_srgb = true
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_so7w3"]
+_surfaces = [{
+"aabb": AABB(-0.5, -0.5, -0.5, 1, 1, 1),
+"attribute_data": PackedByteArray("AAAAP1IM1T4AAIA/AACAP2urIT+YybA+AACAPwAAgD9qqyE/sCV/P/4VID8AAIA/AACAPwAAgD+ynS8/cmBTP2qrIT+wJX8/aqshPwBQWjsAAIA/AAAAAP4VID8AAAAAAAAAAAAAAABrqyE/NJsnPwAAgD8AAIA/AAAAAAAAgD8AAIA//BUgPwAAAAD8FSA/Kqm8Pq8lfz8AAAAAAACAPwjUvz4AAIA/nMSgPnJgUz8AAAAAAACAPyqpvD6vJX8/AACAPwAAAAAAAAAAAAAAAAAAgD8AAIA/nMSgPnJgUz8AAAAAAAAAAAAAAAAAAIA/a6shP5jJsD4AAIA/AACAP7KdLz86fjI+AACAPwAAgD9rqyE/NJsnP7KdLz9yYFM/AACAPwAAgD8AAAA/UgzVPiqpvD6YybA+AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAAAAAAAAAAAAAAAAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAAAAAAAAAAAAAAAAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAA/13kVP2urIT80myc/AAAAP9d5FT8AAAAAAAAAACqpvD40myc/Kqm8PjSbJz8AAAAAAAAAAJzEoD5yYFM/sp0vPzp+Mj4AAIA/AAAAAGqrIT8AUFo7AACAPwAAAAAAAAAAAAAAAAAAgD8F1L8+AACAPwXUvz4AAAAAAAAAAAAAAAAF1L8+sp0vPzp+Mj4AAIA/AACAPwAAgD8AAAAAAAAAAAAAAAAAAIA/AACAPwAAgD8AAAAAAACAPwAAgD8qqbw+mMmwPgAAAAAAAAAAAACAPwAAgD8AAIA//BUgPwAAAAAAAIA/AAAAAAAAAAAqqbw+AFFaOwjUvz4AAAAAAAAAAAAAAACcxKA+On4yPiqpvD4AUVo7AAAAAAAAAAAqqbw+mMmwPpzEoD46fjI+"),
+"format": 34359738391,
+"material": SubResource("StandardMaterial3D_nymv0"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 96,
+"vertex_data": PackedByteArray("ts6rvQAAAL8AAAAAAAAAPwAAAL8AAAC/0WwevgAAAL+srQa+AAAAvwAAAD8AAAC/YEv+vgAAAD+qrQa+AAAAvwAAAD/2VwC+AAAAvwAAAD8AAAC/48CmvgAAAD/Jdj6+YEv+vgAAAD+qrQa+YEv+vgAAAL+qrQa+AAAAvwAAAL8AAAC/AAAAvwAAAL/2VwC+AAAAPwAAAD8AAAA/0WwevgAAAD+srQa+AAAAvwAAAD8AAAC/AAAAvwAAAD8AAAA/AAAAvwAAAL/wVwA+AAAAvwAAAD/wVwA+Xkv+vgAAAD+rrQY+AAAAvwAAAD8AAAA/AAAAvwAAAD/wVwA+48CmvgAAAD/Jdj4+AAAAvwAAAD8AAAA/Xkv+vgAAAD+rrQY+AAAAvwAAAD8AAAA/AAAAPwAAAD8AAAA/AAAAvwAAAL8AAAA/48CmvgAAAD/Jdj4+AAAAPwAAAD8AAAA/AAAAvwAAAD8AAAA/0WwevgAAAL+srQa+AAAAPwAAAL8AAAC/48CmvgAAAL/Jdj6+AAAAvwAAAD8AAAC/0WwevgAAAD+srQa+48CmvgAAAD/Jdj6+AAAAPwAAAL8AAAC/ts6rvQAAAL8AAAAAz2wevgAAAL+rrQY+AAAAvwAAAL8AAAA/AAAAPwAAAL8AAAA/AAAAPwAAAL8AAAC/AAAAPwAAAD8AAAA/AAAAPwAAAL8AAAA/AAAAvwAAAL8AAAA/AAAAPwAAAL8AAAA/AAAAPwAAAD8AAAA/AAAAPwAAAL8AAAC/AAAAPwAAAL8AAAC/AAAAPwAAAD8AAAC/AAAAvwAAAD8AAAC/AAAAPwAAAD8AAAC/AAAAPwAAAD8AAAA/AAAAvwAAAD8AAAC/AAAAPwAAAD8AAAA/AAAAPwAAAD8AAAC/AAAAPwAAAL8AAAC/AAAAPwAAAD8AAAA/ts6rvQAAAD8AAAAA0WwevgAAAD+srQa+ts6rvQAAAD8AAAAAAAAAPwAAAD8AAAA/z2wevgAAAD+rrQY+z2wevgAAAD+rrQY+AAAAPwAAAD8AAAA/48CmvgAAAD/Jdj4+48CmvgAAAL/Jdj6+AAAAvwAAAL8AAAC/YEv+vgAAAL+qrQa+AAAAvwAAAL8AAAC/AAAAvwAAAD8AAAC/AAAAvwAAAL/2VwC+AAAAvwAAAL/2VwC+AAAAvwAAAD8AAAC/AAAAvwAAAD/2VwC+48CmvgAAAL/Jdj6+AAAAPwAAAL8AAAC/AAAAvwAAAL8AAAC/AAAAPwAAAL8AAAC/AAAAvwAAAD8AAAC/AAAAvwAAAL8AAAC/AAAAPwAAAL8AAAC/z2wevgAAAL+rrQY+AAAAvwAAAL8AAAA/AAAAvwAAAL8AAAA/AAAAvwAAAL/wVwA+AAAAvwAAAD8AAAA/AAAAvwAAAL8AAAA/Xkv+vgAAAL+rrQY+AAAAvwAAAL/wVwA+AAAAvwAAAL8AAAA/48CmvgAAAL/Jdj4+Xkv+vgAAAL+rrQY+AAAAvwAAAL8AAAA/z2wevgAAAL+rrQY+48CmvgAAAL/Jdj4+/38AAAAAAAD/fwAAAAAAAP9/AAAAAAAA/3///wAAAAD/f/////8AAP9//////wAA/3///wAAAAD/f///AAAAAP9//////wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAA/3//////AAD/f///AAAAAP9///8AAAAAAAD/f/9//n8AAP9//3/+fwAA/3//f/5//3//////AAD/f/////8AAP9//////wAA/3//////AAD/f/////8AAP9//////wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8//3//////AAD/f/////8AAP9//////wAA/38AAAAAAAD/fwAAAAAAAP9/AAD//wAA/3///wAAAAD/f///AAAAAP9///8AAAAA/38AAAAAAAD/fwAAAAAAAP9/AAD//wAA/38AAP//AAD/fwAA//8AAP9/AAAAAAAA/3//fwAA/z//f/9/AAD/P/9//38AAP8/////f/9//n////9//3/+f////3//f/5//////wAA/z//////AAD/P/////8AAP8//3//////AAD/f/////8AAP9///8AAAAA////f/9//n////9//3/+f////3//f/5//3//////AAD/f/////8AAP9///8AAAAA/3//////AAD/f/////8AAP9///8AAAAA/3///wAAAAD/f/////8AAP9//////wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAAAAD/f/9//n8AAP9//3/+fwAA/3//f/5/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//38AAP//AAD/fwAAAAAAAP9/AAD//wAA/////wAA/z//////AAD/P/////8AAP8//38AAAAAAAD/fwAA//8AAP9/AAD//wAAAAD/f/9//n8AAP9//3/+fwAA/3//f/5//38AAP//AAD/fwAA//8AAP9/AAD//wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAA")
+}, {
+"aabb": AABB(-0.5, -0.5, -0.186, 0.41611, 1, 0.372),
+"attribute_data": PackedByteArray("AADAPsBIcT8AAMA+gJHiPgAAgD6AkeI+rn4eP8BIcT8AACA/gJHiPq5+Hj+AkeI+AABAP8BIcT8AAEA/gJHiPgAAID+AkeI+AABgP8BIcT8AAGA/gJHiPgAAQD+AkeI+AAAAAMBIcT8AAAAAgJHiPgAAYD+AkeI+AADAPsBIcT+oAsM+gJHiPgAAwD6AkeI+AABAP4CR4j4AAEA/wEhxPwAAYD/ASHE/AACAPsBIcT8AAIA+gJHiPgAAAD6AkeI+AAAAAICR4j4AAAAAwEhxPwAAAD7ASHE/AAAAPoCR4j4AAAA+wEhxPwAAgD7ASHE/AAAAPsBIcT8AAAA+gJHiPgAAAACAkeI+AACAPoCR4j4AAIA+wEhxPwAAwD7ASHE/qALDPoCR4j4AAMA+wEhxP6gCwz7ASHE/AABgP4CR4j4AAGA/wEhxPwAAAADASHE/rn4eP8BIcT8AACA/wEhxPwAAID+AkeI+AAAgP4CR4j4AACA/wEhxPwAAQD/ASHE/"),
+"format": 34359738391,
+"material": SubResource("StandardMaterial3D_nymv0"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 48,
+"vertex_data": PackedByteArray("Xkv+vgAAAD+rrQY+Xkv+vgAAAL+rrQY+48CmvgAAAL/Jdj4+AAAAvwAAAD/2VwC+YEv+vgAAAL+qrQa+AAAAvwAAAL/2VwC+48CmvgAAAD/Jdj6+48CmvgAAAL/Jdj6+YEv+vgAAAL+qrQa+0WwevgAAAD+srQa+0WwevgAAAL+srQa+48CmvgAAAL/Jdj6+ts6rvQAAAD8AAAAAts6rvQAAAL8AAAAA0WwevgAAAL+srQa+Xkv+vgAAAD+rrQY+AAAAvwAAAL/wVwA+Xkv+vgAAAL+rrQY+48CmvgAAAL/Jdj6+48CmvgAAAD/Jdj6+0WwevgAAAD+srQa+48CmvgAAAD/Jdj4+48CmvgAAAL/Jdj4+z2wevgAAAL+rrQY+ts6rvQAAAL8AAAAAts6rvQAAAD8AAAAAz2wevgAAAD+rrQY+z2wevgAAAL+rrQY+z2wevgAAAD+rrQY+48CmvgAAAD/Jdj4+z2wevgAAAD+rrQY+z2wevgAAAL+rrQY+ts6rvQAAAL8AAAAA48CmvgAAAL/Jdj4+48CmvgAAAD/Jdj4+Xkv+vgAAAD+rrQY+AAAAvwAAAL/wVwA+Xkv+vgAAAD+rrQY+AAAAvwAAAD/wVwA+0WwevgAAAL+srQa+0WwevgAAAD+srQa+ts6rvQAAAD8AAAAAAAAAvwAAAD/2VwC+YEv+vgAAAD+qrQa+YEv+vgAAAL+qrQa+YEv+vgAAAL+qrQa+YEv+vgAAAD+qrQa+48CmvgAAAD/Jdj6+///zxQAA+SL///PFAAD5Iv//tPMAANo5MtP/f///ZhYLuv9////5IjLT/3///2YWSYz/f///2jm1c/9/tPP/Pwu6/3////kiwk7/f8LO/z9cPf9/W73/P7Vz/3+08/8/ehP/fwAAQfYAAHmT//9B9lw9/38AAFDh///zxQAA+SL//8ysAABmFv//88UAAPkitXP/f7Tz/z9JjP9////aOcJO/3/Czv8/AAC080oM/z///7TzAADaOQAAws48Mf8/AAB5k4Vs/z96E/9/eZP/PwAAW72jQv8/AADCzjwx/z8AAFu9o0L/PwAAtPNKDP8/AABbvaNC/z8AAMLOPDH/PwAAeZOFbP8///+08wAA2jkAALTzSgz/P///88UAAPki///MrAAAZhb///PFAAD5Iv//zKwAAGYWXD3/fwAAUOHCTv9/AACd2HoT/38AAEH2MtP/f///ZhYLuv9////5Igu6/3////kiC7r/f///+SILuv9////5IkmM/3///9o5")
+}]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_so7w3"]
+data = PackedVector3Array(-0.0839, -0.5, 0, 0.5, -0.5, -0.5, -0.1547, -0.5, -0.1315, -0.5, 0.5, -0.5, -0.4967, 0.5, -0.1315, -0.5, 0.5, -0.1253, -0.5, 0.5, -0.5, -0.3257, 0.5, -0.186, -0.4967, 0.5, -0.1315, -0.4967, -0.5, -0.1315, -0.5, -0.5, -0.5, -0.5, -0.5, -0.1253, 0.5, 0.5, 0.5, -0.1547, 0.5, -0.1315, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.1253, -0.5, 0.5, 0.1253, -0.4967, 0.5, 0.1315, -0.5, 0.5, 0.5, -0.5, 0.5, 0.1253, -0.3257, 0.5, 0.186, -0.5, 0.5, 0.5, -0.4967, 0.5, 0.1315, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.3257, 0.5, 0.186, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.1547, -0.5, -0.1315, 0.5, -0.5, -0.5, -0.3257, -0.5, -0.186, -0.5, 0.5, -0.5, -0.1547, 0.5, -0.1315, -0.3257, 0.5, -0.186, 0.5, -0.5, -0.5, -0.0839, -0.5, 0, -0.1547, -0.5, 0.1315, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.0839, 0.5, 0, -0.1547, 0.5, -0.1315, -0.0839, 0.5, 0, 0.5, 0.5, 0.5, -0.1547, 0.5, 0.1315, -0.1547, 0.5, 0.1315, 0.5, 0.5, 0.5, -0.3257, 0.5, 0.186, -0.3257, -0.5, -0.186, -0.5, -0.5, -0.5, -0.4967, -0.5, -0.1315, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.1253, -0.5, -0.5, -0.1253, -0.5, 0.5, -0.5, -0.5, 0.5, -0.1253, -0.3257, -0.5, -0.186, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.1547, -0.5, 0.1315, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.1253, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.4967, -0.5, 0.1315, -0.5, -0.5, 0.1253, -0.5, -0.5, 0.5, -0.3257, -0.5, 0.186, -0.4967, -0.5, 0.1315, -0.5, -0.5, 0.5, -0.1547, -0.5, 0.1315, -0.3257, -0.5, 0.186, -0.4967, 0.5, 0.1315, -0.4967, -0.5, 0.1315, -0.3257, -0.5, 0.186, -0.5, 0.5, -0.1253, -0.4967, -0.5, -0.1315, -0.5, -0.5, -0.1253, -0.3257, 0.5, -0.186, -0.3257, -0.5, -0.186, -0.4967, -0.5, -0.1315, -0.1547, 0.5, -0.1315, -0.1547, -0.5, -0.1315, -0.3257, -0.5, -0.186, -0.0839, 0.5, 0, -0.0839, -0.5, 0, -0.1547, -0.5, -0.1315, -0.4967, 0.5, 0.1315, -0.5, -0.5, 0.1253, -0.4967, -0.5, 0.1315, -0.3257, -0.5, -0.186, -0.3257, 0.5, -0.186, -0.1547, 0.5, -0.1315, -0.3257, 0.5, 0.186, -0.3257, -0.5, 0.186, -0.1547, -0.5, 0.1315, -0.0839, -0.5, 0, -0.0839, 0.5, 0, -0.1547, 0.5, 0.1315, -0.1547, -0.5, 0.1315, -0.1547, 0.5, 0.1315, -0.3257, 0.5, 0.186, -0.1547, 0.5, 0.1315, -0.1547, -0.5, 0.1315, -0.0839, -0.5, 0, -0.3257, -0.5, 0.186, -0.3257, 0.5, 0.186, -0.4967, 0.5, 0.1315, -0.5, -0.5, 0.1253, -0.4967, 0.5, 0.1315, -0.5, 0.5, 0.1253, -0.1547, -0.5, -0.1315, -0.1547, 0.5, -0.1315, -0.0839, 0.5, 0, -0.5, 0.5, -0.1253, -0.4967, 0.5, -0.1315, -0.4967, -0.5, -0.1315, -0.4967, -0.5, -0.1315, -0.4967, 0.5, -0.1315, -0.3257, 0.5, -0.186)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ki08j"]
+albedo_color = Color(0, 1, 100, 1)
+albedo_texture = ExtResource("5_ayqea")
+albedo_texture_force_srgb = true
+roughness = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_btkd4"]
+material = SubResource("StandardMaterial3D_ki08j")
+size = Vector3(7, 1, 7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8yxsx"]
+size = Vector3(7, 1, 7)
+
+[node name="Ice_dun" type="Node3D"]
+
+[node name="Ice_Platform" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(70, 0, 0, 0, 1, 0, 0, 0, 70, 0, 0, 0)
+
+[node name="Ice_Platform2" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, 10, 4, 9.63418)
+
+[node name="Ice_Platform6" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, 18.194, 4, -17.5538)
+
+[node name="Ice_Platform7" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, 24.389, 6.4267, 17.3879)
+
+[node name="Ice_Platform8" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, -0.382748, 16.3816, -10.3768)
+
+[node name="Ice_Platform9" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, 4.90072, 37.6277, -13.1427)
+
+[node name="Ice_Platform10" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, -6.13691, 20.6644, -22.6729)
+
+[node name="Ice_Platform11" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, 14.0101, 37.0762, -23.7698)
+
+[node name="Ice_Platform18" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, -13.2095, 37.0762, -9.88828)
+
+[node name="Ice_Platform12" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, 6.37948, 41.8731, 16.9827)
+
+[node name="Ice_Platform13" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, 6.63333, 40.2377, 1.86867)
+
+[node name="Ice_Platform3" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, 10, 8, -1.4057)
+
+[node name="Ice_Platform14" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(6.06218, 0, 3.5, 0, 1, 0, -3.5, 0, 6.06218, -8.21584, 17.6677, 13.3618)
+
+[node name="Ice_Platform16" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, -7.29621, 9.66481, 11.6214)
+
+[node name="Ice_Platform15" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(-2.19246e-06, -0.736156, 4.73768, 42, -4.37114e-08, 2.07091e-07, 3.27838e-07, 0.676812, 5.15309, 0.556418, 22.0653, 4.2079)
+
+[node name="Ice_Platform17" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(-3.6541e-07, -0.736156, 4.73768, 7, -4.37114e-08, 2.07091e-07, 5.46396e-08, 0.676812, 5.15309, -3.25895, 49.8612, 7.71569)
+
+[node name="Ice_Platform19" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(-2.27387e-07, -0.743145, -4.68391, 7, -4.37114e-08, 0, -2.0474e-07, -0.669131, 5.20201, -12.5512, 42.7233, -0.41192)
+
+[node name="Ice_Platform4" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, -12.4956, 6.0908, -1.4057)
+
+[node name="Ice_Platform5" parent="." instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, -6.81376, 37.1345, 14.1188)
+
+[node name="ice_up" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, -22.8343, 25.225, 16.4662)
+script = ExtResource("2_mffh1")
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="ice_up"]
+transform = Transform3D(0.999964, 0.00812665, 1.58049e-07, -0.00812665, 0.999964, -1.20834e-07, -1.59026e-07, 1.19546e-07, 1, -0.000659943, -0.000621796, 0)
+
+[node name="Ice_Platform5" parent="ice_up/AnimatableBody3D" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 0.5, 0, 0, 0, 7, -0.186117, 0.242909, -0.132253)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ice_up/AnimatableBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.186, 0.49, -0.132)
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_i426a")
+
+[node name="Path3D" type="Path3D" parent="ice_up"]
+curve = SubResource("Curve3D_me4sq")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="ice_up/Path3D"]
+transform = Transform3D(1.20363e-08, 0.999986, -0.00371866, 5.99639e-08, -0.00371866, -0.999986, -1, 1.18143e-08, -6.00078e-08, -0.076827, 0.0810742, 0)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="ice_up/Path3D/PathFollow3D"]
+transform = Transform3D(1.70576e-07, -5.94864e-08, -1, 0.999994, 0.00440808, 1.70312e-07, 0.00440808, -0.999994, 6.02379e-08, 1.79277e-08, 0.0764692, 0.0814123)
+remote_path = NodePath("../../../AnimatableBody3D")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ice_up"]
+libraries = {
+&"": SubResource("AnimationLibrary_28s1i")
+}
+
+[node name="Area3D" type="Area3D" parent="ice_up"]
+transform = Transform3D(1, 0, 0, 0, 1.16269, 0, 0, 0, 1, 0.137686, 0.0798241, 0.0463562)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="ice_up/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00797821, 0.247463, 0.00238039)
+shape = SubResource("BoxShape3D_mi635")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ice_up"]
+transform = Transform3D(5.911, 0, 0, 0, 11, 0, 0, 0, 1, 0, 5.40589, 0)
+visible = false
+mesh = SubResource("BoxMesh_me4sq")
+
+[node name="ice_up2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 39.3291, 49.5458, -8.5031)
+script = ExtResource("2_mffh1")
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="ice_up2"]
+transform = Transform3D(0.999964, 0.00812665, 1.58049e-07, -0.00812665, 0.999964, -1.20834e-07, -1.59026e-07, 1.19546e-07, 1, -0.000663757, -0.000621796, 0)
+
+[node name="Ice_Platform5" parent="ice_up2/AnimatableBody3D" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(7, 0, 0, 0, 0.5, 0, 0, 0, 7, -0.186117, 0.242909, -0.132253)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ice_up2/AnimatableBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.186, 0.5, -0.132)
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_i426a")
+
+[node name="Path3D" type="Path3D" parent="ice_up2"]
+curve = SubResource("Curve3D_me4sq")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="ice_up2/Path3D"]
+transform = Transform3D(1.20363e-08, 0.999986, -0.00371866, 5.99639e-08, -0.00371866, -0.999986, -1, 1.18143e-08, -6.00078e-08, -0.076827, 0.0810742, 0)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="ice_up2/Path3D/PathFollow3D"]
+transform = Transform3D(1.70576e-07, -5.94864e-08, -1, 0.999994, 0.00440808, 1.70312e-07, 0.00440808, -0.999994, 6.02379e-08, 1.79277e-08, 0.0764692, 0.0814123)
+remote_path = NodePath("../../../AnimatableBody3D")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ice_up2"]
+libraries = {
+&"": SubResource("AnimationLibrary_28s1i")
+}
+
+[node name="Area3D" type="Area3D" parent="ice_up2"]
+transform = Transform3D(1, 0, 0, 0, 1.16269, 0, 0, 0, 1, 0.137686, 0.0798241, 0.0463562)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="ice_up2/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00797821, 0.247463, 0.00238039)
+shape = SubResource("BoxShape3D_mi635")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ice_up2"]
+transform = Transform3D(5.911, 0, 0, 0, 11, 0, 0, 0, 1, 0, 5.40589, 0)
+visible = false
+mesh = SubResource("BoxMesh_me4sq")
+
+[node name="ice_move" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.4583, 23.5032, -16.6888)
+script = ExtResource("3_so7w3")
+
+[node name="ABody3D" type="AnimatableBody3D" parent="ice_move"]
+transform = Transform3D(-0.999991, 0, 0.00427379, 0, 1, 0, -0.00427379, 0, -0.999991, -0.0522308, 0, 0.940175)
+
+[node name="Ice_Platform" parent="ice_move/ABody3D" instance=ExtResource("1_gmmf0")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ice_move/ABody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_i426a")
+
+[node name="Area3D" type="Area3D" parent="ice_move"]
+transform = Transform3D(1, 0, 0, 0, 1.16269, 0, 0, 0, 1, 0.620819, 0.526075, 1.23073)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="ice_move/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00797821, 0.247463, 0.00238039)
+shape = SubResource("BoxShape3D_3i853")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ice_move"]
+transform = Transform3D(6, 0, 0, 0, 2, 0, 0, 0, 30, 0.0237591, -0.0209062, 12.8814)
+visible = false
+mesh = SubResource("BoxMesh_7j2io")
+
+[node name="Path3D" type="Path3D" parent="ice_move"]
+curve = SubResource("Curve3D_haci6")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="ice_move/Path3D"]
+transform = Transform3D(-0.999991, 0, 0.00427379, 0, 1, 0, -0.00427379, 0, -0.999991, -0.0522308, 0, 0.940175)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="ice_move/Path3D/PathFollow3D"]
+remote_path = NodePath("../../../ABody3D")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ice_move"]
+libraries = {
+&"": SubResource("AnimationLibrary_7j2io")
+}
+speed_scale = 0.8
+
+[node name="ice_move2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.3786, 44.7015, -24.7929)
+script = ExtResource("3_so7w3")
+
+[node name="ABody3D" type="AnimatableBody3D" parent="ice_move2"]
+transform = Transform3D(-0.999991, 0, 0.00427379, 0, 1, 0, -0.00427379, 0, -0.999991, -0.0522308, 0, 0.940174)
+
+[node name="Ice_Platform" parent="ice_move2/ABody3D" instance=ExtResource("1_gmmf0")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ice_move2/ABody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_i426a")
+
+[node name="Area3D" type="Area3D" parent="ice_move2"]
+transform = Transform3D(1, 0, 0, 0, 1.16269, 0, 0, 0, 1, 0.620819, 0.526075, 1.23073)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="ice_move2/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00797821, 0.247463, 0.00238039)
+shape = SubResource("BoxShape3D_3i853")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ice_move2"]
+transform = Transform3D(6, 0, 0, 0, 2, 0, 0, 0, 30, 0.0237591, -0.0209062, 12.8814)
+visible = false
+mesh = SubResource("BoxMesh_7j2io")
+
+[node name="Path3D" type="Path3D" parent="ice_move2"]
+curve = SubResource("Curve3D_haci6")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="ice_move2/Path3D"]
+transform = Transform3D(-0.999991, 0, 0.00427379, 0, 1, 0, -0.00427379, 0, -0.999991, -0.0522308, 0, 0.940175)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="ice_move2/Path3D/PathFollow3D"]
+remote_path = NodePath("../../../ABody3D")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ice_move2"]
+libraries = {
+&"": SubResource("AnimationLibrary_7j2io")
+}
+speed_scale = 0.8
+
+[node name="ice_chamber" type="Node3D" parent="."]
+
+[node name="Ice_Platform14" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(31, 0, 0, 0, 1, 0, 0, 0, 30, 15.5092, 71, -8)
+
+[node name="Ice_Platform20" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 15.5092, 73.5398, -16.3351)
+
+[node name="Ice_Platform21" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 7.74302, 75.4015, -16.3351)
+
+[node name="Ice_Platform22" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 18.2661, 78.423, -16.0631)
+
+[node name="Ice_Platform28" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 26.0476, 80.6095, -1.71839)
+
+[node name="Ice_Platform29" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 25.0059, 81.0814, -9.99197)
+
+[node name="Ice_Platform23" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 3.48448, 90.5421, -8.69997)
+
+[node name="Ice_Platform24" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 3.48448, 91.698, -19.6125)
+
+[node name="Ice_Platform25" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 2.4742, 85.2349, -2.94932)
+
+[node name="Ice_Platform26" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 5.98279, 81.1075, 1.97994)
+
+[node name="Ice_Platform27" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 19.5662, 81.1143, 1.97966)
+
+[node name="Ice_Platform16" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 30, 20.153, 91.7169, -8)
+
+[node name="Ice_Platform15" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(30, 0, 0, 0, 1, 0, 0, 0, 30, 15, 100.003, -8)
+
+[node name="Ice_Platform17" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(-1.31134e-06, -1, 0, 30, -4.37114e-08, 0, 0, 0, 30, 0, 85.5, -8)
+
+[node name="Ice_Platform18" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(30, 0, 0, 0, -4.37114e-08, -30, 0, 1, -1.31134e-06, 15, 85.5, 6.5)
+
+[node name="Ice_Platform19" parent="ice_chamber" instance=ExtResource("1_gmmf0")]
+transform = Transform3D(30, 0, 0, 0, -4.37114e-08, -30, 0, 1, -1.31134e-06, 15, 85.5, -22.5)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ice_chamber"]
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="ice_chamber/StaticBody3D"]
+transform = Transform3D(-1.31134e-06, -1, 0, 30, -4.37114e-08, 0, 0, 0, 30, 30.5, 85.5, -8)
+visibility_range_end = 300.0
+mesh = SubResource("ArrayMesh_so7w3")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ice_chamber/StaticBody3D"]
+transform = Transform3D(-1.31134e-06, -1, 0, 30, -4.37114e-08, 0, 0, 0, 30, 30.5, 85.5, -8)
+shape = SubResource("ConcavePolygonShape3D_so7w3")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="ice_chamber"]
+transform = Transform3D(4.3, 0, 0, 0, 0.5, 0, 0, 0, 4.1, 15.2938, 99.7263, -7.87922)
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_btkd4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ice_chamber/MeshInstance3D3"]
+shape = SubResource("BoxShape3D_8yxsx")
+
+[node name="Ice_boot" parent="ice_chamber" instance=ExtResource("6_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.5618, 94.0358, -7.60734)
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="ice_chamber"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8, 20.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ice_chamber/StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.75126, 71.8267, -7.8402)
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_btkd4")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ice_chamber/StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.75126, 71.8267, -7.8402)
+shape = SubResource("BoxShape3D_8yxsx")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="ice_chamber"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8, 20.5, 0)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ice_chamber/StaticBody3D3"]
+transform = Transform3D(1.2, 0, 0, 0, 0.5, 0, 0, 0, 1.2, 7.75126, 71.8267, -7.8402)
+visibility_range_end = 300.0
+mesh = SubResource("BoxMesh_btkd4")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ice_chamber/StaticBody3D3"]
+transform = Transform3D(1.2, 0, 0, 0, 0.5, 0, 0, 0, 1.2, 7.75126, 71.8267, -7.8402)
+shape = SubResource("BoxShape3D_8yxsx")
+
+[node name="ice" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.59959, 99.485, 4.04309)
+
+[node name="ice2" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.8663, 99.485, 4.04309)
+
+[node name="ice3" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.0137, 99.6969, -17.9746)
+
+[node name="ice4" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22278, 99.6171, -17.9746)
+
+[node name="ice5" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0848, 99.476, -17.9746)
+
+[node name="ice6" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0848, 99.1188, 10.1653)
+
+[node name="ice7" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 1.82801, 99.5817, -7.55033)
+
+[node name="ice8" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0.898577, 99.1261, 6.34558)
+
+[node name="ice9" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.3, 3.92768, 89.4831, 8.38999)
+
+[node name="ice11" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.3, 2.74938, 75.8434, 8.38999)
+
+[node name="ice12" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.3, 3.39167, 65.6731, 8.38999)
+
+[node name="ice13" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.3, 10.8126, 77.0366, 8.38999)
+
+[node name="ice14" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.3, 16.8262, 87.5067, 8.38999)
+
+[node name="ice15" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.3, 26.1544, 85.9582, 8.38999)
+
+[node name="ice16" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.3, 20.2635, 74.8028, 8.38999)
+
+[node name="ice17" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.3, 15.92, 67.5874, 8.38999)
+
+[node name="ice18" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.3, 24.8804, 68.2207, 8.38999)
+
+[node name="ice19" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, 0.3, 0, 1, 0, -1, 0, -1.31134e-08, 32.4497, 69.9498, 4.5268)
+
+[node name="ice20" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, 0.3, 0, 1, 0, -1, 0, -1.31134e-08, 32.4497, 82.7608, 4.5268)
+
+[node name="ice21" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, 0.3, 0, 1, 0, -1, 0, -1.31134e-08, 32.4497, 82.7608, -4.57042)
+
+[node name="ice22" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, 0.3, 0, 1, 0, -1, 0, -1.31134e-08, 32.4497, 95.0574, -3.56975)
+
+[node name="ice23" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, 0.3, 0, 1, 0, -1, 0, -1.31134e-08, 32.4497, 69.9085, -16.1397)
+
+[node name="ice24" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, 0.3, 0, 1, 0, -1, 0, -1.31134e-08, 32.4497, 85.323, -16.1397)
+
+[node name="ice25" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, 0.3, 0, 1, 0, -1, 0, -1.31134e-08, 32.4497, 90.3563, -11.7007)
+
+[node name="ice26" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, -0.3, 0, 1, 0, 1, 0, -1.31134e-08, -2.16307, 90.3563, -19.345)
+
+[node name="ice27" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, -0.3, 0, 1, 0, 1, 0, -1.31134e-08, -2.16307, 89.4371, -9.52652)
+
+[node name="ice28" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, -0.3, 0, 1, 0, 1, 0, -1.31134e-08, -2.16307, 87.6923, 0.374164)
+
+[node name="ice29" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, -0.3, 0, 1, 0, 1, 0, -1.31134e-08, -2.16307, 78.1645, 0.374164)
+
+[node name="ice30" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, -0.3, 0, 1, 0, 1, 0, -1.31134e-08, -2.16307, 75.9759, -6.44294)
+
+[node name="ice31" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, -0.3, 0, 1, 0, 1, 0, -1.31134e-08, -2.16307, 76.7545, -12.7185)
+
+[node name="ice32" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, -0.3, 0, 1, 0, 1, 0, -1.31134e-08, -2.16307, 83.6933, -19.9032)
+
+[node name="ice33" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, -0.3, 0, 1, 0, 1, 0, -1.31134e-08, -2.16307, 72.1646, -19.3415)
+
+[node name="ice34" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, -0.3, 0, 1, 0, 1, 0, -1.31134e-08, -2.21631, 68.5241, -11.2465)
+
+[node name="ice35" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, -0.3, 0, 1, 0, 1, 0, -1.31134e-08, -2.16307, 68.5241, -1.57972)
+
+[node name="ice36" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, -0.3, 0, 1, 0, 1, 0, -1.31134e-08, -2.16307, 68.5241, 2.29015)
+
+[node name="ice37" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-4.37114e-08, 0, -0.3, 0, 1, 0, 1, 0, -1.31134e-08, -2.16307, 64.193, -20.4962)
+
+[node name="ice38" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-1, 0, -2.62268e-08, 0, 1, 0, 8.74228e-08, 0, -0.3, 3.43045, 64.193, -24.2099)
+
+[node name="ice39" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-1, 0, -2.62268e-08, 0, 1, 0, 8.74228e-08, 0, -0.3, 5.05817, 76.3361, -24.2099)
+
+[node name="ice40" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-1, 0, -2.62268e-08, 0, 1, 0, 8.74228e-08, 0, -0.3, 6.9047, 89.7337, -24.2099)
+
+[node name="ice41" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-1, 0, -2.62268e-08, 0, 1, 0, 8.74228e-08, 0, -0.3, 14.9111, 89.7337, -24.2099)
+
+[node name="ice42" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-1, 0, -2.62268e-08, 0, 1, 0, 8.74228e-08, 0, -0.3, 14.9111, 77.717, -24.2099)
+
+[node name="ice43" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-1, 0, -2.62268e-08, 0, 1, 0, 8.74228e-08, 0, -0.3, 13.7662, 68.1965, -24.2099)
+
+[node name="ice44" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-1, 0, -2.62268e-08, 0, 1, 0, 8.74228e-08, 0, -0.3, 23.6581, 69.729, -24.2099)
+
+[node name="ice46" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-1, 0, -2.62268e-08, 0, 1, 0, 8.74228e-08, 0, -0.3, 23.6581, 80.7111, -24.2099)
+
+[node name="ice47" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-1, 0, -2.62268e-08, 0, 1, 0, 8.74228e-08, 0, -0.3, 29.8438, 80.5416, -24.2099)
+
+[node name="ice48" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-1, 0, -2.62268e-08, 0, 1, 0, 8.74228e-08, 0, -0.3, 25.3603, 93.0599, -24.1232)
+
+[node name="ice45" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-1, 0, -2.62268e-08, 0, 1, 0, 8.74228e-08, 0, -0.3, 31.0291, 66.3584, -24.2099)
+
+[node name="ice10" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 10.2828, 99.4851, -6.70511)
+
+[node name="ice49" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-2.5, 4.52987e-08, 0, -3.77489e-07, -0.3, 0, 0, 0, 2.5, 18.6491, 71.6774, -6.72364)
+
+[node name="ice50" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-2.5, 4.52987e-08, 0, -3.77489e-07, -0.3, 0, 0, 0, 2.5, 20.4419, 71.6774, -5.91972)
+
+[node name="ice51" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-1, 4.52987e-08, 0, -1.50996e-07, -0.3, 0, 0, 0, 1, 27.1016, 71.9124, 2.33216)
+
+[node name="ice52" parent="ice_chamber" instance=ExtResource("7_i426a")]
+transform = Transform3D(-1, 4.52987e-08, 0, -1.50996e-07, -0.3, 0, 0, 0, 1, 27.1016, 71.9124, -17.1301)

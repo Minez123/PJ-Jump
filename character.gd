@@ -9,6 +9,8 @@ extends CharacterBody3D
 @export var move_speed := 8.0
 @export var bounce_speed := 8.0
 
+@export var respawn_position: Vector3 = Vector3(0, 15, 0)
+@export var fall_limit: float = -50.0  # Y-position considered "fell out"
 
 #Cam
 @export var min_zoom := -20.0
@@ -38,7 +40,6 @@ var full_charge_sfx_played := false
 var jump_power := 0.0
 var jump_direction := 0 
 var jump_hight := 2
-var has_bounced := false
 
 
 var GRAVITY = 9.8 * jump_hight 
@@ -72,7 +73,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		pause_menu.game_script = self
 		pause_menu.show_menu()
 
+
 func _physics_process(delta: float) -> void:
+	if global_transform.origin.y < fall_limit:
+		respawn()
 	# Camera rotation
 	twist_pivot.rotate_y(twist_input)
 	pitch_pivot.rotate_x(pitch_input)
@@ -96,7 +100,6 @@ func _physics_process(delta: float) -> void:
 	
 	# Only allow movement input on ground
 	if is_on_floor():
-		has_bounced = false # Reset bounce on landing
 		
 		var move_input := Input.get_axis("move_left", "move_right")
 		velocity.x = direction.x * speed
@@ -135,16 +138,13 @@ func _physics_process(delta: float) -> void:
 			velocity.z = forward.z * jump_power 
 
 			jump_power = 0.0
-			
-			
-		
-		
+
 	# Gravity
 	if not is_on_floor():
 		# Check if character is falling down (negative y velocity)
 		if velocity.y < 0:
 			# Increase gravity when falling to make character fall faster
-			GRAVITY = original_gravity + (0.5 * original_gravity)
+			GRAVITY = original_gravity + (2.5 * original_gravity)
 		else:
 			# Reset gravity to original when not falling (jumping up)
 			GRAVITY = original_gravity
@@ -152,29 +152,35 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= GRAVITY * delta
 	else:
 		# Reset gravity to original when on floor
-		GRAVITY = original_gravity
-
+		GRAVITY = original_gravity	
+		
+	var velocity_before_slide := velocity
+	
+	
+	
 	move_and_slide()
-
-	if not is_on_floor() and not has_bounced:
-		var collision_count = get_slide_collision_count()
-		if collision_count > 0:
-			for i in range(collision_count):
-				var collision = get_slide_collision(i)
-				# Check if the collision is with a wall (normal is mostly horizontal)
-				if abs(collision.get_normal().y) < 0.1:
-					var wall_normal = collision.get_normal()
-					# Stop upward movement and push away from the wall
-					velocity.x = wall_normal.x * bounce_speed
-					velocity.z = wall_normal.z * bounce_speed
-
-					has_bounced = true
-					break # We only want to bounce once
+	
+	#wall bouncing
+	
+	var collision_count = get_slide_collision_count()
+	if collision_count > 0:
+		for i in range(collision_count):
+			var collision = get_slide_collision(i)
+			if abs(collision.get_normal().y) < 0.1:
+				var wall_normal := collision.get_normal()
+				#R=L−2(N⋅L)N
+				var reflection := velocity_before_slide - 2*(wall_normal.dot(velocity_before_slide))*wall_normal
+				
+				velocity = reflection
+				
+				
+				
 
 	if not was_on_floor and is_on_floor():
 		landing_sfx.play()
 	was_on_floor = is_on_floor()
 
 
-		
-	
+func respawn():
+	global_transform.origin = respawn_position
+	velocity = Vector3.ZERO 

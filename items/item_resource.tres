@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=2 format=3 uid="uid://jblwsavchv50"]
+
+[ext_resource type="Script" uid="uid://c214cp20i2584" path="res://items/item_resource.gd" id="1_tegux"]
+
+[resource]
+script = ExtResource("1_tegux")
+uid = ""
+item_name = "New Item"
+description = ""
+is_stackable = false
+stack_size = 1

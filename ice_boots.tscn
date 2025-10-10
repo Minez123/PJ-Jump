@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4twotxglb8c1"]
+
+[ext_resource type="PackedScene" uid="uid://bds6nerkop06x" path="res://Boots.glb" id="1_vqc3l"]
+[ext_resource type="Texture2D" uid="uid://c45smqymnqqbt" path="res://Boots_CHAHIN_BOOTS_TEXTURE.jpg" id="2_rqlw4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l77ds"]
+albedo_color = Color(0, 1.657, 16.022, 1)
+albedo_texture = ExtResource("2_rqlw4")
+
+[node name="Boots" instance=ExtResource("1_vqc3l")]
+
+[node name="Cube_010_Cube_012" parent="." index="0"]
+visibility_range_end = 300.0
+surface_material_override/0 = SubResource("StandardMaterial3D_l77ds")

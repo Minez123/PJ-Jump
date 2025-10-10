@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://br4t4q50fjjek"]
+
+[ext_resource type="ArrayMesh" uid="uid://5qh2h33q3j3n" path="res://1222 Iceberg.obj" id="1_lryxu"]
+[ext_resource type="Texture2D" uid="uid://dptd2f7hj1osa" path="res://PJ-Jump/Fantasy-Free-Godot-617145cb2c96a443e2a61973b939ee0221364a3a/360_F_281239239_WO4JiC37US1v5RGWvaEQBT6LNvSzywpL.jpg" id="2_3inoc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wc2py"]
+albedo_color = Color(0.501265, 0.89708, 1, 1)
+albedo_texture = ExtResource("2_3inoc")
+albedo_texture_force_srgb = true
+
+[node name="ice" type="Node3D"]
+
+[node name="1222Iceberg" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 1.7041, 0, -1.08807)
+visibility_range_end = 300.0
+mesh = ExtResource("1_lryxu")
+surface_material_override/0 = SubResource("StandardMaterial3D_wc2py")

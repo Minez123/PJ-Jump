@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://dlwdo03wvbfs0"]
+
+[ext_resource type="Script" uid="uid://c214cp20i2584" path="res://items/item_resource.gd" id="1_pf4cr"]
+[ext_resource type="Texture2D" uid="uid://ds5lcjgw7v3sh" path="res://Texture/C.png" id="2_atitb"]
+
+[resource]
+script = ExtResource("1_pf4cr")
+uid = "key_c"
+item_name = "C"
+description = "part of a key"
+texture = ExtResource("2_atitb")
+is_stackable = false
+stack_size = 1
+metadata/_custom_type_script = "uid://c214cp20i2584"
