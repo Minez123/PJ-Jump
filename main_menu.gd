@@ -60,7 +60,7 @@ func _on_number_line_edit_text_changed(new_text: String) -> void:
 			var removed_count = new_text.length() - cleaned_text.length()
 			seed_input.caret_column = _previous_caret_position - removed_count
 
-func _save_caret_position() -> void:
+func _save_caret_position(new_text: String) -> void:
 	_previous_caret_position = seed_input.caret_column
 	
 func _on_quit_pressed() -> void:

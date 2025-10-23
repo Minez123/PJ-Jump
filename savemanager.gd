@@ -8,7 +8,6 @@ func save_game(player: Node, world: Node) -> void:
 	var coin_positions_to_save = GameData.collected_coin_positions
 	var npcs_to_save = GameData.npcs_to_save
 	var all_npcs = get_tree().get_nodes_in_group("AI_NPC")
-	
 
 
 		
@@ -34,7 +33,8 @@ func save_game(player: Node, world: Node) -> void:
 		"inventory": inventory_uids,
 		"npcs": npcs_to_save,
 		"seed": world.custom_seed,
-		"elapsed_time": GameData.elapsed_time,   
+		"elapsed_time": GameData.elapsed_time,
+		"tutorial": GameData.tutorial_done,
 		"best_time": GameData.best_time, 
 		"at_goal": GameData.at_goal
 	}
@@ -56,7 +56,9 @@ func load_game(save_path: String) -> Dictionary:
 			if save_data.has("elapsed_time"):
 				GameData.elapsed_time = save_data["elapsed_time"]  
 			if save_data.has("best_time"):
-				GameData.best_time = save_data["best_time"]       
+				GameData.best_time = save_data["best_time"]   
+			if 	save_data.has("tutorial"):
+				GameData.tutorial_done = save_data["tutorial"]    
 			return save_data
 	return {}
 	

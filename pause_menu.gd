@@ -56,6 +56,14 @@ func _unhandled_input(event):
 
 
 func _on_save_pressed() -> void:
+	var sensitivity = mouse_slider.value
+	var SFX = SFX_slider.value
+	var Music = Music_slider.value
+
+	game_script.mouse_sensitivity = sensitivity
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(SFX))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(Music))
+	preload("res://savemanager.gd").save_settings(sensitivity, SFX, Music)
 	var player = get_tree().get_first_node_in_group("player")
 	var world = get_tree().get_first_node_in_group("world")
 	GameData.at_goal = false

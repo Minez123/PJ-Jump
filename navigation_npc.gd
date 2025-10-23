@@ -90,8 +90,6 @@ func drop_collectible():
 		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 		var num_drops = rng.randi_range(2, 5)
-
-		player = get_tree().get_first_node_in_group("player")
 		
 		for i in range(num_drops):
 			var collectible_instance = collectible_scene.instantiate()
@@ -132,7 +130,7 @@ func _on_body_entered(body):
 		is_hostile = false
 	else:
 		is_hostile = true
-	if body.is_in_group("Player") and not is_hit:
+	if body.is_in_group("player") and not is_hit:
 		is_hit = true
 		hit_timer = hit_recover_time
 		anim_state.travel("HIT")

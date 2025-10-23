@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://cawyxa2honk7g"]
+[gd_scene load_steps=50 format=3 uid="uid://cawyxa2honk7g"]
 
 [ext_resource type="Texture2D" uid="uid://7n4p1anjoe51" path="res://crosshair.png" id="1_272bh"]
 [ext_resource type="Script" uid="uid://camty0ert0fe6" path="res://main.gd" id="1_d13ii"]
@@ -39,6 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://cegy62tp3lcgb" path="res://player.tscn" id="38_b1qrp"]
 [ext_resource type="PackedScene" uid="uid://dsq7mffeyblru" path="res://items/key_m.tscn" id="38_h8e4i"]
 [ext_resource type="PackedScene" uid="uid://dkrvj82yi2h0q" path="res://items/key_i.tscn" id="39_come4"]
+[ext_resource type="PackedScene" uid="uid://bp4rrx1dbwfch" path="res://tutorail.tscn" id="40_h8e4i"]
 
 [sub_resource type="Curve" id="Curve_d13ii"]
 _data = [Vector2(0.00322061, 0), 0.0, 0.0, 0, 0, Vector2(0.162641, 0.912162), 0.0, 0.0, 0, 0, Vector2(0.987118, 0.48443), 0.0, 0.0, 0, 0]
@@ -136,10 +137,18 @@ shadow_enabled = true
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource("8_htxhm")
 
+[node name="SeedLabel" type="Label" parent="HUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -128.0
+offset_bottom = 23.0
+grow_horizontal = 0
+
 [node name="JumpPowerBar" type="ProgressBar" parent="HUD"]
 anchors_preset = -1
-anchor_left = 0.547
-anchor_right = 0.937
+anchor_left = 0.586
+anchor_right = 1.0
 anchor_bottom = 0.119
 offset_left = 138.856
 offset_top = 7.0
@@ -148,9 +157,9 @@ offset_bottom = -42.112
 max_value = 10.0
 
 [node name="ShotgunAmmoLabel" type="Label" parent="HUD"]
-offset_left = 709.0
+offset_left = 730.0
 offset_top = 10.0
-offset_right = 749.0
+offset_right = 770.0
 offset_bottom = 33.0
 
 [node name="TextureRect" type="TextureRect" parent="HUD"]
@@ -175,8 +184,21 @@ anchor_right = 0.025
 offset_right = 40.0
 offset_bottom = 23.0
 
+[node name="TutorialLabel" type="Label" parent="HUD"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -152.0
+offset_top = -254.0
+offset_right = -112.0
+offset_bottom = -231.0
+grow_horizontal = 0
+grow_vertical = 2
+
 [node name="Platform_Gen" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.096, 0.5, 15.142)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.3864, 0.5, 8.38334)
 script = ExtResource("2_0xm2m")
 collectible_scene = ExtResource("3_h2yge")
 key_scenes = Array[PackedScene]([ExtResource("36_facbu"), ExtResource("37_come4"), ExtResource("38_h8e4i"), ExtResource("37_b1qrp"), ExtResource("36_b1qrp"), ExtResource("39_come4"), ExtResource("34_0rl1p"), ExtResource("35_0rl1p")])
@@ -194,14 +216,6 @@ shop_scene = ExtResource("26_lswn8")
 goal_scene = ExtResource("25_0odxb")
 ice_dun = ExtResource("27_a6jrf")
 slime_dun = ExtResource("28_xuqvo")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Platform_Gen"]
-
-[node name="SeedLabel" type="Label" parent="Platform_Gen/CanvasLayer"]
-offset_left = 1011.0
-offset_top = 5.0
-offset_right = 1139.0
-offset_bottom = 28.0
 
 [node name="InventoryUI" type="CanvasLayer" parent="." node_paths=PackedStringArray("grid")]
 script = ExtResource("11_efxa6")
@@ -296,6 +310,9 @@ transform = Transform3D(99, 0, 0, 0, 1, 0, 0, 0, 99, -17.7562, 0, 17.0846)
 script = ExtResource("31_seu75")
 
 [node name="Knight" parent="." instance=ExtResource("38_b1qrp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.884, 1.00412, 10.8502)
 shotgun_pellet_scene = ExtResource("8_5vw27")
+
+[node name="tutorial" parent="." groups=["tutorial"] instance=ExtResource("40_h8e4i")]
 
 [connection signal="timeout" from="Fade_transition/Fade_Timer" to="." method="_on_fade_timer_timeout"]

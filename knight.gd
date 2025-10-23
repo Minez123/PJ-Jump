@@ -41,7 +41,7 @@ var zooming := false
 @onready var crosshair: TextureRect = $"../HUD/TextureRect"
 @onready var camera_raycast: RayCast3D = $TwistPivot/PitchPivot/CameraRayCast
 
-
+@onready var tutorial_manager := get_tree().get_first_node_in_group("tutorial")
 #UI
 @onready var pause_menu: Node = $PauseMenu  
 @onready var jump_bar := $"../HUD/JumpPowerBar" 
@@ -72,9 +72,6 @@ var platform_factor: float = 1.0
 var GRAVITY = 9.8 * jump_hight 
 var original_gravity: float  # Store the original gravity value
 var jump_boost = 1
-
-var last_dash_time := -1.0
-const DASH_COOLDOWN := 1.0  # seconds
 
 # Mouse input
 var twist_input := 0.0
@@ -159,6 +156,29 @@ func _physics_process(delta: float) -> void:
 		# Movement input
 	else:
 		var input_dir = Vector3.ZERO
+		if not GameData.tutorial_done:
+			if Input.is_action_just_pressed("move_forward"):
+				tutorial_manager.mark_action_done("move")
+
+			if Input.is_action_just_released("move_up"):
+				tutorial_manager.mark_action_done("jump")
+
+			if zooming:
+				tutorial_manager.mark_action_done("aim")
+
+			if Input.is_action_just_pressed("shoot_shotgun"):
+				tutorial_manager.mark_action_done("shoot")
+
+			if Input.is_action_just_pressed("interact"):
+				tutorial_manager.mark_action_done("interact")
+
+			if Input.is_action_just_pressed("inventory_toggle"):
+				tutorial_manager.mark_action_done("inventory")
+
+			if Input.is_action_just_pressed("ui_cancel"):
+				tutorial_manager.mark_action_done("pause")
+			
+			
 		input_dir.x = Input.get_axis("move_left", "move_right")
 		input_dir.z = Input.get_axis("move_forward", "move_back")
 		
@@ -266,14 +286,6 @@ func _physics_process(delta: float) -> void:
 			GRAVITY = original_gravity	
 			
 		var velocity_before_slide := velocity
-		
-		# Bounce on enemy collision
-
-		
-
-		
-
-
 
 
 		if Input.is_action_just_pressed("shoot_shotgun") and shotgun_shots_remaining > 0:
@@ -338,7 +350,7 @@ func update_ammo_label(change: int):
 		tween.kill()
 	tween = create_tween()
 	
-	# Pick color based on ammo change
+	# Pick color based on ammo changeฟ
 	var flash_color := Color(0, 1, 0) if change > 0 else Color(1, 0, 0)
 	
 	# Instantly set to flash color, then fade back to white

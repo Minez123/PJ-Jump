@@ -56,7 +56,8 @@ func _ready():
 		custom_seed = Time.get_unix_time_from_system()
 	add_to_group("world")
 	rng.seed = custom_seed
-	$CanvasLayer/SeedLabel.text = "Seed: %d" % custom_seed
+	var seed_label = get_parent().get_node("HUD/SeedLabel")
+	seed_label.text = "Seed: %d" % custom_seed
 	platform_size = get_scene_size(platform_scene)
 	plat_up_size = get_scene_size(plat_up_scene)
 	nav_size = get_scene_size(NavLevel_scene)
@@ -96,6 +97,7 @@ func generate_platform_batch(start_position: Vector3, branch_id: int = 0):
 		elif local_created >= 20 and not slime_spawned and batch_phase == 1 and branch_id == 2:
 			spawn_slime_dun(last_post, last_size, branch_id)
 
+
 		await get_tree().process_frame
 
 
@@ -125,7 +127,6 @@ func generate_platform_batch(start_position: Vector3, branch_id: int = 0):
 	else:
 		spawn_goal(last_post, last_spawned_size, branch_id)
 		branch_phases[branch_id]=3
-		print(local_created , branch_id,branch_phases,batch_phase)
 		emit_signal("world_generation_finished")
 		
 
@@ -359,8 +360,6 @@ func spawn_shop(pos: Vector3, parent_size: Vector3, branch_id: int) -> void:
 	shop_instance.position = shop_pos
 	add_child(shop_instance)
 
-	print("🛒 Shop spawned at: ", shop_pos)
-
 	spawn_bridge(pos, shop_pos, parent_size, shop_size, branch_id,false)
 
 
@@ -377,7 +376,6 @@ func spawn_ice_dun(pos: Vector3, parent_size: Vector3, branch_id: int) -> void:
 	ice_instance.position =  dun_pos
 	add_child(ice_instance)
 
-	print("🛒 ice spawned at: ", dun_pos)
 
 	spawn_bridge(pos,  dun_pos, parent_size, ice_size, branch_id,true)
 var slime_spawned := false
@@ -392,7 +390,6 @@ func spawn_slime_dun(pos: Vector3, parent_size: Vector3, branch_id: int) -> void
 	slime_instance.position =  dun_pos
 	add_child(slime_instance)
 
-	print("🛒 slime spawned at: ", dun_pos)
 
 	spawn_bridge(pos,  dun_pos, parent_size, slime_size, branch_id,true)
 
