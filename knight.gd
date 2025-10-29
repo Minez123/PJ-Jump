@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var mouse_sensitivity := 0.0015
+@export var mouse_sensitivity = GameData.mouse_sensitivity
 @export var can_move_in_air: bool = false
 @export var inf_Ammo = false
 
@@ -109,7 +109,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			zooming = event.pressed
-
+func  update_mouse(sensitivity: float)->void:
+	mouse_sensitivity = sensitivity
+	
 
 func _physics_process(delta: float) -> void:
 	var inventory = get_tree().get_first_node_in_group("inventory_ui")

@@ -68,7 +68,6 @@ func _ready():
 	goal_size = get_scene_size(goal_scene)
 
 
-
 	generate_platform_batch(Vector3.ZERO, 0)  
 
 var branch_phases := {0: 0, 1: 0, 2: 0}
@@ -275,7 +274,7 @@ func spawn_collectible(top_pos: Vector3, offset: float, branch_id: int) -> void:
 	if not branch_key_index.has(branch_id):
 		branch_key_index[branch_id] = 0
 
-	if key_scenes.size() > 0 and rng.randf() < 0.1 and branch_id>0:
+	if key_scenes.size() > 0 and rng.randf() < 0.2 and branch_id>0:
 		var index = branch_key_index[branch_id]
 		if index < key_scenes.size():
 			var key_instance = key_scenes[index].instantiate()
@@ -283,8 +282,7 @@ func spawn_collectible(top_pos: Vector3, offset: float, branch_id: int) -> void:
 			add_child(key_instance)
 
 			branch_key_index[branch_id] += 1
-		else:
-			print("Branch", branch_id, "has spawned all keys already.")
+
 
 	elif collectible_scene and rng.randf() < item_spawn_chance:
 		collectible = collectible_scene.instantiate()
@@ -402,6 +400,7 @@ func spawn_goal(pos: Vector3, parent_size: Vector3, branch_id: int) -> void:
 	goal_instance.position = goal_pos
 	add_child(goal_instance)
 	spawn_bridge(pos, goal_pos, parent_size, goal_size, branch_id,true)
+
 
 
 

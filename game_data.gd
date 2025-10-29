@@ -4,6 +4,7 @@ extends Node
 var best_time: float = -1.0
 var elapsed_time: float = 0.0
 var timing_active: bool = true
+var mouse_sensitivity := 0.0015
 var loaded_save_data = null
 var collected_coin_positions: Dictionary = {}
 var npcs_to_save: Dictionary = {}

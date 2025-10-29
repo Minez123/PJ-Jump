@@ -5,7 +5,7 @@ extends CanvasLayer
 @onready var Music_slider: HSlider = $Panel/MusicSlider
 @onready var confirm_button: Button = $Panel/ConfirmButton
 @onready var save_confirm_dialog: ConfirmationDialog = $SaveConfirmDialog
-var game_script: Node
+@onready var game_script = get_node("..")
 
 func _ready():
 	visible = false
@@ -15,10 +15,17 @@ func _ready():
 	mouse_slider.value = settings.get("mouse_sensitivity", 0.0015)
 	SFX_slider.value = settings.get("sfx", 1.0)
 	Music_slider.value = settings.get("music", 0.7)
+	
+	print("mou",mouse_slider.value)
+	print("SFX",SFX_slider.value)
+	print("Music",Music_slider.value)
 
 	# Apply volumes immediately
+	GameData.mouse_sensitivity = mouse_slider.value
+	game_script.update_mouse(mouse_slider.value)
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(SFX_slider.value))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(Music_slider.value))
+	
 
 func show_menu():
 	visible = true
@@ -34,8 +41,9 @@ func _on_confirm_pressed():
 	var sensitivity = mouse_slider.value
 	var SFX = SFX_slider.value
 	var Music = Music_slider.value
-
-	game_script.mouse_sensitivity = sensitivity
+	
+	game_script.update_mouse(sensitivity)
+	GameData.mouse_sensitivity = sensitivity
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(SFX))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(Music))
 	preload("res://savemanager.gd").save_settings(sensitivity, SFX, Music)
@@ -45,9 +53,12 @@ func _on_confirm_pressed():
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel"):
 		if visible:
+			var settings = preload("res://savemanager.gd").load_settings()
+			mouse_slider.value = settings.get("mouse_sensitivity", 0.0015)
+			SFX_slider.value = settings.get("sfx", 1.0)
+			Music_slider.value = settings.get("music", 0.7)
 			hide_menu()
 		else:
-			game_script = get_tree().get_first_node_in_group("player") # or pass reference
 			show_menu()
 
 
@@ -59,8 +70,8 @@ func _on_save_pressed() -> void:
 	var sensitivity = mouse_slider.value
 	var SFX = SFX_slider.value
 	var Music = Music_slider.value
-
-	game_script.mouse_sensitivity = sensitivity
+	game_script.update_mouse(sensitivity)
+	GameData.mouse_sensitivity = sensitivity
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(SFX))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(Music))
 	preload("res://savemanager.gd").save_settings(sensitivity, SFX, Music)

@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_o44xo")
-uid = "Ice_boot"
+uid = "ice_boot"
 item_name = "Ice Boot"
 description = "reduce slippery effect"
 texture = ExtResource("2_6vrw1")

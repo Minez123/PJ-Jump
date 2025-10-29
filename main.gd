@@ -102,15 +102,33 @@ func _process(_delta) -> void:
 	else:
 		target_music = music_low
 
-	# 🎶 Switch music if needed
-	if target_music != current_music:
+	var height_check_task = null
+	if height_check_task == null or not height_check_task.is_valid():
+		_delayed_music_check(target_music)
+
+func _delayed_music_check(target_music: AudioStreamPlayer) -> void:
+	var initial_target = target_music
+	await get_tree().create_timer(3.0).timeout
+
+	# re-check height after 3 seconds
+	var h = player.global_position.y
+	var new_target: AudioStreamPlayer = null
+	if h > 6000.0:
+		new_target = music_high
+	elif h > 450.0:
+		new_target = music_high
+	elif h > 250.0:
+		new_target = music_mid
+	else:
+		new_target = music_low
+
+	# Only switch if still in the same range
+	if new_target == initial_target and new_target != current_music:
 		if current_music and current_music.playing:
 			current_music.stop()
-		if not target_music.playing:
-			target_music.play()
-		current_music = target_music
-
-
+		if not new_target.playing:
+			new_target.play()
+		current_music = new_target
 
 func _on_fade_timer_timeout() -> void:
 	$Fade_transition.hide()

@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_n4kf6")
-uid = "Slime_jelly"
+uid = "slime_jelly"
 item_name = "Slime Jelly"
 description = "friend with slime"
 texture = ExtResource("2_usvpd")

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3v3xbcs5oach"]
+
+[ext_resource type="PackedScene" uid="uid://cj0v3r58rpxyk" path="res://wall_scene.tscn" id="1_nh2f4"]
+[ext_resource type="PackedScene" uid="uid://cyruo4d2x7lxh" path="res://PJ-Jump/Platform/plat_move.tscn" id="2_te801"]
+[ext_resource type="PackedScene" uid="uid://bjx6qjt6kt41q" path="res://PJ-Jump/Platform/navigation_npc.tscn" id="3_pj24y"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_721bi"]
+vertices = PackedVector3Array(-2.51954, 3.38462, -2.76491, -2.01954, 3.38462, -2.26491, -1.76954, 3.38462, -4.51491, -1.01954, 3.38462, -5.51491, 2.48046, 3.38462, -6.26491, 2.48046, 3.38462, -9.51491, -9.51954, 3.38462, -2.51491, -9.51954, 3.38462, -9.51491, 4.73046, 3.38462, -1.01491, 6.48046, 3.38462, -1.01491, 6.73046, 3.38462, -2.51491, 3.73046, 3.38462, -6.01491, 8.48046, 3.38462, -2.26491, 9.48046, 3.38462, -9.51491, 8.48046, 3.38462, 2.98509, 9.48046, 3.38462, 3.23509, -1.26954, 5.88462, 0.485087, 3.73046, 4.63462, -0.764913, 2.73046, 5.13462, -5.01491, -2.26954, 6.38462, -4.01491, -3.76954, 3.88462, 4.48509, -3.26954, 3.88462, 4.23509, -3.26954, 3.88462, -1.76491, -8.51954, 3.88462, -1.76491, -8.51954, 3.88462, 27.4851, -3.26954, 3.88462, 27.4851, -3.76954, 3.88462, 5.73509, -3.26954, 3.88462, 6.23509, 4.73046, 3.38462, -0.0149126, 3.98046, 3.38462, 0.485087, 3.23046, 3.38462, 2.98509, 3.48046, 3.38462, 3.98509, 6.48046, 3.38462, 3.98509, 1.73046, 3.38462, 2.98509, -2.26954, 3.38462, 1.48509, -2.26954, 3.38462, 3.98509, 8.23046, 3.38462, 4.73509, 9.48046, 3.38462, 9.73509, 6.73046, 3.38462, 4.73509, 3.23046, 3.38462, 5.23509, -2.26954, 3.38462, 6.23509, -2.26954, 3.38462, 9.73509)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(5, 4, 3), PackedInt32Array(2, 0, 6), PackedInt32Array(3, 2, 6), PackedInt32Array(6, 7, 3), PackedInt32Array(3, 7, 5), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 4, 5), PackedInt32Array(10, 11, 12), PackedInt32Array(12, 11, 5), PackedInt32Array(12, 5, 13), PackedInt32Array(14, 12, 15), PackedInt32Array(15, 12, 13), PackedInt32Array(18, 17, 19), PackedInt32Array(19, 17, 16), PackedInt32Array(21, 20, 22), PackedInt32Array(22, 20, 23), PackedInt32Array(25, 24, 26), PackedInt32Array(26, 24, 23), PackedInt32Array(20, 26, 23), PackedInt32Array(26, 27, 25), PackedInt32Array(28, 8, 9), PackedInt32Array(28, 9, 29), PackedInt32Array(29, 9, 30), PackedInt32Array(30, 9, 31), PackedInt32Array(31, 9, 32), PackedInt32Array(29, 30, 33), PackedInt32Array(35, 34, 33), PackedInt32Array(33, 34, 29), PackedInt32Array(14, 15, 36), PackedInt32Array(36, 15, 37), PackedInt32Array(32, 38, 31), PackedInt32Array(31, 38, 39), PackedInt32Array(38, 36, 39), PackedInt32Array(39, 36, 37), PackedInt32Array(39, 37, 40), PackedInt32Array(40, 37, 41)]
+
+[node name="structure_A" type="Node3D"]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.14153, 0)
+navigation_mesh = SubResource("NavigationMesh_721bi")
+
+[node name="wall_1" parent="NavigationRegion3D" instance=ExtResource("1_nh2f4")]
+transform = Transform3D(-1.31134e-07, 0, 3, 0, 1.49374, 0, -3, 0, -1.31134e-07, 7.79087, 2.77982, 1.14595)
+
+[node name="wall_2" parent="NavigationRegion3D" instance=ExtResource("1_nh2f4")]
+transform = Transform3D(2.84814, 0.568186, -0.68888, -0.633476, -0.280225, -2.91515, -0.697724, 2.57378, -0.165316, -0.0195389, 4.59477, -4.94818)
+
+[node name="wall_3" parent="NavigationRegion3D" instance=ExtResource("1_nh2f4")]
+transform = Transform3D(2.93335, 0, 0.628856, 0, 1.9113, 0, -0.628856, 0, 2.93335, -0.0195389, 2.84456, 4.99245)
+
+[node name="floor" parent="NavigationRegion3D" instance=ExtResource("1_nh2f4")]
+transform = Transform3D(10, 0, 0, 0, -4.37114e-07, -5, 0, 10, -2.18557e-07, -0.0195389, 1.62381, -10.0043)
+
+[node name="plat_move" parent="NavigationRegion3D" instance=ExtResource("2_te801")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96643, 2.47001, 0)
+
+[node name="NavigationNPC" parent="." instance=ExtResource("3_pj24y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.10212, 2.60208, 1.42867)

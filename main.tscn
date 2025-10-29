@@ -198,7 +198,7 @@ grow_horizontal = 0
 grow_vertical = 2
 
 [node name="Platform_Gen" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.3864, 0.5, 8.38334)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.3864, 0.5, 15.6704)
 script = ExtResource("2_0xm2m")
 collectible_scene = ExtResource("3_h2yge")
 key_scenes = Array[PackedScene]([ExtResource("36_facbu"), ExtResource("37_come4"), ExtResource("38_h8e4i"), ExtResource("37_b1qrp"), ExtResource("36_b1qrp"), ExtResource("39_come4"), ExtResource("34_0rl1p"), ExtResource("35_0rl1p")])
